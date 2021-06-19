@@ -2,16 +2,16 @@ import { FormSchema } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table';
 import moment from 'moment';
 
-import {
-  UserServiceProxy,
-  RoleServiceProxy,
-  UserLookupServiceProxy,
-  PagedResultDto_1OfOfIdentityUserDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null,
-  ListResultDto_1OfOfIdentityRoleDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null,
-} from '/@/services/IdentityServiceProxies';
+// import {
+//   UserServiceProxy,
+//   RoleServiceProxy,
+//   UserLookupServiceProxy,
+//   PagedResultDto_1OfOfIdentityUserDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null,
+//   ListResultDto_1OfOfIdentityRoleDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null,
+// } from '/@/services/IdentityServiceProxies';
 import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
-
+import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
 const [openFullLoading, closeFullLoading] = useLoading({
@@ -179,14 +179,12 @@ export const editFormSchema: FormSchema[] = [
  * @returns
  */
 export async function getTableListAsync(
-  params: any
-): Promise<
-  | PagedResultDto_1OfOfIdentityUserDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null
-  | undefined
-> {
-  const _userServiceProxy = new UserServiceProxy();
-  const skipCount = (params.pageIndex - 1) * params.pageSize;
-  return _userServiceProxy.usersGet(params.filter, '', skipCount, params.pageSize);
+  params: PagedListInput
+): Promise<PagedListOutput | undefined> {
+  // const _userServiceProxy = new UserServiceProxy();
+  // const skipCount = (params.pageIndex - 1) * params.pageSize;
+  // return _userServiceProxy.usersGet(params.filter, '', skipCount, params.pageSize);
+  return null;
   //return GetUserListApi(params);
 }
 
@@ -195,9 +193,7 @@ export async function getTableListAsync(
  * @param userId
  * @returns
  */
-export async function getRolesByUserIdAsync(
-  userId: string
-): Promise<ListResultDto_1OfOfIdentityRoleDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null> {
+export async function getRolesByUserIdAsync(userId: string): Promise<ListOutput> {
   const _userServiceProxy = new UserServiceProxy();
   return _userServiceProxy.rolesGet(userId);
 }
@@ -206,7 +202,7 @@ export async function getRolesByUserIdAsync(
  * 获取所有角色
  * @returns
  */
-export async function getAllRoleAsync(): Promise<ListResultDto_1OfOfIdentityRoleDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null> {
+export async function getAllRoleAsync(): Promise<ListOutput> {
   const _roleServiceProxy = new RoleServiceProxy();
   return _roleServiceProxy.all();
 }
