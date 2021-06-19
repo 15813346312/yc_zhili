@@ -184,9 +184,10 @@ export async function getTableListAsync(
   | PagedResultDto_1OfOfIdentityUserDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null
   | undefined
 > {
-  const _userServiceProxy = new UserServiceProxy();
-  const skipCount = (params.pageIndex - 1) * params.pageSize;
-  return _userServiceProxy.usersGet(params.filter, '', skipCount, params.pageSize);
+  // const _userServiceProxy = new UserServiceProxy();
+  // const skipCount = (params.pageIndex - 1) * params.pageSize;
+  // return _userServiceProxy.usersGet(params.filter, '', skipCount, params.pageSize);
+  return null;
   //return GetUserListApi(params);
 }
 
