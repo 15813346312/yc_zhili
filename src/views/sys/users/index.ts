@@ -2,16 +2,11 @@ import { FormSchema } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table';
 import moment from 'moment';
 
-// import {
-//   UserServiceProxy,
-//   RoleServiceProxy,
-//   UserLookupServiceProxy,
-//   PagedResultDto_1OfOfIdentityUserDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null,
-//   ListResultDto_1OfOfIdentityRoleDtoAndContractsAnd_0AndCulture_neutralAndPublicKeyToken_null,
-// } from '/@/services/IdentityServiceProxies';
 import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
-import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
+// import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
+import { getUserPagedList, getUserRole, createUser, deleteUser, updateUser } from '/@/api/sys/user';
+import { getRoleListAll } from '/@/api/sys/role';
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
 const [openFullLoading, closeFullLoading] = useLoading({
@@ -20,31 +15,31 @@ const [openFullLoading, closeFullLoading] = useLoading({
 
 export const tableColumns: BasicColumn[] = [
   {
-    title: t('routes.admin.userManagement_name'),
+    title: '姓名',
     dataIndex: 'name',
   },
   {
-    title: t('routes.admin.userManagement_userName'),
+    title: '用户名',
     dataIndex: 'userName',
   },
   {
-    title: t('routes.admin.userManagement_email'),
+    title: '邮箱',
     dataIndex: 'email',
   },
   {
-    title: t('routes.admin.userManagement_phone'),
+    title: '电话',
     dataIndex: 'phoneNumber',
   },
   {
-    title: t('routes.admin.userManagement_locked'),
+    title: '是否锁定',
     dataIndex: 'lockoutEnabled',
     slots: { customRender: 'lockoutEnabled' },
   },
   {
-    title: t('routes.admin.userManagement_createTime'),
+    title: '创建时间',
     dataIndex: 'creationTime',
     customRender: ({ text }) => {
-      return moment(text).format('YYYY-MM-DD HH:mm:ss');
+      return moment(text).format('YYYY-MM-DD HH:mm');
     },
   },
 ];
@@ -63,7 +58,7 @@ export const createFormSchema: FormSchema[] = [
   {
     field: 'name',
     component: 'Input',
-    label: t('routes.admin.userManagement_name'),
+    label: '姓名',
     required: true,
     labelWidth: 70,
     colProps: {
@@ -73,7 +68,7 @@ export const createFormSchema: FormSchema[] = [
   {
     field: 'userName',
     component: 'Input',
-    label: t('routes.admin.userManagement_userName'),
+    label: '用户名',
     labelWidth: 70,
     required: true,
     colProps: {
@@ -83,7 +78,7 @@ export const createFormSchema: FormSchema[] = [
   {
     field: 'email',
     component: 'Input',
-    label: t('routes.admin.userManagement_email'),
+    label: '邮箱',
     required: true,
     labelWidth: 70,
     colProps: {
@@ -93,7 +88,7 @@ export const createFormSchema: FormSchema[] = [
   {
     field: 'password',
     component: 'InputPassword',
-    label: t('routes.admin.userManagement_password'),
+    label: '密码',
     required: true,
     labelWidth: 70,
     colProps: {
@@ -110,22 +105,22 @@ export const createFormSchema: FormSchema[] = [
       span: 12,
     },
   },
-  {
-    field: 'lockoutEnabled',
-    component: 'Switch',
-    label: '是否锁定',
-    labelWidth: 70,
-    colProps: {
-      span: 12,
-    },
-  },
+  // {
+  //   field: 'lockoutEnabled',
+  //   component: 'Switch',
+  //   label: '是否锁定',
+  //   labelWidth: 70,
+  //   colProps: {
+  //     span: 12,
+  //   },
+  // },
 ];
 
 export const editFormSchema: FormSchema[] = [
   {
     field: 'name',
     component: 'Input',
-    label: t('routes.admin.userManagement_name'),
+    label: '姓名',
     required: true,
     labelWidth: 70,
     colProps: {
@@ -135,7 +130,7 @@ export const editFormSchema: FormSchema[] = [
   {
     field: 'userName',
     component: 'Input',
-    label: t('routes.admin.userManagement_userName'),
+    label: '用户名',
     labelWidth: 70,
     required: true,
     colProps: {
@@ -145,7 +140,7 @@ export const editFormSchema: FormSchema[] = [
   {
     field: 'email',
     component: 'Input',
-    label: t('routes.admin.userManagement_email'),
+    label: '邮箱',
     required: true,
     labelWidth: 70,
     colProps: {
@@ -178,13 +173,19 @@ export const editFormSchema: FormSchema[] = [
  * @param params
  * @returns
  */
-export async function getTableListAsync(
-  params: PagedListInput
-): Promise<PagedListOutput | undefined> {
-  // const _userServiceProxy = new UserServiceProxy();
-  // const skipCount = (params.pageIndex - 1) * params.pageSize;
-  // return _userServiceProxy.usersGet(params.filter, '', skipCount, params.pageSize);
-  return null;
+export async function getTableListAsync(params: any): Promise<any | undefined> {
+  const skipCount = (params.page - 1) * params.pageSize;
+  const model = {
+    filter: params.filter,
+    sorting: '',
+    skipCount: skipCount,
+    maxResultCount: params.pageSize,
+  };
+  var result = await getUserPagedList(model);
+  return {
+    total: result.totalCount,
+    items: result.items,
+  };
   //return GetUserListApi(params);
 }
 
@@ -193,18 +194,16 @@ export async function getTableListAsync(
  * @param userId
  * @returns
  */
-export async function getRolesByUserIdAsync(userId: string): Promise<ListOutput> {
-  const _userServiceProxy = new UserServiceProxy();
-  return _userServiceProxy.rolesGet(userId);
+export async function getRolesByUserIdAsync(userId: string): Promise<any> {
+  return await getUserRole(userId);
 }
 
 /**
  * 获取所有角色
  * @returns
  */
-export async function getAllRoleAsync(): Promise<ListOutput> {
-  const _roleServiceProxy = new RoleServiceProxy();
-  return _roleServiceProxy.all();
+export async function getAllRoleAsync(): Promise<any> {
+  return await getRoleListAll();
 }
 
 /**
@@ -220,10 +219,9 @@ export async function createUserAsync({
 }) {
   changeOkLoading(true);
   await validate();
-  const _userServiceProxy = new UserServiceProxy();
-  await _userServiceProxy.usersPost(request);
+  await createUser(request);
   changeOkLoading(false);
-  message.success(t('common.operationSuccess'));
+  message.success('新增成功');
   resetFields();
   closeModal();
 }
@@ -234,11 +232,10 @@ export async function createUserAsync({
  */
 export async function deleteUserAsync({ userId, reload }) {
   try {
-    const _userServiceProxy = new UserServiceProxy();
     openFullLoading();
-    await _userServiceProxy.usersDelete(userId);
+    await deleteUser(userId);
     closeFullLoading();
-    message.success(t('common.operationSuccess'));
+    message.success('删除成功');
     reload();
   } catch (error) {
     closeFullLoading();
@@ -252,10 +249,10 @@ export async function deleteUserAsync({ userId, reload }) {
 export async function updateUserAsync({ request, changeOkLoading, validate, closeModal }) {
   changeOkLoading(true);
   await validate();
-  const _userServiceProxy = new UserServiceProxy();
-  await _userServiceProxy.usersPut(request.userId, request.userInfo);
+
+  await updateUser(request.userId, request.userInfo);
   changeOkLoading(false);
-  message.success(t('common.operationSuccess'));
+  message.success('编辑成功');
   closeModal();
 }
 
@@ -265,6 +262,6 @@ export async function updateUserAsync({ request, changeOkLoading, validate, clos
  * @returns
  */
 export async function lockUserAsync(request: any): Promise<void> {
-  const _userServiceProxy = new UserLookupServiceProxy();
-  await _userServiceProxy.lookup(request.userId);
+  // const _userServiceProxy = new UserLookupServiceProxy();
+  // await _userServiceProxy.lookup(request.userId);
 }

@@ -39,3 +39,30 @@ export interface GetUserInfoModel {
   // 介绍
   desc?: string;
 }
+
+export interface UserPagedListInput {
+  filter?: string;
+}
+
+export interface UserDto {
+  extraProperties: any;
+  id?: string;
+  creationTime?: string;
+  creatorId?: string;
+  lastModificationTime?: string;
+  lastModifierId?: string;
+  isDeleted?: boolean;
+  deleterId?: string;
+  deletionTime?: string;
+  tenantId?: string;
+  userName: string;
+  name: string;
+  surname: string;
+  email: string;
+  emailConfirmed?: boolean;
+  phoneNumber: string;
+  phoneNumberConfirmed?: boolean;
+  lockoutEnabled?: boolean;
+  lockoutEnd: string;
+  concurrencyStamp: string;
+}
