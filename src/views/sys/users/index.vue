@@ -5,6 +5,7 @@
 
       <template #toolbar>
         <a-button type="primary"
+                  v-auth="'AbpIdentity.Users.Create'"
                   @click="openCreateAbpUserModal">新增</a-button>
       </template>
       <template #action="{ record }">
@@ -21,11 +22,13 @@
         <TableAction :actions="[
             {
               icon: 'clarity:note-edit-line',
+              auth:['AbpIdentity.Users.Update'],
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
+              auth:['AbpIdentity.Users.Delete'],
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
@@ -45,25 +48,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
-// import { getBasicColumns, getFormConfig } from './tableData';
-// import { demoListApi } from '/@/api/demo/table';
-import { FormSchema } from '/@/components/Table';
-// import { BasicColumn } from '/@/components/Table';
-import { tableColumns, getTableListAsync, deleteUserAsync } from './index.ts';
+import { tableColumns, getTableListAsync, deleteUserAsync, searchFormSchema } from './index.ts';
 import { useModal } from '/@/components/Modal';
-import CreateAbpUser from './CreateAbpUser.vue';
-import EditAbpUser from './EditAbpUser.vue';
+import CreateAbpUser from './createAbpUser.vue';
+import EditAbpUser from './editAbpUser.vue';
 import { message } from 'ant-design-vue';
-// import { useI18n } from '/@/hooks/web/useI18n';
-import { Tag, Switch, Button } from 'ant-design-vue';
-export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'filter',
-    label: '关键词',
-    component: 'Input',
-    colProps: { span: 6 },
-  },
-];
 
 export default defineComponent({
   components: {
@@ -71,9 +60,6 @@ export default defineComponent({
     TableAction,
     CreateAbpUser,
     EditAbpUser,
-    Tag,
-    Switch,
-    Button,
   },
   setup() {
     const [registerCreateAbpUserModal, { openModal: openCreateAbpUserModal }] = useModal();
@@ -90,7 +76,7 @@ export default defineComponent({
       showTableSetting: true,
       rowSelection: { type: 'checkbox' },
       actionColumn: {
-        width: 200,
+        width: 120,
         title: '操作',
         dataIndex: 'action',
         slots: {
@@ -99,7 +85,6 @@ export default defineComponent({
         fixed: 'right',
       },
     });
-
     // 编辑用户
     const handleEdit = (record: Recordable) => {
       openEditAbpUserModal(true, {

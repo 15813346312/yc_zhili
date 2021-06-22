@@ -18,7 +18,8 @@ const system: AppRouteModule = {
       component: () => import('/@/views/sys/users/index.vue'),
       meta: {
         title: '用户管理',
-        affix: true,
+        // affix: true,
+        roles: ['AbpIdentity.Users'],
         icon: 'ant-design:home-outlined',
       },
     },

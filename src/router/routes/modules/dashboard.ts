@@ -20,7 +20,7 @@ const dashboard: AppRouteModule = {
       meta: {
         affix: true,
         title: t('routes.dashboard.analysis'),
-        roles: ['AbpIdentity.Users'],
+        // roles: ['AbpIdentity.Users'],
       },
     },
     {
@@ -29,7 +29,7 @@ const dashboard: AppRouteModule = {
       component: () => import('/@/views/dashboard/workbench/index.vue'),
       meta: {
         title: t('routes.dashboard.workbench'),
-        roles: ['AbpIdentity.Users'],
+        // roles: ['AbpIdentity.Users'],
       },
     },
   ],

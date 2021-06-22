@@ -11,24 +11,32 @@ export default {
       // The field name of the current page passed to the background
       pageField: 'page',
       // The number field name of each page displayed in the background
-      sizeField: 'pageSize',
+      sizeField: 'maxResultCount',
       // Field name of the form data returned by the interface
       listField: 'items',
       // Total number of tables returned by the interface field name
-      totalField: 'total',
+      totalField: 'totalCount',
     },
+
     // Number of pages that can be selected
-    pageSizeOptions: ['10', '50', '80', '100'],
+    pageSizeOptions: ['20', '50', '100', '200'],
     // Default display quantity on one page
-    defaultPageSize: 10,
+    defaultPageSize: 20,
     // Custom general sort function
     defaultSortFn: (sortInfo: SorterResult) => {
       const { field, order } = sortInfo;
+      var sort = '';
+      if (field != undefined) {
+        sort = field;
+      }
+      if (field != undefined && order != undefined) {
+        sort += order == 'ascend' ? '' : ' desc';
+      }
       return {
         // The sort field passed to the backend you
-        field,
+        sorting: sort,
         // Sorting method passed to the background asc/desc
-        order,
+        // order,
       };
     },
     // Custom general filter function
@@ -40,6 +48,6 @@ export default {
   scrollbar: {
     // Whether to use native scroll bar
     // After opening, the menu, modal, drawer will change the pop-up scroll bar to native
-    native: false,
+    native: true,
   },
 };

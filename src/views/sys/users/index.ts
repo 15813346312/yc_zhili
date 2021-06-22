@@ -17,30 +17,35 @@ export const tableColumns: BasicColumn[] = [
   {
     title: '姓名',
     dataIndex: 'name',
+    sorter: true,
   },
   {
     title: '用户名',
     dataIndex: 'userName',
+    sorter: true,
   },
   {
     title: '邮箱',
     dataIndex: 'email',
+    sorter: true,
   },
   {
     title: '电话',
     dataIndex: 'phoneNumber',
+    sorter: true,
   },
-  {
-    title: '是否锁定',
-    dataIndex: 'lockoutEnabled',
-    slots: { customRender: 'lockoutEnabled' },
-  },
+  // {
+  //   title: '是否锁定',
+  //   dataIndex: 'lockoutEnabled',
+  //   slots: { customRender: 'lockoutEnabled' },
+  // },
   {
     title: '创建时间',
     dataIndex: 'creationTime',
     customRender: ({ text }) => {
       return moment(text).format('YYYY-MM-DD HH:mm');
     },
+    sorter: true,
   },
 ];
 
@@ -174,18 +179,9 @@ export const editFormSchema: FormSchema[] = [
  * @returns
  */
 export async function getTableListAsync(params: any): Promise<any | undefined> {
-  const skipCount = (params.page - 1) * params.pageSize;
-  const model = {
-    filter: params.filter,
-    sorting: '',
-    skipCount: skipCount,
-    maxResultCount: params.pageSize,
-  };
-  var result = await getUserPagedList(model);
-  return {
-    total: result.totalCount,
-    items: result.items,
-  };
+  params.skipCount = (params.page - 1) * params.maxResultCount;
+  var result = await getUserPagedList(params);
+  return result;
   //return GetUserListApi(params);
 }
 

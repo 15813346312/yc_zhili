@@ -19,14 +19,14 @@
             </a-checkbox>
           </a-checkbox-group> -->
 
-          <CheckBoxGroup @change="onRoleSelectedChange"
+          <CheckBoxGroup @change="onRoleSelectedChange($event)"
                          v-model:value="defaultRolesRef">
             <a-row justify="center">
               <a-col :span="24">
                 <Checkbox style="width: 150px"
                           v-for="(item, index) in rolesRef"
                           :key="index"
-                          :value="item.name">{{ item.name }}</Checkbox>
+                          :label="item.name">{{ item.name }}</Checkbox>
               </a-col>
             </a-row>
           </CheckBoxGroup>
@@ -83,11 +83,12 @@ export default defineComponent({
       }
     };
     // 选择角色
-    const onRoleSelectedChange = (value: string[]) => {
-      defaultRolesRef.splice(0, defaultRolesRef.length);
-      value.forEach((e) => {
-        defaultRolesRef.push(e);
-      });
+    const onRoleSelectedChange = (value: any) => {
+      console.log(value);
+      // defaultRolesRef.splice(0, defaultRolesRef.length);
+      // value.forEach((e) => {
+      //   defaultRolesRef.push(e);
+      // });
     };
     // 保存用户
     const submit = async () => {
