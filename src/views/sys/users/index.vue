@@ -76,7 +76,7 @@ export default defineComponent({
       showTableSetting: true,
       rowSelection: { type: 'checkbox' },
       actionColumn: {
-        width: 120,
+        width: 200,
         title: '操作',
         dataIndex: 'action',
         slots: {
@@ -110,6 +110,7 @@ export default defineComponent({
       registerEditAbpUserModal,
       handleEdit,
       handleDelete,
+      reload,
     };
   },
 });

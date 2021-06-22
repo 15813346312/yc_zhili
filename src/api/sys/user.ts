@@ -61,6 +61,7 @@ export function getUserPagedList(params: any, mode: ErrorMessageMode = 'modal') 
  * 用户获取单行
  */
 export function getUser(id: string, mode: ErrorMessageMode = 'modal') {
+  console.log(id);
   return defHttp.get<any>(
     {
       baseURL: globSetting.apiUrl,
@@ -110,7 +111,7 @@ export function createUser(params: any, mode: ErrorMessageMode = 'modal') {
  * 修改用户
  */
 export function updateUser(id: string, params: any, mode: ErrorMessageMode = 'modal') {
-  return defHttp.post<any>(
+  return defHttp.put<any>(
     {
       baseURL: globSetting.apiUrl,
       url: `${Api.BasicUserUrl}/${id}`,

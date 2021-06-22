@@ -5,7 +5,14 @@ import moment from 'moment';
 import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
 // import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
-import { getUserPagedList, getUserRole, createUser, deleteUser, updateUser } from '/@/api/sys/user';
+import {
+  getUserPagedList,
+  getUserRole,
+  createUser,
+  deleteUser,
+  updateUser,
+  getUser,
+} from '/@/api/sys/user';
 import { getRoleListAll } from '/@/api/sys/role';
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
@@ -110,15 +117,15 @@ export const createFormSchema: FormSchema[] = [
       span: 12,
     },
   },
-  // {
-  //   field: 'lockoutEnabled',
-  //   component: 'Switch',
-  //   label: '是否锁定',
-  //   labelWidth: 70,
-  //   colProps: {
-  //     span: 12,
-  //   },
-  // },
+  {
+    field: 'lockoutEnabled',
+    component: 'Switch',
+    label: '是否锁定',
+    labelWidth: 70,
+    colProps: {
+      span: 12,
+    },
+  },
 ];
 
 export const editFormSchema: FormSchema[] = [
@@ -180,7 +187,7 @@ export const editFormSchema: FormSchema[] = [
  */
 export async function getTableListAsync(params: any): Promise<any | undefined> {
   params.skipCount = (params.page - 1) * params.maxResultCount;
-  var result = await getUserPagedList(params);
+  const result = await getUserPagedList(params);
   return result;
   //return GetUserListApi(params);
 }
@@ -246,7 +253,7 @@ export async function updateUserAsync({ request, changeOkLoading, validate, clos
   changeOkLoading(true);
   await validate();
 
-  await updateUser(request.userId, request.userInfo);
+  await updateUser(request.id, request);
   changeOkLoading(false);
   message.success('编辑成功');
   closeModal();
@@ -260,4 +267,9 @@ export async function updateUserAsync({ request, changeOkLoading, validate, clos
 export async function lockUserAsync(request: any): Promise<void> {
   // const _userServiceProxy = new UserLookupServiceProxy();
   // await _userServiceProxy.lookup(request.userId);
+}
+
+export async function getUserAsync(id: string) {
+  console.log(id);
+  return await getUser(id);
 }

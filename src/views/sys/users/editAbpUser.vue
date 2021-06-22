@@ -46,6 +46,7 @@ import {
   getAllRoleAsync,
   updateUserAsync,
   getRolesByUserIdAsync,
+  getUserAsync
 } from './index.ts';
 export default defineComponent({
   name: 'EditAbpUser',
@@ -67,11 +68,14 @@ export default defineComponent({
     });
     let currentUserInfo;
     const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
-      currentUserInfo = data.record;
+      currentUserInfo=data.record
+
       setFieldsValue({
         name: data.record.name,
         userName: data.record.userName,
         email: data.record.email,
+        phoneNumber:data.record.phoneNumber,
+        lockoutEnabled:data.record.lockoutEnabled
       });
     });
     let roles: any = [];
@@ -82,6 +86,8 @@ export default defineComponent({
       if (visible) {
         const roles = await getAllRoleAsync();
         const userRoles = await getRolesByUserIdAsync(currentUserInfo.id as string);
+
+         currentUserInfo=  await getUserAsync(currentUserInfo.id);
         userRoles.items?.forEach((e) => {
           defaultRolesRef.push(e.name as string);
         });
@@ -103,17 +109,11 @@ export default defineComponent({
     const submit = async () => {
       try {
         let request = getFieldsValue();
-        let userInfo: any;
-        request.userId = currentUserInfo.id;
-        userInfo.userName = request.userName;
-        userInfo.name = request.name;
-        userInfo.surname = currentUserInfo.surname;
-        userInfo.email = request.email;
-        userInfo.phoneNumber = currentUserInfo.phoneNumber;
-        userInfo.lockoutEnabled = currentUserInfo.lockoutEnabled;
-        userInfo.concurrencyStamp = currentUserInfo.concurrencyStamp;
-        userInfo.roleNames = defaultRolesRef;
-        request.userInfo = userInfo;
+    console.log('111')
+        request.id=currentUserInfo.id
+        request.surname = currentUserInfo.surname;
+        request.concurrencyStamp = currentUserInfo.concurrencyStamp;
+        request.roleNames = defaultRolesRef;
         await updateUserAsync({ request, changeOkLoading, validate, closeModal });
         ctx.emit('reload');
       } catch (error) {
