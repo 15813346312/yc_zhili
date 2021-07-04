@@ -13,23 +13,23 @@
         </TabPane>
         <TabPane tab="角色"
                  key="2">
-          <!-- <a-checkbox-group @change="onRoleSelectedChange" v-model:value="defaultRolesRef">
-            <a-checkbox v-for="(item, index) in rolesRef" :key="index" :value="item.name">
+          <a-checkbox-group @change="onRoleSelectedChange" v-model:value="defaultRolesRef">
+            <a-checkbox  style="width: 150px" v-for="(item, index) in rolesRef" :key="index" :value="item.name">
               {{ item.name }}
             </a-checkbox>
-          </a-checkbox-group> -->
+          </a-checkbox-group>
 
-          <CheckBoxGroup @change="onRoleSelectedChange($event)"
+          <!-- <a-checkbox-group @change="onRoleSelectedChange()"
                          v-model:value="defaultRolesRef">
             <a-row justify="center">
               <a-col :span="24">
-                <Checkbox style="width: 150px"
+                <a-checkbox style="width: 150px"
                           v-for="(item, index) in rolesRef"
                           :key="index"
-                          :label="item.name">{{ item.name }}</Checkbox>
+                          :value="item.name">{{ item.name }}</a-checkbox>
               </a-col>
             </a-row>
-          </CheckBoxGroup>
+          </a-checkbox-group> -->
         </TabPane>
       </Tabs>
     </div>
@@ -83,12 +83,12 @@ export default defineComponent({
       }
     };
     // 选择角色
-    const onRoleSelectedChange = (value: any) => {
-      console.log(value);
-      // defaultRolesRef.splice(0, defaultRolesRef.length);
-      // value.forEach((e) => {
-      //   defaultRolesRef.push(e);
-      // });
+    const onRoleSelectedChange = (value) => {
+      defaultRolesRef.splice(0, defaultRolesRef.length);
+      value.forEach((e) => {
+        defaultRolesRef.push(e);
+      });
+         console.log(value);
     };
     // 保存用户
     const submit = async () => {

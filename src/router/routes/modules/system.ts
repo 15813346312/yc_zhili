@@ -23,6 +23,17 @@ const system: AppRouteModule = {
         icon: 'ant-design:home-outlined',
       },
     },
+    {
+      path: 'roles',
+      name: 'Roles',
+      component: () => import('/@/views/sys/roles/index.vue'),
+      meta: {
+        title: '角色管理',
+        // affix: true,
+        roles: ['AbpIdentity.Roles'],
+        icon: 'ant-design:home-outlined',
+      },
+    },
   ],
 };
 

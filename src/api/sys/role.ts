@@ -92,11 +92,11 @@ export function createRole(params: any, mode: ErrorMessageMode = 'modal') {
  * @description: updateRole
  * 修改
  */
-export function updateRole(params: any, mode: ErrorMessageMode = 'modal') {
-  return defHttp.post<any>(
+export function updateRole(id: string, params: any, mode: ErrorMessageMode = 'modal') {
+  return defHttp.put<any>(
     {
       baseURL: globSetting.apiUrl,
-      url: `${Api.BasicUrl}/${params.id}`,
+      url: `${Api.BasicUrl}/${id}`,
       params,
     },
     {

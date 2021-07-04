@@ -1,35 +1,17 @@
 <template>
-  <BasicModal title="编辑用户"
-              :canFullscreen="false"
-              @ok="submit"
-              @register="registerModal"
-              @visible-change="visibleChange"
-              :bodyStyle="{ 'padding-top': '0' }">
+  <BasicModal title="编辑用户" :canFullscreen="false" @ok="submit" @register="registerModal" @visible-change="visibleChange" :bodyStyle="{ 'padding-top': '0' }">
     <div>
       <Tabs>
-        <TabPane tab="用户信息"
-                 key="1">
+        <TabPane tab="用户信息" key="1">
           <BasicForm @register="registerUserForm" />
         </TabPane>
-        <TabPane tab="角色"
-                 key="2">
-          <!-- <a-checkbox-group @change="onRoleSelectedChange" v-model:value="defaultRolesRef">
+        <TabPane tab="角色" key="2">
+          <a-checkbox-group @change="onRoleSelectedChange" v-model:value="defaultRolesRef">
             <a-checkbox v-for="(item, index) in rolesRef" :key="index" :value="item.name">
               {{ item.name }}
             </a-checkbox>
-          </a-checkbox-group> -->
+          </a-checkbox-group>
 
-          <CheckboxGroup v-model:value="defaultRolesRef"
-                         @change="onRoleSelectedChange">
-            <a-row justify="center">
-              <a-col :span="24">
-                <Checkbox style="width: 150px"
-                          v-for="(item, index) in rolesRef"
-                          :key="index"
-                          :value="item.name">{{ item.name }}</Checkbox>
-              </a-col>
-            </a-row>
-          </CheckboxGroup>
         </TabPane>
       </Tabs>
     </div>
@@ -46,7 +28,7 @@ import {
   getAllRoleAsync,
   updateUserAsync,
   getRolesByUserIdAsync,
-  getUserAsync
+  getUserAsync,
 } from './index.ts';
 export default defineComponent({
   name: 'EditAbpUser',
@@ -68,14 +50,14 @@ export default defineComponent({
     });
     let currentUserInfo;
     const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
-      currentUserInfo=data.record
+      currentUserInfo = data.record;
 
       setFieldsValue({
         name: data.record.name,
         userName: data.record.userName,
         email: data.record.email,
-        phoneNumber:data.record.phoneNumber,
-        lockoutEnabled:data.record.lockoutEnabled
+        phoneNumber: data.record.phoneNumber,
+        lockoutEnabled: data.record.lockoutEnabled,
       });
     });
     let roles: any = [];
@@ -87,7 +69,7 @@ export default defineComponent({
         const roles = await getAllRoleAsync();
         const userRoles = await getRolesByUserIdAsync(currentUserInfo.id as string);
 
-         currentUserInfo=  await getUserAsync(currentUserInfo.id);
+        currentUserInfo = await getUserAsync(currentUserInfo.id);
         userRoles.items?.forEach((e) => {
           defaultRolesRef.push(e.name as string);
         });
@@ -109,8 +91,8 @@ export default defineComponent({
     const submit = async () => {
       try {
         let request = getFieldsValue();
-    console.log('111')
-        request.id=currentUserInfo.id
+        console.log('111');
+        request.id = currentUserInfo.id;
         request.surname = currentUserInfo.surname;
         request.concurrencyStamp = currentUserInfo.concurrencyStamp;
         request.roleNames = defaultRolesRef;

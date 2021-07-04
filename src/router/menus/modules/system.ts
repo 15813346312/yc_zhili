@@ -10,6 +10,10 @@ const system: MenuModule = {
         path: 'users',
         name: '用户管理',
       },
+      {
+        path: 'roles',
+        name: '角色管理',
+      },
     ],
   },
 };
