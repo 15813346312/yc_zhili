@@ -1,6 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting/index';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
+import qs from 'qs';
 const globSetting = useGlobSetting();
 enum Api {
   BasicUrl = '/api/permission-management/permissions',
@@ -37,11 +38,13 @@ export function updatePermissions(
   param: any,
   mode: ErrorMessageMode = 'modal'
 ) {
+  console.log('1222');
+
   return defHttp.put<any>(
     {
       baseURL: globSetting.apiUrl,
       url: `${Api.BasicUrl}?providerName=${providerName}&providerKey=${providerKey}`,
-      data: param,
+      param,
     },
     {
       errorMessageMode: mode,

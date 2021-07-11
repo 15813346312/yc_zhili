@@ -42,6 +42,7 @@ export default defineComponent({
   setup() {
     var providerName: string = ''; //R or U
     var providerKey: string = '';
+    const permissionsArr :any=[]
     // let roleName: string = '';
     const { t } = useI18n();
     const [registerDrawer, { closeDrawer, setDrawerProps }] = useDrawerInner(async (data) => {
@@ -71,7 +72,18 @@ export default defineComponent({
       const permissions = await getPermissionsList(providerName, providerKey);
       totalRolePermissionsRef.push(...(permissions.groups as []));
       allPermissionsRef.push(...(permissions.groups as []));
-      getTree().setCheckedKeys(permissions.isGranted as []);
+
+      const checkArr:any=[]
+      permissions.groups.forEach(item => {
+          item.permissions.forEach(cItem => {
+            if(cItem.isGranted)
+            {
+              checkArr.push(cItem.name)
+            }
+            permissionsArr.push(cItem)
+          });
+      });
+      getTree().setCheckedKeys(checkArr as []);
       setDrawerProps({ loading: false });
     };
     const submitRolePermisstionAsync = async () => {
@@ -81,7 +93,20 @@ export default defineComponent({
 
       const keys = toRaw(getTree().getCheckedKeys()) as [];
       request=keys
-      console.log(request)
+
+      // request.forEach(item => {
+      //   var  row= permissionsArr.find(r=>r.name===item)
+
+
+      // });
+      permissionsArr.forEach(item => {
+           var  row= request.find(r=>r==item.name)
+           if(row){
+             item.isGranted=true
+           }
+      });
+      console.log(permissionsArr)
+
       // const noSelectedPermissions = totalRolePermissionsRef.filter((e) => {
       //   return !(keys.indexOf(e) > -1);
       // });
@@ -104,7 +129,7 @@ export default defineComponent({
       // request = permisstions;
       try {
         openFullLoading();
-        await updatePermissions(providerName, providerKey, request);
+        await updatePermissions(providerName, providerKey, {'permissions':permissionsArr});
         message.success(t('common.operationSuccess'));
         closeFullLoading();
         closeDrawer();

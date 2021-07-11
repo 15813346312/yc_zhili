@@ -126,7 +126,7 @@ export default defineComponent({
     const openPermissions=(record:recordable)=>{
 
         openPermissionsModal(true,{
-          name:'R',key:record.id
+          name:'R',key:record.name
         });
     };
     // 删除用户
