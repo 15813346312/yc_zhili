@@ -141,7 +141,7 @@ export default defineComponent({
         openFullLoading();
 
         await updatePermissions(providerName, providerKey, { permissions: permisstions });
-        message.success('保存成功');
+        message.success('编辑成功');
         closeFullLoading();
         closeDrawer();
       } catch (error) {
