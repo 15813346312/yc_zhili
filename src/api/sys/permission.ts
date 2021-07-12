@@ -15,9 +15,6 @@ export function getPermissionsList(
   providerKey: string,
   mode: ErrorMessageMode = 'modal'
 ) {
-  console.log(providerName);
-  console.log(providerKey);
-
   return defHttp.get<any>(
     {
       baseURL: globSetting.apiUrl,
@@ -35,16 +32,14 @@ export function getPermissionsList(
 export function updatePermissions(
   providerName: string,
   providerKey: string,
-  param: any,
+  params: any,
   mode: ErrorMessageMode = 'modal'
 ) {
-  console.log('1222');
-
   return defHttp.put<any>(
     {
       baseURL: globSetting.apiUrl,
       url: `${Api.BasicUrl}?providerName=${providerName}&providerKey=${providerKey}`,
-      param,
+      params,
     },
     {
       errorMessageMode: mode,

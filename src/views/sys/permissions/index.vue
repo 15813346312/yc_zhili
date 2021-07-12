@@ -1,6 +1,12 @@
 <template>
-  <BasicDrawer @register="registerDrawer" title="权限" width="20%">
-    <BasicTree :treeData="allPermissionsRef" v-model="totalRolePermissionsRef" :replaceFields="{children:'permissions',title:'displayName',key:'name'}" checkable ref="treeRef" />
+  <BasicDrawer @register="registerDrawer"
+               title="权限"
+               width="20%">
+    <BasicTree :treeData="allPermissionsRef"
+               v-model="totalRolePermissionsRef"
+               :replaceFields="{children:'permissions',title:'displayName',key:'name'}"
+               checkable
+               ref="treeRef" />
     <div :style="{
         position: 'absolute',
         right: 0,
@@ -12,9 +18,11 @@
         textAlign: 'right',
         zIndex: 1,
       }">
-      <a-button :style="{ marginRight: '8px' }" @click="closeDrawer">{{ t('common.cancelText') }}
+      <a-button :style="{ marginRight: '8px' }"
+                @click="closeDrawer">{{ t('common.cancelText') }}
       </a-button>
-      <a-button type="primary" @click="submitRolePermisstionAsync">
+      <a-button type="primary"
+                @click="submitRolePermisstionAsync">
         {{ t('common.saveText') }}
       </a-button>
     </div>
@@ -42,14 +50,14 @@ export default defineComponent({
   setup() {
     var providerName: string = ''; //R or U
     var providerKey: string = '';
-    const permissionsArr :any=[]
+    let permissionsArr: any = [];
     // let roleName: string = '';
     const { t } = useI18n();
     const [registerDrawer, { closeDrawer, setDrawerProps }] = useDrawerInner(async (data) => {
-      providerKey =data.key;
+      providerKey = data.key;
       providerName = data.name;
 
-      await getRolePermissions (providerName, providerKey);
+      await getRolePermissions(providerName, providerKey);
       //loading.value = false;
     });
     const treeRef = ref<Nullable<TreeActionType>>(null);
@@ -69,19 +77,18 @@ export default defineComponent({
       setDrawerProps({ loading: true });
       totalRolePermissionsRef.splice(0, totalRolePermissionsRef.length);
       allPermissionsRef.splice(0, allPermissionsRef.length);
-      const permissions = await getPermissionsList(providerName, providerKey);
+      let permissions = await getPermissionsList(providerName, providerKey);
       totalRolePermissionsRef.push(...(permissions.groups as []));
       allPermissionsRef.push(...(permissions.groups as []));
-
-      const checkArr:any=[]
-      permissions.groups.forEach(item => {
-          item.permissions.forEach(cItem => {
-            if(cItem.isGranted)
-            {
-              checkArr.push(cItem.name)
-            }
-            permissionsArr.push(cItem)
-          });
+      permissionsArr = [];
+      let checkArr: any = [];
+      permissions.groups.forEach((item) => {
+        item.permissions.forEach((cItem) => {
+          if (cItem.isGranted) {
+            checkArr.push(cItem.name);
+          }
+          permissionsArr.push(cItem);
+        });
       });
       getTree().setCheckedKeys(checkArr as []);
       setDrawerProps({ loading: false });
@@ -91,21 +98,24 @@ export default defineComponent({
 
       let permisstions: any = [];
 
-      const keys = toRaw(getTree().getCheckedKeys()) as [];
-      request=keys
+      let keys = toRaw(getTree().getCheckedKeys()) as [];
+      request = keys;
 
       // request.forEach(item => {
       //   var  row= permissionsArr.find(r=>r.name===item)
 
-
       // });
-      permissionsArr.forEach(item => {
-           var  row= request.find(r=>r==item.name)
-           if(row){
-             item.isGranted=true
-           }
+      permissionsArr.forEach((item) => {
+        var row = request.find((r) => r == item.name);
+        if (row) {
+          item.isGranted = true;
+        }
+        permisstions.push({
+          name: item.name,
+          isGranted: item.isGranted,
+        });
       });
-      console.log(permissionsArr)
+      console.log(permisstions);
 
       // const noSelectedPermissions = totalRolePermissionsRef.filter((e) => {
       //   return !(keys.indexOf(e) > -1);
@@ -129,7 +139,8 @@ export default defineComponent({
       // request = permisstions;
       try {
         openFullLoading();
-        await updatePermissions(providerName, providerKey, {'permissions':permissionsArr});
+
+        await updatePermissions(providerName, providerKey, { permissions: permisstions });
         message.success(t('common.operationSuccess'));
         closeFullLoading();
         closeDrawer();

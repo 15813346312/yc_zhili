@@ -4,21 +4,27 @@
       <template #form-custom> custom-slot </template>
 
       <template #toolbar>
-        <a-button type="primary" v-auth="'AbpIdentity.Roles.Create'" @click="openCreateAbpRoleModal">新增</a-button>
+        <a-button type="primary"
+                  v-auth="'AbpIdentity.Roles.Create'"
+                  @click="openCreateAbpRoleModal">新增</a-button>
       </template>
       <template #isDefault="{ record }">
-        <a-tag color="green" v-if="record.isDefault">
+        <a-tag color="green"
+               v-if="record.isDefault">
           是
         </a-tag>
-        <a-tag color="red" v-else>
+        <a-tag color="red"
+               v-else>
           否
         </a-tag>
       </template>
       <template #isPublic="{ record }">
-        <a-tag color="green" v-if="record.isPublic">
+        <a-tag color="green"
+               v-if="record.isPublic">
           是
         </a-tag>
-        <a-tag color="red" v-else>
+        <a-tag color="red"
+               v-else>
           否
         </a-tag>
       </template>
@@ -48,8 +54,8 @@
               onClick: handleEdit.bind(null, record),
             },
               {
-              icon: 'clarity:note-edit-line',
-              auth:['AbpIdentity.Roles.Update'],
+              icon: 'cluster',
+              auth:['AbpIdentity.Roles.ManagePermissions'],
               onClick: openPermissions.bind(null, record),
             },
             {
@@ -65,9 +71,14 @@
           ]" />
       </template>
     </BasicTable>
-    <CreateAbpRole @register="registerCreateAbpRoleModal" @reload="reload" :bodyStyle="{ 'padding-top': '0' }" />
-    <EditAbpRole @register="registerEditAbpRoleModal" @reload="reload" :bodyStyle="{ 'padding-top': '0' }" />
-     <Permissions @register="registerPermissionsModal" @reload="reload"  />
+    <CreateAbpRole @register="registerCreateAbpRoleModal"
+                   @reload="reload"
+                   :bodyStyle="{ 'padding-top': '0' }" />
+    <EditAbpRole @register="registerEditAbpRoleModal"
+                 @reload="reload"
+                 :bodyStyle="{ 'padding-top': '0' }" />
+    <Permissions @register="registerPermissionsModal"
+                 @reload="reload" />
   </div>
 </template>
 <script lang="ts">
@@ -77,25 +88,22 @@ import { tableColumns, getTableListAsync, deleteRoleAsync, searchFormSchema } fr
 import { useModal } from '/@/components/Modal';
 import CreateAbpRole from './createAbpRole.vue';
 import EditAbpRole from './editAbpRole.vue';
-import Permissions from '/@/views/sys/permissions/index.vue'
+import Permissions from '/@/views/sys/permissions/index.vue';
 import { message } from 'ant-design-vue';
- import { useDrawer } from '/@/components/Drawer';
+import { useDrawer } from '/@/components/Drawer';
 export default defineComponent({
   components: {
     BasicTable,
     TableAction,
     CreateAbpRole,
     EditAbpRole,
-    Permissions
+    Permissions,
   },
   setup() {
     const [registerCreateAbpRoleModal, { openModal: openCreateAbpRoleModal }] = useModal();
     const [registerEditAbpRoleModal, { openModal: openEditAbpRoleModal }] = useModal();
     // const [registerPermissionsModal, { openModal: openPermissionsModal }] = useModal();
- const [
-        registerPermissionsModal,
-        { openDrawer: openPermissionsModal },
-      ] = useDrawer();
+    const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '',
       api: getTableListAsync,
@@ -123,11 +131,11 @@ export default defineComponent({
         record: record,
       });
     };
-    const openPermissions=(record:recordable)=>{
-
-        openPermissionsModal(true,{
-          name:'R',key:record.name
-        });
+    const openPermissions = (record: recordable) => {
+      openPermissionsModal(true, {
+        name: 'R',
+        key: record.name,
+      });
     };
     // 删除用户
     const handleDelete = async (record: Recordable) => {
@@ -150,7 +158,7 @@ export default defineComponent({
       registerPermissionsModal,
       handleDelete,
       reload,
-      openPermissions
+      openPermissions,
     };
   },
 });

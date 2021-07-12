@@ -25,6 +25,11 @@
               auth:['AbpIdentity.Users.Update'],
               onClick: handleEdit.bind(null, record),
             },
+                    {
+              icon: 'unordered-list',
+              auth:['AbpIdentity.Users.ManagePermissions'],
+              onClick: openPermissions.bind(null, record),
+            },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
@@ -43,6 +48,8 @@
     <EditAbpUser @register="registerEditAbpUserModal"
                  @reload="reload"
                  :bodyStyle="{ 'padding-top': '0' }" />
+    <Permissions @register="registerPermissionsModal"
+                 @reload="reload" />
   </div>
 </template>
 <script lang="ts">
@@ -53,17 +60,20 @@ import { useModal } from '/@/components/Modal';
 import CreateAbpUser from './createAbpUser.vue';
 import EditAbpUser from './editAbpUser.vue';
 import { message } from 'ant-design-vue';
-
+import Permissions from '/@/views/sys/permissions/index.vue';
+import { useDrawer } from '/@/components/Drawer';
 export default defineComponent({
   components: {
     BasicTable,
     TableAction,
     CreateAbpUser,
     EditAbpUser,
+    Permissions,
   },
   setup() {
     const [registerCreateAbpUserModal, { openModal: openCreateAbpUserModal }] = useModal();
     const [registerEditAbpUserModal, { openModal: openEditAbpUserModal }] = useModal();
+    const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '',
       api: getTableListAsync,
@@ -100,6 +110,12 @@ export default defineComponent({
       await deleteUserAsync({ userId: record.id, reload });
     };
 
+    const openPermissions = (record: recordable) => {
+      openPermissionsModal(true, {
+        name: 'U',
+        key: record.id,
+      });
+    };
     // function getFormValues() {
     //   console.log(reload ().getFieldsValue());
     // }
@@ -111,6 +127,8 @@ export default defineComponent({
       handleEdit,
       handleDelete,
       reload,
+      registerPermissionsModal,
+      openPermissions,
     };
   },
 });
