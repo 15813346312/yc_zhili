@@ -34,6 +34,28 @@ const system: AppRouteModule = {
         icon: 'ant-design:home-outlined',
       },
     },
+    {
+      path: 'tenants',
+      name: 'Tenants',
+      component: () => import('/@/views/sys/tenants/index.vue'),
+      meta: {
+        title: '租户管理',
+        // affix: true,
+        roles: ['AbpTenantManagement.Tenants'],
+        icon: 'ant-design:home-outlined',
+      },
+    },
+    {
+      path: 'settings',
+      name: 'Settings',
+      component: () => import('/@/views/sys/settings/index.vue'),
+      meta: {
+        title: '基础设置',
+        // affix: true,
+        roles: ['EasyAbp.Abp.SettingUi.ShowSettingPage'],
+        icon: 'ant-design:home-outlined',
+      },
+    },
   ],
 };
 

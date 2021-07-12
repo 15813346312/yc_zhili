@@ -21,17 +21,17 @@
         </a-button> -->
         <TableAction :actions="[
             {
-              icon: 'clarity:note-edit-line',
+              label:'编辑',
               auth:['AbpIdentity.Users.Update'],
               onClick: handleEdit.bind(null, record),
             },
-                    {
-              icon: 'unordered-list',
+             {
+              label:'权限',
               auth:['AbpIdentity.Users.ManagePermissions'],
               onClick: openPermissions.bind(null, record),
             },
             {
-              icon: 'ant-design:delete-outlined',
+              label:'删除',
               color: 'error',
               auth:['AbpIdentity.Users.Delete'],
               popConfirm: {

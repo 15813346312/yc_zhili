@@ -14,6 +14,14 @@ const system: MenuModule = {
         path: 'roles',
         name: '角色管理',
       },
+      {
+        path: 'tenants',
+        name: '租户管理',
+      },
+      {
+        path: 'settings',
+        name: '基础设置',
+      },
     ],
   },
 };

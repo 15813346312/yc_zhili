@@ -132,6 +132,8 @@ const transform: AxiosTransform = {
     errorLogStore.addAjaxErrorInfo(error);
     const { response } = error || {};
     const msg = response.data.error_description ? response.data.error_description : '';
+    console.log('返回的错误');
+    console.log(response);
     checkStatus(response.status, msg);
     return Promise.reject(error);
   },

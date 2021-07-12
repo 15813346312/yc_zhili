@@ -115,7 +115,7 @@ export default defineComponent({
           isGranted: item.isGranted,
         });
       });
-      console.log(permisstions);
+      // console.log(permisstions);
 
       // const noSelectedPermissions = totalRolePermissionsRef.filter((e) => {
       //   return !(keys.indexOf(e) > -1);
@@ -141,7 +141,7 @@ export default defineComponent({
         openFullLoading();
 
         await updatePermissions(providerName, providerKey, { permissions: permisstions });
-        message.success(t('common.operationSuccess'));
+        message.success('保存成功');
         closeFullLoading();
         closeDrawer();
       } catch (error) {
