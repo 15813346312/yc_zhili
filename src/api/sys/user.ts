@@ -16,10 +16,11 @@ enum Api {
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
   // console.log(globSetting.authUrl);
   // console.log(globSetting.apiUrl);
+
   return defHttp.post<any>(
     {
       baseURL: globSetting.authUrl,
-      url: Api.Login,
+      url: `${Api.Login}?__tenant=${params.tenant}`,
       params,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',

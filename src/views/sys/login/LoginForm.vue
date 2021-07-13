@@ -7,6 +7,12 @@
         ref="formRef"
         v-show="getShow"
         @keypress.enter="handleLogin">
+    <FormItem name="tenant"
+              class="enter-x">
+      <Input size="large"
+             v-model:value="formData.tenant"
+             placeholder="请输入租户名称(选填)" />
+    </FormItem>
     <FormItem name="account"
               class="enter-x">
       <Input size="large"
@@ -146,6 +152,7 @@ export default defineComponent({
     const rememberMe = ref(false);
 
     const formData = reactive({
+      tenant: '',
       account: 'admin',
       password: '1q2w3E*',
     });
@@ -163,6 +170,7 @@ export default defineComponent({
         loading.value = true;
         const userInfo = await userStore.login(
           toRaw({
+            tenant: data.tenant,
             password: data.password,
             username: data.account,
             client_id: 'basic-web',
