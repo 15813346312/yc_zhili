@@ -29,7 +29,11 @@
         </a-tag>
       </template> -->
 
-
+      <!-- {
+             label:'连接字符串',
+              auth:['AbpTenantManagement.Tenants.ManageConnectionStrings'],
+              onClick: openPermissions.bind(null, record),
+            }, -->
       <template #action="{ record }">
 
         <TableAction :actions="[
@@ -38,11 +42,7 @@
               auth:['AbpTenantManagement.Tenants.Update'],
               onClick: handleEdit.bind(null, record),
             },
-              {
-             label:'权限',
-              auth:['AbpTenantManagement.Tenants.ManagePermissions'],
-              onClick: openPermissions.bind(null, record),
-            },
+
             {
              label:'删除',
               color: 'error',
@@ -56,13 +56,13 @@
           ]" />
       </template>
     </BasicTable>
-   <CreateAbpTenant @register="registerCreateAbpTenantModal"
+    <CreateAbpTenant @register="registerCreateAbpTenantModal"
+                     @reload="reload"
+                     :bodyStyle="{ 'padding-top': '0' }" />
+    <EditAbpTenant @register="registerEditAbpTenantModal"
                    @reload="reload"
                    :bodyStyle="{ 'padding-top': '0' }" />
-    <!--  <EditAbpTenant @register="registerEditAbpTenantModal"
-                 @reload="reload"
-                 :bodyStyle="{ 'padding-top': '0' }" />
-    <Permissions @register="registerPermissionsModal"
+    <!-- <Permissions @register="registerPermissionsModal"
                  @reload="reload" /> -->
   </div>
 </template>
@@ -72,7 +72,7 @@ import { BasicTable, useTable, TableAction } from '/@/components/Table';
 import { tableColumns, getTableListAsync, deleteTenantAsync, searchFormSchema } from './index.ts';
 import { useModal } from '/@/components/Modal';
 import CreateAbpTenant from './createAbpTenant.vue';
-// import EditAbpTenant from './editAbpTenant.vue';
+import EditAbpTenant from './editAbpTenant.vue';
 // import Permissions from '/@/views/sys/permissions/index.vue';
 import { message } from 'ant-design-vue';
 export default defineComponent({
@@ -80,12 +80,12 @@ export default defineComponent({
     BasicTable,
     TableAction,
     CreateAbpTenant,
-    // EditAbpTenant,
+    EditAbpTenant,
     // Permissions,
   },
   setup() {
     const [registerCreateAbpTenantModal, { openModal: openCreateAbpTenantModal }] = useModal();
-    // const [registerEditAbpTenantModal, { openModal: openEditAbpTenantModal }] = useModal();
+    const [registerEditAbpTenantModal, { openModal: openEditAbpTenantModal }] = useModal();
 
     // const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
@@ -111,9 +111,9 @@ export default defineComponent({
     });
     // 编辑用户
     const handleEdit = (record: Recordable) => {
-      // openEditAbpTenantModal(true, {
-      //   record: record,
-      // });
+      openEditAbpTenantModal(true, {
+        record: record,
+      });
     };
     const openPermissions = (record: recordable) => {
       // openPermissionsModal(true, {
@@ -137,7 +137,7 @@ export default defineComponent({
       registerTable,
       registerCreateAbpTenantModal,
       openCreateAbpTenantModal,
-      // registerEditAbpTenantModal,
+      registerEditAbpTenantModal,
       handleEdit,
       // registerPermissionsModal,
       handleDelete,
