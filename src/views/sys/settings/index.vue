@@ -3,15 +3,15 @@
   <ScrollContainer>
     <div ref="wrapperRef"
          :class="prefixCls">
-      <Tabs tab-position="left"
-            :tabBarStyle="tabBarStyle">
+      <a-tabs tab-position="left"
+              :tabBarStyle="tabBarStyle">
         <template v-for="item in settingList"
                   :key="item.key">
-          <TabPane :tab="item.name">
+          <a-tab-pane :tab="item.name">
             <component :is="item.component" />
-          </TabPane>
+          </a-tab-pane>
         </template>
-      </Tabs>
+      </a-tabs>
     </div>
   </ScrollContainer>
 
@@ -19,21 +19,38 @@
 
 <script lang="ts">
 const settingList: any = [
-  { key: '1', name: '本地化', component: 'test' },
-  { key: '2', name: '密码', component: 'test' },
-  { key: '3', name: '邮件', component: 'test' },
+  { key: '1', name: '本地化', component: 'Localization' },
+  { key: '2', name: '密码', component: 'PassWordSetting' },
+  { key: '3', name: '邮件', component: 'EmailSetting' },
+  { key: '4', name: '短信', component: 'MessageSetting' },
+  { key: '5', name: '微信小程序', component: 'WechatMiniProgramsSetting' },
+  { key: '6', name: '文件存储', component: 'FileStore' },
 ];
 import { defineComponent } from 'vue';
-import { Tabs } from 'ant-design-vue';
 import { ScrollContainer } from '/@/components/Container/index';
+import FileStore from './center/fileStore.vue';
+import Localization from './center/localization.vue';
+import PassWordSetting from './center/passWordSetting.vue';
+import EmailSetting from './center/emailSetting.vue';
+import MessageSetting from './center/messageSetting.vue';
+import WechatMiniProgramsSetting from './center/wechatMiniProgramsSetting.vue';
+
 export default defineComponent({
-  components: { ScrollContainer, Tabs },
+  components: {
+    ScrollContainer,
+    FileStore,
+    Localization,
+    PassWordSetting,
+    EmailSetting,
+    MessageSetting,
+    WechatMiniProgramsSetting,
+  },
   setup() {
     return {
       prefixCls: 'account-setting',
       settingList,
       tabBarStyle: {
-        width: '220px',
+        width: '120px',
       },
     };
   },
