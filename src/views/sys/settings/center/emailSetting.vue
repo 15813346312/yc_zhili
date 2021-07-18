@@ -8,6 +8,9 @@
 import { CollapseContainer } from '/@/components/Container';
 export default {
   components: { CollapseContainer },
+  setup(){
+
+  }
 }
 </script>
 

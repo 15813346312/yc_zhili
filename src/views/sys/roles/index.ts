@@ -69,7 +69,7 @@ export const createFormSchema: FormSchema[] = [
     required: true,
     labelWidth: 70,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -78,7 +78,7 @@ export const createFormSchema: FormSchema[] = [
     label: '是否默认',
     labelWidth: 70,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -87,7 +87,7 @@ export const createFormSchema: FormSchema[] = [
     label: '是否公共',
     labelWidth: 70,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
 ];
@@ -100,7 +100,7 @@ export const editFormSchema: FormSchema[] = [
     required: true,
     labelWidth: 70,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -109,7 +109,7 @@ export const editFormSchema: FormSchema[] = [
     label: '是否默认',
     labelWidth: 70,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -118,7 +118,7 @@ export const editFormSchema: FormSchema[] = [
     label: '是否公共',
     labelWidth: 70,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
 ];

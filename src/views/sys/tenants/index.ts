@@ -43,7 +43,7 @@ export const createFormSchema: FormSchema[] = [
     required: true,
     labelWidth: 100,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -53,7 +53,7 @@ export const createFormSchema: FormSchema[] = [
     required: true,
     labelWidth: 100,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
   {
@@ -63,7 +63,7 @@ export const createFormSchema: FormSchema[] = [
     required: true,
     labelWidth: 100,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
 ];
@@ -76,7 +76,7 @@ export const editFormSchema: FormSchema[] = [
     required: true,
     labelWidth: 70,
     colProps: {
-      span: 12,
+      span: 24,
     },
   },
 ];

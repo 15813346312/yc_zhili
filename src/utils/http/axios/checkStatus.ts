@@ -15,7 +15,7 @@ export function checkStatus(status: number, msg: any): void {
   const userStore = useUserStoreWidthOut();
   switch (status) {
     case 400:
-      error(`${msg}`);
+      error(`${msg.error_description}`);
       break;
     case 401:
       error(t('sys.api.errMsg401'));
@@ -23,35 +23,35 @@ export function checkStatus(status: number, msg: any): void {
       userStore.setSessionTimeout(true);
       break;
     case 403:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     // 404请求不存在
     case 404:
       error(`未找到服务`);
       break;
     case 405:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     case 408:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     case 500:
       error(`${msg}`);
       break;
     case 501:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     case 502:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     case 503:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     case 504:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     case 505:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     default:
   }

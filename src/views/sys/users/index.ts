@@ -180,6 +180,29 @@ export const editFormSchema: FormSchema[] = [
   },
 ];
 
+export const reSetFormSchema: FormSchema[] = [
+  {
+    field: 'password',
+    component: 'InputPassword',
+    label: '密码',
+    required: true,
+    labelWidth: 70,
+    colProps: {
+      span: 24,
+    },
+  },
+  {
+    field: 'confirmPassword',
+    component: 'InputPassword',
+    label: '确认密码',
+    required: true,
+    labelWidth: 70,
+    colProps: {
+      span: 24,
+    },
+  },
+];
+
 /**
  * 分页列表
  * @param params

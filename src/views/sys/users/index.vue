@@ -25,6 +25,11 @@
               auth:['AbpIdentity.Users.Update'],
               onClick: handleEdit.bind(null, record),
             },
+              {
+              label:'修改密码',
+              auth:['AbpIdentity.Users.Update'],
+              onClick: handleReSet.bind(null, record),
+            },
              {
               label:'权限',
               auth:['AbpIdentity.Users.ManagePermissions'],
@@ -50,6 +55,10 @@
                  :bodyStyle="{ 'padding-top': '0' }" />
     <Permissions @register="registerPermissionsModal"
                  @reload="reload" />
+
+      <ReSetPassWord @register="registerReSetPassWordModal"
+                 @reload="reload"
+                 :bodyStyle="{ 'padding-top': '0' }" />
   </div>
 </template>
 <script lang="ts">
@@ -59,6 +68,8 @@ import { tableColumns, getTableListAsync, deleteUserAsync, searchFormSchema } fr
 import { useModal } from '/@/components/Modal';
 import CreateAbpUser from './createAbpUser.vue';
 import EditAbpUser from './editAbpUser.vue';
+import ReSetPassWord from './reSetPassWord.vue';
+
 import { message } from 'ant-design-vue';
 import Permissions from '/@/views/sys/permissions/index.vue';
 import { useDrawer } from '/@/components/Drawer';
@@ -69,10 +80,13 @@ export default defineComponent({
     CreateAbpUser,
     EditAbpUser,
     Permissions,
+    ReSetPassWord
   },
   setup() {
     const [registerCreateAbpUserModal, { openModal: openCreateAbpUserModal }] = useModal();
     const [registerEditAbpUserModal, { openModal: openEditAbpUserModal }] = useModal();
+    const [registerReSetPassWordModal, { openModal: openReSetPassWordModal }] = useModal();
+
     const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '',
@@ -101,6 +115,12 @@ export default defineComponent({
         record: record,
       });
     };
+
+    const handleReSet=(record:Recordable)=>{
+      openReSetPassWordModal(true,{
+        record: record,
+      })
+    }
     // 删除用户
     const handleDelete = async (record: Recordable) => {
       if (record.name == 'admin') {
@@ -127,7 +147,9 @@ export default defineComponent({
       handleEdit,
       handleDelete,
       reload,
+      handleReSet,
       registerPermissionsModal,
+      registerReSetPassWordModal,
       openPermissions,
     };
   },
