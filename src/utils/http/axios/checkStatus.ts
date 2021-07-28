@@ -36,7 +36,7 @@ export function checkStatus(status: number, msg: any): void {
       error(`${msg.error.message}`);
       break;
     case 500:
-      error(`${msg}`);
+      error(`${msg.error.message}`);
       break;
     case 501:
       error(`${msg.error.message}`);

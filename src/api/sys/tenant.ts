@@ -3,7 +3,7 @@ import { useGlobSetting } from '/@/hooks/setting/index';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 const globSetting = useGlobSetting();
 enum Api {
-  BasicUrl = '/api/multi-tenancy/tenants',
+  BasicUrl = '/api/tenant-management/tenants',
 }
 
 /**
