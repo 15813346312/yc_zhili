@@ -116,7 +116,7 @@ export default defineComponent({
       showTableSetting: true,
       rowSelection: { type: 'checkbox' },
       actionColumn: {
-        width: 200,
+        width: 230,
         title: '操作',
         dataIndex: 'action',
         slots: {

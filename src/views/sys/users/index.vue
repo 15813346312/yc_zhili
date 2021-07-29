@@ -56,9 +56,9 @@
     <Permissions @register="registerPermissionsModal"
                  @reload="reload" />
 
-      <ReSetPassWord @register="registerReSetPassWordModal"
-                 @reload="reload"
-                 :bodyStyle="{ 'padding-top': '0' }" />
+    <ReSetPassWord @register="registerReSetPassWordModal"
+                   @reload="reload"
+                   :bodyStyle="{ 'padding-top': '0' }" />
   </div>
 </template>
 <script lang="ts">
@@ -80,7 +80,7 @@ export default defineComponent({
     CreateAbpUser,
     EditAbpUser,
     Permissions,
-    ReSetPassWord
+    ReSetPassWord,
   },
   setup() {
     const [registerCreateAbpUserModal, { openModal: openCreateAbpUserModal }] = useModal();
@@ -100,7 +100,7 @@ export default defineComponent({
       showTableSetting: true,
       rowSelection: { type: 'checkbox' },
       actionColumn: {
-        width: 200,
+        width: 230,
         title: '操作',
         dataIndex: 'action',
         slots: {
@@ -116,11 +116,11 @@ export default defineComponent({
       });
     };
 
-    const handleReSet=(record:Recordable)=>{
-      openReSetPassWordModal(true,{
+    const handleReSet = (record: Recordable) => {
+      openReSetPassWordModal(true, {
         record: record,
-      })
-    }
+      });
+    };
     // 删除用户
     const handleDelete = async (record: Recordable) => {
       if (record.name == 'admin') {
