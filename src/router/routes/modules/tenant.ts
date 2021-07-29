@@ -8,7 +8,7 @@ const system: AppRouteModule = {
   component: LAYOUT,
   redirect: '/system/tenants',
   meta: {
-    icon: 'ant-design:home-outlined',
+    icon: 'ant-design:cloud-server',
     title: '租户管理',
   },
   children: [
@@ -20,7 +20,7 @@ const system: AppRouteModule = {
         title: '租户管理',
         // affix: true,
         roles: ['AbpTenantManagement.Tenants'],
-        icon: 'ant-design:home-outlined',
+        icon: 'ant-design:cloud-server',
       },
     },
   ],

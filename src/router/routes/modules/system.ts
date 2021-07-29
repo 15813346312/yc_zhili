@@ -8,7 +8,7 @@ const system: AppRouteModule = {
   component: LAYOUT,
   redirect: '/system/users',
   meta: {
-    icon: 'ant-design:home-outlined',
+    icon: 'ant-design:user',
     title: '身份标识管理',
   },
   children: [
@@ -20,7 +20,7 @@ const system: AppRouteModule = {
         title: '用户管理',
         // affix: true,
         roles: ['AbpIdentity.Users'],
-        icon: 'ant-design:home-outlined',
+        icon: 'ant-design:user-add',
       },
     },
     {
@@ -31,7 +31,7 @@ const system: AppRouteModule = {
         title: '角色管理',
         // affix: true,
         roles: ['AbpIdentity.Roles'],
-        icon: 'ant-design:home-outlined',
+        icon: 'ant-design:usergroup-add',
       },
     },
 

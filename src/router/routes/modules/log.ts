@@ -8,7 +8,7 @@ const system: AppRouteModule = {
   component: LAYOUT,
   redirect: '/log/abpauditing',
   meta: {
-    icon: 'ant-design:home-outlined',
+    icon: 'ant-design:file',
     title: '系统日志',
   },
   children: [
@@ -20,7 +20,7 @@ const system: AppRouteModule = {
         title: '审计日志',
         // affix: true,
         roles: ['AbpAuditing.AuditLog'],
-        icon: 'ant-design:home-outlined',
+        icon: 'ant-design:file-text',
       },
     },
     {
@@ -31,7 +31,7 @@ const system: AppRouteModule = {
         title: '安全日志',
         // affix: true,
         roles: ['AbpAuditing.SecurityLog'],
-        icon: 'ant-design:home-outlined',
+        icon: 'ant-design:file-pdf',
       },
     },
   ],

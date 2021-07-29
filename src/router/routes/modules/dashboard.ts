@@ -9,7 +9,7 @@ const dashboard: AppRouteModule = {
   component: LAYOUT,
   redirect: '/dashboard/analysis',
   meta: {
-    icon: 'ion:grid-outline',
+    icon: 'ant-design:home-outlined', // ion:grid-outline
     title: t('routes.dashboard.dashboard'),
   },
   children: [
@@ -19,6 +19,7 @@ const dashboard: AppRouteModule = {
       component: () => import('/@/views/dashboard/analysis/index.vue'),
       meta: {
         affix: true,
+        icon: 'ant-design:pie-chart',
         title: t('routes.dashboard.analysis'),
         // roles: ['AbpIdentity.Users'],
       },
@@ -28,6 +29,8 @@ const dashboard: AppRouteModule = {
       name: 'Workbench',
       component: () => import('/@/views/dashboard/workbench/index.vue'),
       meta: {
+        icon: 'ant-design:appstore',
+
         title: t('routes.dashboard.workbench'),
         // roles: ['AbpIdentity.Users'],
       },
