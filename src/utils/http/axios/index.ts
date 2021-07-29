@@ -120,8 +120,8 @@ const transform: AxiosTransform = {
       // jwt token
       config.headers.Authorization = 'Bearer ' + token;
     }
-    // config.headers.AcceptLanguage = 'zh-Hans';
-    // config.headers.common['Accept-Language'] = 'zh-hans';
+
+    config.headers.common['Accept-Language'] = 'zh-hans';
     return config;
   },
 
