@@ -9,7 +9,7 @@ const system: AppRouteModule = {
   redirect: '/log/abpauditing',
   meta: {
     icon: 'ant-design:home-outlined',
-    title: '内部审计',
+    title: '系统日志',
   },
   children: [
     {

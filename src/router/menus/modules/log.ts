@@ -1,10 +1,10 @@
 import type { MenuModule } from '/@/router/types';
 const log: MenuModule = {
   // 菜单排序。越大排名越后面
-  orderNo: 51,
+  orderNo: 52,
   menu: {
     path: '/log',
-    name: '内部审计',
+    name: '系统日志',
     children: [
       {
         path: 'abpauditing',

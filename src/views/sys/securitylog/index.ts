@@ -56,7 +56,7 @@ export const tableColumns: BasicColumn[] = [
 
   {
     title: '执行时间',
-    dataIndex: 'executionTime',
+    dataIndex: 'creationTime',
     customRender: ({ text }) => {
       return moment(text).format('YYYY-MM-DD HH:mm');
     },

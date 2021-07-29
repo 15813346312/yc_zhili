@@ -4,7 +4,7 @@ const system: MenuModule = {
   orderNo: 50,
   menu: {
     path: '/system',
-    name: '系统设置',
+    name: '身份标识管理',
     children: [
       {
         path: 'users',
