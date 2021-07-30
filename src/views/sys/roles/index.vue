@@ -58,6 +58,11 @@
               auth:['AbpIdentity.Roles.ManagePermissions'],
               onClick: openPermissions.bind(null, record),
             },
+               {
+             label:'管理声明',
+              auth:['AbpIdentity.Roles.ManageClaims'],
+              onClick: manageClaims.bind(null, record),
+            },
             {
              label:'删除',
               color: 'error',
@@ -79,6 +84,9 @@
                  :bodyStyle="{ 'padding-top': '0' }" />
     <Permissions @register="registerPermissionsModal"
                  @reload="reload" />
+    <ManageClaims @register="registerManageClaimsModal"
+                  @reload="reload"
+                  :bodyStyle="{ 'padding-top': '0' }" />
   </div>
 </template>
 <script lang="ts">
@@ -88,6 +96,8 @@ import { tableColumns, getTableListAsync, deleteRoleAsync, searchFormSchema } fr
 import { useModal } from '/@/components/Modal';
 import CreateAbpRole from './createAbpRole.vue';
 import EditAbpRole from './editAbpRole.vue';
+import ManageClaims from './manageClaims.vue';
+
 import Permissions from '/@/views/sys/permissions/index.vue';
 import { message } from 'ant-design-vue';
 import { useDrawer } from '/@/components/Drawer';
@@ -98,11 +108,12 @@ export default defineComponent({
     CreateAbpRole,
     EditAbpRole,
     Permissions,
+    ManageClaims,
   },
   setup() {
     const [registerCreateAbpRoleModal, { openModal: openCreateAbpRoleModal }] = useModal();
     const [registerEditAbpRoleModal, { openModal: openEditAbpRoleModal }] = useModal();
-    // const [registerPermissionsModal, { openModal: openPermissionsModal }] = useModal();
+    const [registerManageClaimsModal, { openModal: openManageClaimsModal }] = useModal();
     const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '',
@@ -146,6 +157,12 @@ export default defineComponent({
       await deleteRoleAsync({ id: record.id, reload });
     };
 
+    const manageClaims = async (record: Recordable) => {
+      openManageClaimsModal(true, {
+        record: record,
+      });
+    };
+
     // function getFormValues() {
     //   console.log(reload ().getFieldsValue());
     // }
@@ -157,8 +174,10 @@ export default defineComponent({
       handleEdit,
       registerPermissionsModal,
       handleDelete,
+      manageClaims,
       reload,
       openPermissions,
+      registerManageClaimsModal,
     };
   },
 });

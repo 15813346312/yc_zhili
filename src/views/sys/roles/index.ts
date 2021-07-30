@@ -6,6 +6,13 @@ import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
 // import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
 import { deleteRole, createRole, updateRole, getRolePagedList } from '/@/api/sys/role';
+import {
+  deleteRoleClaims,
+  createRoleClaims,
+  updateRoleClaims,
+  getRoleClaims,
+} from '/@/api/sys/roleClaims';
+
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
 const [openFullLoading, closeFullLoading] = useLoading({
@@ -123,6 +130,21 @@ export const editFormSchema: FormSchema[] = [
   },
 ];
 
+export const manageClaimsColumns: BasicColumn[] = [
+  {
+    title: 'id',
+    dataIndex: 'id',
+  },
+  {
+    title: '名称',
+    dataIndex: 'claimType',
+  },
+  {
+    title: '值',
+    dataIndex: 'claimValue',
+  },
+];
+
 /**
  * 分页列表
  * @param params
@@ -180,6 +202,66 @@ export async function updateRoleAsync({ request, changeOkLoading, validate, clos
   await validate();
 
   await updateRole(request.id, request);
+  changeOkLoading(false);
+  message.success('编辑成功');
+  closeModal();
+}
+
+/**
+ * 创建
+ * @param param0
+ */
+export async function createRoleClaimsAsync({
+  request,
+  changeOkLoading,
+  validate,
+  closeModal,
+  resetFields,
+}) {
+  changeOkLoading(true);
+  await validate();
+  await createRoleClaims(request.id, request);
+  changeOkLoading(false);
+  message.success('新增成功');
+  resetFields();
+  closeModal();
+}
+
+/**
+ *
+ * @param params
+ * @returns
+ */
+export async function getRoleClaimsAsync(id: string): Promise<any | undefined> {
+  const result = await getRoleClaims(id);
+  return result;
+}
+
+/**
+ * 删除
+ * @param param0
+ */
+export async function deleteRoleClaimsAsync({ id, reload }) {
+  try {
+    openFullLoading();
+    await deleteRoleClaims(id);
+    closeFullLoading();
+    message.success('删除成功');
+    reload();
+  } catch (error) {
+    closeFullLoading();
+  }
+}
+
+/**
+ * 编辑
+ * @param param0
+ */
+export async function updateRoleClaimsAsync({ request, changeOkLoading, validate, closeModal }) {
+  changeOkLoading(true);
+  await validate();
+
+  await updateRoleClaims(request.id, request);
   changeOkLoading(false);
   message.success('编辑成功');
   closeModal();
