@@ -1,20 +1,39 @@
 <template>
-  <BasicModal title="编辑用户"
-              :canFullscreen="false"
-              @ok="submit"
-              :width="680"
-              @register="registerModal"
-              @visible-change="visibleChange"
-              :bodyStyle="{ 'padding-top': '0' }">
+  <BasicModal title="编辑用户" :showCancelBtn="false" :showOkBtn="false" :canFullscreen="false" @ok="submit" :width="680" @register="registerModal" @visible-change="visibleChange" :bodyStyle="{ 'padding-top': '0' }">
     <div>
-      <BasicForm @register="registerUserForm"
-                 @submit="handleSubmit">
+      <BasicForm @register="registerUserForm" @submit="handleSubmit">
         <template #add="{ field }">
-          <a-button>添加</a-button>
+          <a-button @click="handleCreate">添加</a-button>
         </template>
       </BasicForm>
       <div>
-        {{state.dataList.length}}
+        <a-row v-for="item in state.dataList" :key="item.id" style="text-align:right;margin-top:5px;">
+          <a-col :span="8">
+            <a-input style="width:80%" v-model:value="item.claimType" />
+          </a-col>
+          <a-col :span="8">
+            <a-input style="width:80%" v-model:value="item.claimValue" />
+          </a-col>
+          <a-col :span="8"  >
+
+            <TableAction  style="margin-left:30px;" :actions="[
+            {
+              label:'修改',
+              onClick: handleEdit.bind(null, item),
+            },
+            {
+             label:'删除',
+              color: 'error',
+
+              popConfirm: {
+                title: '是否确认删除',
+                confirm: handleDelete.bind(null, item),
+              },
+
+            },
+          ]" />
+          </a-col>
+        </a-row>
       </div>
     </div>
   </BasicModal>
@@ -23,17 +42,15 @@
 <script lang="ts">
 import { defineComponent, reactive, useContext, defineEmit } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
+import { TableAction } from '/@/components/Table';
 import { BasicForm, useForm } from '/@/components/Form/index';
-import { Tabs, Checkbox } from 'ant-design-vue';
-import { getRoleClaimsAsync } from './index.ts';
+import { getRoleClaimsAsync,createRoleClaimsAsync,deleteRoleClaimsAsync } from './index.ts';
 export default defineComponent({
   name: 'EditAbpUser',
   components: {
     BasicModal,
     BasicForm,
-    Tabs,
-    Checkbox,
-    TabPane: Tabs.TabPane,
+TableAction
   },
   setup() {
     // 加载父组件方法
@@ -41,7 +58,7 @@ export default defineComponent({
     const ctx = useContext();
     const state: any = reactive({
       dataList: [],
-      currentUserInfo: null,
+      record: null,
     });
     const [registerUserForm, { getFieldsValue, validate, setFieldsValue }] = useForm({
       schemas: [
@@ -80,15 +97,11 @@ export default defineComponent({
     });
 
     const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
-      state.currentUserInfo = data.record;
-      console.log(data.record.id);
+      state.record = data.record;
 
       getRoleClaimsAsync(data.record.id).then((res) => {
         state.dataList = res.items;
-        console.log(state.dataList);
       });
-
-      // dataList = res.items;
     });
 
     const visibleChange = async (visible: boolean) => {
@@ -96,13 +109,26 @@ export default defineComponent({
       } else {
       }
     };
+    // 编辑用户
+    const handleEdit = async (record: Recordable) => {
+      console.log(record);
+      console.log(state.record.id);
 
+    };
+    const handleDelete = async (record: Recordable) => {
+      await  deleteRoleClaimsAsync(state.record.id,record)
+
+    };
+    const handleCreate =async()=>{
+        var  request = await getFieldsValue();
+
+        createRoleClaimsAsync(state.record.id,request);
+
+    };
     const submit = async () => {
       try {
-        let request = getFieldsValue();
-        console.log('111');
+        closeModal()
 
-        ctx.emit('reload');
       } catch (error) {
         changeOkLoading(false);
       }
@@ -111,7 +137,11 @@ export default defineComponent({
       registerModal,
       registerUserForm,
       submit,
+      state,
       visibleChange,
+      handleEdit,
+      handleDelete,
+      handleCreate
     };
   },
 });

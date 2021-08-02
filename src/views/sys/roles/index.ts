@@ -211,20 +211,11 @@ export async function updateRoleAsync({ request, changeOkLoading, validate, clos
  * 创建
  * @param param0
  */
-export async function createRoleClaimsAsync({
+export async function createRoleClaimsAsync(id,
   request,
-  changeOkLoading,
-  validate,
-  closeModal,
-  resetFields,
-}) {
-  changeOkLoading(true);
-  await validate();
-  await createRoleClaims(request.id, request);
-  changeOkLoading(false);
+) {
+  await createRoleClaims(id, request);
   message.success('新增成功');
-  resetFields();
-  closeModal();
 }
 
 /**
@@ -241,10 +232,10 @@ export function getRoleClaimsAsync(id: string): Promise<any | undefined> {
  * 删除
  * @param param0
  */
-export async function deleteRoleClaimsAsync({ id, reload }) {
+export async function deleteRoleClaimsAsync( id :string,params :any) {
   try {
     openFullLoading();
-    await deleteRoleClaims(id);
+    await deleteRoleClaims(id,params);
     closeFullLoading();
     message.success('删除成功');
     reload();
