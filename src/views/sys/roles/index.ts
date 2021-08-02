@@ -232,8 +232,8 @@ export async function createRoleClaimsAsync({
  * @param params
  * @returns
  */
-export async function getRoleClaimsAsync(id: string): Promise<any | undefined> {
-  const result = await getRoleClaims(id);
+export function getRoleClaimsAsync(id: string): Promise<any | undefined> {
+  const result = getRoleClaims(id);
   return result;
 }
 

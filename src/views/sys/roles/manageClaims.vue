@@ -1,44 +1,49 @@
 <template>
-  <BasicModal title="管理声明"
+  <BasicModal title="编辑用户"
               :canFullscreen="false"
               @ok="submit"
+              :width="680"
               @register="registerModal"
+              @visible-change="visibleChange"
               :bodyStyle="{ 'padding-top': '0' }">
-    <BasicForm @register="register"
-               @submit="handleSubmit">
-      <template #add="{ field }">
-        <a-button>添加</a-button>
-      </template>
-    </BasicForm>
     <div>
-      111
+      <BasicForm @register="registerUserForm"
+                 @submit="handleSubmit">
+        <template #add="{ field }">
+          <a-button>添加</a-button>
+        </template>
+      </BasicForm>
+      <div>
+        {{state.dataList.length}}
+      </div>
     </div>
   </BasicModal>
 </template>
-<script>
+
+<script lang="ts">
 import { defineComponent, reactive, useContext, defineEmit } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
 import { BasicForm, useForm } from '/@/components/Form/index';
-import {
-  getRoleClaimsAsync,
-} from './index.ts';
-
+import { Tabs, Checkbox } from 'ant-design-vue';
+import { getRoleClaimsAsync } from './index.ts';
 export default defineComponent({
-  components: { BasicModal, BasicForm },
-  setup () {
-
+  name: 'EditAbpUser',
+  components: {
+    BasicModal,
+    BasicForm,
+    Tabs,
+    Checkbox,
+    TabPane: Tabs.TabPane,
+  },
+  setup() {
+    // 加载父组件方法
     defineEmit(['reload']);
-    let row;
-    const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
-      row = data.record
-      console.log(row.id)
-      console.log('-----------')
-      // (await getRoleClaimsAsync(row.id)).then(res => {
-      //   console.log(res)
-      // })
-
+    const ctx = useContext();
+    const state: any = reactive({
+      dataList: [],
+      currentUserInfo: null,
     });
-    const [register, { validate }] = useForm({
+    const [registerUserForm, { getFieldsValue, validate, setFieldsValue }] = useForm({
       schemas: [
         {
           field: 'claimType',
@@ -74,35 +79,45 @@ export default defineComponent({
       actionColOptions: { span: 24 },
     });
 
-    // const visibleChange = async (visible) => {
-    //   if (visible) {
-    //     console.log('--222222222--')
-    //     console.log(row.id)
+    const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
+      state.currentUserInfo = data.record;
+      console.log(data.record.id);
 
-    //     var res = await getRoleClaimsAsync(row.id);
-    //     console.log(res)
-    //   }
-    // };
-    const submit = async () => {
-      closeModal();
-    };
-    const handleSubmit = async () => {
-      try {
-        const data = await validate();
-        console.log(data);
-      } catch (e) {
-        console.log(e);
+      getRoleClaimsAsync(data.record.id).then((res) => {
+        state.dataList = res.items;
+        console.log(state.dataList);
+      });
+
+      // dataList = res.items;
+    });
+
+    const visibleChange = async (visible: boolean) => {
+      if (visible) {
+      } else {
       }
     };
 
+    const submit = async () => {
+      try {
+        let request = getFieldsValue();
+        console.log('111');
+
+        ctx.emit('reload');
+      } catch (error) {
+        changeOkLoading(false);
+      }
+    };
     return {
       registerModal,
-      register,
+      registerUserForm,
       submit,
-      row,
-      // visibleChange,
-
-    }
+      visibleChange,
+    };
   },
-})
+});
 </script>
+<style lang="less" scoped>
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+  margin-left: 0px;
+}
+</style>
