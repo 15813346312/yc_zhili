@@ -1,22 +1,48 @@
 <template>
-  <BasicModal title="编辑用户" :showCancelBtn="false" :showOkBtn="false" :canFullscreen="false" @ok="submit" :width="680" @register="registerModal" @visible-change="visibleChange" :bodyStyle="{ 'padding-top': '0' }">
+  <BasicDrawer @register="registerDrawer"
+               title="管理声明"
+               width="500px">
     <div>
-      <BasicForm @register="registerUserForm" @submit="handleSubmit">
-        <template #add="{ field }">
-          <a-button @click="handleCreate">添加</a-button>
-        </template>
-      </BasicForm>
-      <div>
-        <a-row v-for="item in state.dataList" :key="item.id" style="text-align:right;margin-top:5px;">
-          <a-col :span="8">
-            <a-input style="width:80%" v-model:value="item.claimType" />
-          </a-col>
-          <a-col :span="8">
-            <a-input style="width:80%" v-model:value="item.claimValue" />
-          </a-col>
-          <a-col :span="8"  >
+      <a-row style="margin-bottom:10px;">
+        <!-- <a-button type="primary"
+                  >新增</a-button>
+        <a-button @click="reloadTable">刷新</a-button> -->
+        <a-button-group>
+          <a-button type="primary"
+                    @click="handleCreate">
+            新增
+          </a-button>
+          <a-button @click="reloadTable"> 刷新
 
-            <TableAction  style="margin-left:30px;" :actions="[
+          </a-button>
+        </a-button-group>
+
+      </a-row>
+      <div v-if="state.dataList.length>0">
+        <a-row style="text-align:center;margin-bottom:10px;font-weight:bold;">
+          <a-col :span="8">
+            类型
+          </a-col>
+          <a-col :span="8">
+            值
+          </a-col>
+          <a-col :span="8">
+            操作
+          </a-col>
+        </a-row>
+        <a-row v-for="item in state.dataList"
+               :key="item.id"
+               style="text-align:center;border-width:1px;line-height:30px;">
+          <a-col :span="8">
+            {{item.claimType}}
+          </a-col>
+          <a-col :span="8">
+            {{item.claimValue}}
+          </a-col>
+          <a-col :span="8">
+
+            <TableAction style="margin-left:30px;line-height:30px;"
+                         :actions="[
             {
               label:'修改',
               onClick: handleEdit.bind(null, item),
@@ -35,113 +61,89 @@
           </a-col>
         </a-row>
       </div>
+      <div v-else>
+        <a-empty />
+      </div>
     </div>
-  </BasicModal>
+    <EditClaimsModel @register="registerEditClaimsModel"
+                     @reloadTable="reloadTable"
+                     :bodyStyle="{ 'padding-top': '0' }" />
+    <CreateClaimsModel @register="registerCreateClaimsModel"
+                       @reloadTable="reloadTable"
+                       :bodyStyle="{ 'padding-top': '0' }" />
+  </BasicDrawer>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, useContext, defineEmit } from 'vue';
-import { BasicModal, useModalInner } from '/@/components/Modal';
+import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
+import EditClaimsModel from './editclaimsModel.vue';
+import CreateClaimsModel from './createclaimsModel.vue';
+import { getRoleClaimsAsync, deleteRoleClaimsAsync } from './index.ts';
 import { TableAction } from '/@/components/Table';
-import { BasicForm, useForm } from '/@/components/Form/index';
-import { getRoleClaimsAsync,createRoleClaimsAsync,deleteRoleClaimsAsync } from './index.ts';
+import { useModal } from '/@/components/Modal';
 export default defineComponent({
   name: 'EditAbpUser',
   components: {
-    BasicModal,
-    BasicForm,
-TableAction
+    BasicDrawer,
+    TableAction,
+    EditClaimsModel,
+    CreateClaimsModel,
   },
   setup() {
+    const [registerEditClaimsModel, { openModal: openEditClaimsModel }] = useModal();
+    const [registerCreateClaimsModel, { openModal: openCreateClaimsModel }] = useModal();
+
     // 加载父组件方法
     defineEmit(['reload']);
-    const ctx = useContext();
     const state: any = reactive({
       dataList: [],
       record: null,
     });
-    const [registerUserForm, { getFieldsValue, validate, setFieldsValue }] = useForm({
-      schemas: [
-        {
-          field: 'claimType',
-          component: 'Input',
-          label: '名称',
-          colProps: {
-            span: 8,
-          },
-          required: true,
-        },
-        {
-          field: 'claimValue',
-          component: 'Input',
-          label: '值',
-          colProps: {
-            span: 8,
-          },
-          required: true,
-        },
-        {
-          field: '0',
-          component: 'Input',
-          label: ' ',
-          colProps: {
-            span: 8,
-          },
-          slot: 'add',
-        },
-      ],
-      labelWidth: 100,
-      showResetButton: false,
-      showSubmitButton: false,
-      actionColOptions: { span: 24 },
-    });
-
-    const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
+    const [registerDrawer, { closeDrawer, setDrawerProps }] = useDrawerInner((data) => {
       state.record = data.record;
-
       getRoleClaimsAsync(data.record.id).then((res) => {
         state.dataList = res.items;
       });
     });
 
-    const visibleChange = async (visible: boolean) => {
-      if (visible) {
-      } else {
-      }
-    };
     // 编辑用户
     const handleEdit = async (record: Recordable) => {
-      console.log(record);
-      console.log(state.record.id);
-
+      openEditClaimsModel(true, {
+        id: state.record.id,
+        record: record,
+      });
     };
     const handleDelete = async (record: Recordable) => {
-      await  deleteRoleClaimsAsync(state.record.id,record)
-
+      deleteRoleClaimsAsync(state.record.id, record).then(() => {
+        reloadTable();
+      });
     };
-    const handleCreate =async()=>{
-        var  request = await getFieldsValue();
 
-        createRoleClaimsAsync(state.record.id,request);
-
+    const reloadTable = async () => {
+      getRoleClaimsAsync(state.record.id).then((res) => {
+        state.dataList = res.items;
+      });
     };
-    const submit = async () => {
-      try {
-        closeModal()
-
-      } catch (error) {
-        changeOkLoading(false);
-      }
+    const handleCreate = async () => {
+      openCreateClaimsModel(true, {
+        id: state.record.id,
+        record: {
+          claimType: '',
+          claimValue: '',
+        },
+      });
     };
+
     return {
-      registerModal,
-      registerUserForm,
-      submit,
+      registerDrawer,
       state,
-      visibleChange,
       handleEdit,
       handleDelete,
-      handleCreate
+      handleCreate,
+      reloadTable,
+      registerCreateClaimsModel,
+      registerEditClaimsModel,
     };
   },
 });

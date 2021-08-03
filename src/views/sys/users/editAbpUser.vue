@@ -1,13 +1,23 @@
 <template>
-  <BasicModal title="编辑用户" :canFullscreen="false" @ok="submit" @register="registerModal" @visible-change="visibleChange" :bodyStyle="{ 'padding-top': '0' }">
+  <BasicModal title="编辑用户"
+              :canFullscreen="false"
+              @ok="submit"
+              @register="registerModal"
+              @visible-change="visibleChange"
+              :bodyStyle="{ 'padding-top': '0' }">
     <div>
       <Tabs>
-        <TabPane tab="用户信息" key="1">
+        <TabPane tab="用户信息"
+                 key="1">
           <BasicForm @register="registerUserForm" />
         </TabPane>
-        <TabPane tab="角色" key="2">
-          <a-checkbox-group @change="onRoleSelectedChange" v-model:value="defaultRolesRef">
-            <a-checkbox v-for="(item, index) in rolesRef" :key="index" :value="item.name">
+        <TabPane tab="角色"
+                 key="2">
+          <a-checkbox-group @change="onRoleSelectedChange"
+                            v-model:value="defaultRolesRef">
+            <a-checkbox v-for="(item, index) in rolesRef"
+                        :key="index"
+                        :value="item.name">
               {{ item.name }}
             </a-checkbox>
           </a-checkbox-group>
@@ -90,14 +100,15 @@ export default defineComponent({
     };
     const submit = async () => {
       try {
-        let request = getFieldsValue();
-        console.log('111');
-        request.id = currentUserInfo.id;
-        request.surname = currentUserInfo.surname;
-        request.concurrencyStamp = currentUserInfo.concurrencyStamp;
-        request.roleNames = defaultRolesRef;
-        await updateUserAsync({ request, changeOkLoading, validate, closeModal });
-        ctx.emit('reload');
+        if (validate()) {
+          let request = getFieldsValue();
+          request.id = currentUserInfo.id;
+          request.surname = currentUserInfo.surname;
+          request.concurrencyStamp = currentUserInfo.concurrencyStamp;
+          request.roleNames = defaultRolesRef;
+          await updateUserAsync({ request, changeOkLoading, validate, closeModal });
+          ctx.emit('reload');
+        }
       } catch (error) {
         changeOkLoading(false);
       }

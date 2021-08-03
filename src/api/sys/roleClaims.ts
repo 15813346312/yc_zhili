@@ -1,7 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import { useGlobSetting } from '/@/hooks/setting/index';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
-import{qs} from 'qs'
+import { qs } from 'qs';
 const globSetting = useGlobSetting();
 enum Api {
   BasicUrl = '/api/identity/roles',
@@ -27,12 +27,15 @@ export function getRoleClaims(id: string, mode: ErrorMessageMode = 'modal') {
  * @description:
  * 删除
  */
-export function deleteRoleClaims(id: string,params:any, mode: ErrorMessageMode = 'modal') {
+export function deleteRoleClaims(id: string, params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.delete<any>(
     {
       baseURL: globSetting.apiUrl,
-      url: `${Api.BasicUrl}/${params.id}/claims`,
-      params
+      url: `${Api.BasicUrl}/${id}/claims`,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      params,
     },
     {
       errorMessageMode: mode,
@@ -65,7 +68,7 @@ export function updateRoleClaims(id: string, params: any, mode: ErrorMessageMode
   return defHttp.put<any>(
     {
       baseURL: globSetting.apiUrl,
-      url: `${Api.BasicUrl}/${id}/claims?id=${params.id}`,
+      url: `${Api.BasicUrl}/${id}/claims`,
       params,
     },
     {

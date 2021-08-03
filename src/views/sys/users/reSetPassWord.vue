@@ -1,10 +1,13 @@
 <template>
-  <BasicModal title="修改密码" :canFullscreen="false" @ok="submit" @register="registerModal" @visible-change="visibleChange" :bodyStyle="{ 'padding-top': '0' }">
+  <BasicModal title="修改密码"
+              :canFullscreen="false"
+              @ok="submit"
+              @register="registerModal"
+              @visible-change="visibleChange"
+              :bodyStyle="{ 'padding-top': '0' }">
     <div>
 
-
-          <BasicForm @register="registerUserForm" />
-
+      <BasicForm @register="registerUserForm" />
 
     </div>
   </BasicModal>
@@ -84,20 +87,15 @@ export default defineComponent({
     const submit = async () => {
       try {
         let request = getFieldsValue();
-        console.log(request)
-        if(request.password !==request.confirmPassword){
-           message.error('两次输入的密码不一致');
-           return
-        }
         request.id = currentUserInfo.id;
         request.surname = currentUserInfo.surname;
         request.concurrencyStamp = currentUserInfo.concurrencyStamp;
-          request.name= currentUserInfo.name,
-        request.userName= currentUserInfo.userName,
-        request.email= currentUserInfo.email,
-        request.phoneNumber= currentUserInfo.phoneNumber,
-        request.lockoutEnabled= currentUserInfo.lockoutEnabled,
-        request.roleNames = defaultRolesRef;
+        (request.name = currentUserInfo.name),
+          (request.userName = currentUserInfo.userName),
+          (request.email = currentUserInfo.email),
+          (request.phoneNumber = currentUserInfo.phoneNumber),
+          (request.lockoutEnabled = currentUserInfo.lockoutEnabled),
+          (request.roleNames = defaultRolesRef);
         await updateUserAsync({ request, changeOkLoading, validate, closeModal });
         ctx.emit('reload');
       } catch (error) {

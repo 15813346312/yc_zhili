@@ -60,6 +60,9 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'filter',
     label: '关键词',
+    componentProps: {
+      placeholder: '请输入关键词',
+    },
     subLabel: '',
     component: 'Input',
     colProps: { span: 6 },
@@ -72,6 +75,9 @@ export const createFormSchema: FormSchema[] = [
     component: 'Input',
     label: '姓名',
     required: true,
+    componentProps: {
+      placeholder: '请输入姓名',
+    },
     labelWidth: 70,
     colProps: {
       span: 12,
@@ -81,6 +87,9 @@ export const createFormSchema: FormSchema[] = [
     field: 'userName',
     component: 'Input',
     label: '用户名',
+    componentProps: {
+      placeholder: '请输入用户名',
+    },
     labelWidth: 70,
     required: true,
     colProps: {
@@ -91,6 +100,9 @@ export const createFormSchema: FormSchema[] = [
     field: 'email',
     component: 'Input',
     label: '邮箱',
+    componentProps: {
+      placeholder: '请输入邮箱',
+    },
     required: true,
     labelWidth: 70,
     colProps: {
@@ -101,6 +113,9 @@ export const createFormSchema: FormSchema[] = [
     field: 'password',
     component: 'InputPassword',
     label: '密码',
+    componentProps: {
+      placeholder: '请输入密码',
+    },
     required: true,
     labelWidth: 70,
     colProps: {
@@ -111,6 +126,9 @@ export const createFormSchema: FormSchema[] = [
     field: 'phoneNumber',
     component: 'Input',
     label: '手机',
+    componentProps: {
+      placeholder: '请输入手机',
+    },
     required: true,
     labelWidth: 70,
     colProps: {
@@ -133,6 +151,9 @@ export const editFormSchema: FormSchema[] = [
     field: 'name',
     component: 'Input',
     label: '姓名',
+    componentProps: {
+      placeholder: '请输入姓名',
+    },
     required: true,
     labelWidth: 70,
     colProps: {
@@ -143,6 +164,9 @@ export const editFormSchema: FormSchema[] = [
     field: 'userName',
     component: 'Input',
     label: '用户名',
+    componentProps: {
+      placeholder: '请输入用户名',
+    },
     labelWidth: 70,
     required: true,
     colProps: {
@@ -153,6 +177,9 @@ export const editFormSchema: FormSchema[] = [
     field: 'email',
     component: 'Input',
     label: '邮箱',
+    componentProps: {
+      placeholder: '请输入邮箱',
+    },
     required: true,
     labelWidth: 70,
     colProps: {
@@ -163,6 +190,9 @@ export const editFormSchema: FormSchema[] = [
     field: 'phoneNumber',
     component: 'Input',
     label: '手机',
+    componentProps: {
+      placeholder: '请输入手机',
+    },
     required: true,
     labelWidth: 70,
     colProps: {
@@ -185,6 +215,9 @@ export const reSetFormSchema: FormSchema[] = [
     field: 'password',
     component: 'InputPassword',
     label: '密码',
+    componentProps: {
+      placeholder: '请输入密码',
+    },
     required: true,
     labelWidth: 70,
     colProps: {
@@ -195,7 +228,26 @@ export const reSetFormSchema: FormSchema[] = [
     field: 'confirmPassword',
     component: 'InputPassword',
     label: '确认密码',
+    componentProps: {
+      placeholder: '请输入确认密码',
+    },
     required: true,
+    dynamicRules: ({ values }) => {
+      return [
+        {
+          required: true,
+          validator: (_, value) => {
+            if (!value) {
+              return Promise.reject('密码不能为空');
+            }
+            if (value !== values.password) {
+              return Promise.reject('两次输入的密码不一致!');
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
     labelWidth: 70,
     colProps: {
       span: 24,

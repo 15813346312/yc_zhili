@@ -113,7 +113,7 @@ export default defineComponent({
   setup() {
     const [registerCreateAbpRoleModal, { openModal: openCreateAbpRoleModal }] = useModal();
     const [registerEditAbpRoleModal, { openModal: openEditAbpRoleModal }] = useModal();
-    const [registerManageClaimsModal, { openModal: openManageClaimsModal }] = useModal();
+    const [registerManageClaimsModal, { openDrawer: openManageClaimsModal }] = useDrawer();
     const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '',
