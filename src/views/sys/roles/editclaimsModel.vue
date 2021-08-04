@@ -74,29 +74,19 @@ export default defineComponent({
     const submit = async () => {
       try {
         let request = getFieldsValue(); //as IdentityUserCreateDto;
-        console.log(id);
+
         if (validate()) {
-          changeOkLoading(true);
-          if (row.id) {
-            updateRoleClaimsAsync(
-              id,
-              {
-                claimType: row.claimType,
-                claimValue: row.claimValue,
-                newClaimValue: request.claimValue,
-              },
-              changeOkLoading,
-              validate,
-              closeModal
-            );
-          } else {
-            createRoleClaimsAsync(id, request, changeOkLoading, validate, closeModal);
-          }
-          resetFields();
-          changeOkLoading(false);
-          closeModal();
+          // changeOkLoading(true);
+
+          updateRoleClaimsAsync(id, {
+            claimType: row.claimType,
+            claimValue: row.claimValue,
+            newClaimValue: request.claimValue,
+          });
 
           ctx.emit('reloadTable');
+          // changeOkLoading(false);
+          closeModal();
         }
       } catch (error) {
         changeOkLoading(false);

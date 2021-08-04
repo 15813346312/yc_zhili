@@ -14,12 +14,12 @@
 import { defineComponent, reactive, useContext, defineEmit } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
 import { BasicForm, useForm } from '/@/components/Form/index';
-import { createRoleClaimsAsync, updateRoleClaimsAsync } from './index.ts';
-// import { IdentityRoleDto, IdentityUserCreateDto } from '/@/services/ServiceProxies';
+import { createUserClaimsAsync, updateUserClaimsAsync } from './index.ts';
+// import { IdentityUserDto, IdentityUserCreateDto } from '/@/services/ServiceProxies';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { Row } from 'ant-design-vue';
 export default defineComponent({
-  name: 'CreateAbpRole',
+  name: 'CreateAbpUser',
   components: {
     BasicModal,
     BasicForm,
@@ -79,10 +79,9 @@ export default defineComponent({
         let request = getFieldsValue(); //as IdentityUserCreateDto;
 
         if (validate()) {
-          createRoleClaimsAsync(id, request);
+          createUserClaimsAsync(id, request, changeOkLoading, validate, closeModal);
 
           ctx.emit('reloadTable');
-
           closeModal();
         }
       } catch (error) {

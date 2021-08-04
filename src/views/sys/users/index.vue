@@ -35,6 +35,11 @@
               auth:['AbpIdentity.Users.ManagePermissions'],
               onClick: openPermissions.bind(null, record),
             },
+                 {
+             label:'管理声明',
+              auth:['AbpIdentity.Users.ManageClaims'],
+              onClick: manageClaims.bind(null, record),
+            },
             {
               label:'删除',
               color: 'error',
@@ -59,6 +64,9 @@
     <ReSetPassWord @register="registerReSetPassWordModal"
                    @reload="reload"
                    :bodyStyle="{ 'padding-top': '0' }" />
+    <ManageClaims @register="registerManageClaimsModal"
+                  @reload="reload"
+                  :bodyStyle="{ 'padding-top': '0' }" />
   </div>
 </template>
 <script lang="ts">
@@ -69,7 +77,7 @@ import { useModal } from '/@/components/Modal';
 import CreateAbpUser from './createAbpUser.vue';
 import EditAbpUser from './editAbpUser.vue';
 import ReSetPassWord from './reSetPassWord.vue';
-
+import ManageClaims from './manageClaims.vue';
 import { message } from 'ant-design-vue';
 import Permissions from '/@/views/sys/permissions/index.vue';
 import { useDrawer } from '/@/components/Drawer';
@@ -81,12 +89,13 @@ export default defineComponent({
     EditAbpUser,
     Permissions,
     ReSetPassWord,
+    ManageClaims,
   },
   setup() {
     const [registerCreateAbpUserModal, { openModal: openCreateAbpUserModal }] = useModal();
     const [registerEditAbpUserModal, { openModal: openEditAbpUserModal }] = useModal();
     const [registerReSetPassWordModal, { openModal: openReSetPassWordModal }] = useModal();
-
+    const [registerManageClaimsModal, { openDrawer: openManageClaimsModal }] = useDrawer();
     const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '',
@@ -100,7 +109,7 @@ export default defineComponent({
       showTableSetting: true,
       rowSelection: { type: 'checkbox' },
       actionColumn: {
-        width: 230,
+        width: 300,
         title: '操作',
         dataIndex: 'action',
         slots: {
@@ -136,6 +145,11 @@ export default defineComponent({
         key: record.id,
       });
     };
+    const manageClaims = async (record: Recordable) => {
+      openManageClaimsModal(true, {
+        record: record,
+      });
+    };
     // function getFormValues() {
     //   console.log(reload ().getFieldsValue());
     // }
@@ -151,6 +165,8 @@ export default defineComponent({
       registerPermissionsModal,
       registerReSetPassWordModal,
       openPermissions,
+      registerManageClaimsModal,
+      manageClaims,
     };
   },
 });

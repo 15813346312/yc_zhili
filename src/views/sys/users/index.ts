@@ -1,7 +1,12 @@
 import { FormSchema } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table';
 import moment from 'moment';
-
+import {
+  deleteUserClaims,
+  createUserClaims,
+  updateUserClaims,
+  getUserClaims,
+} from '/@/api/sys/userClaims';
 import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
 // import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
@@ -347,4 +352,51 @@ export async function lockUserAsync(request: any): Promise<void> {
 export async function getUserAsync(id: string) {
   console.log(id);
   return await getUser(id);
+}
+
+/**
+ * 创建
+ * @param param0
+ */
+export async function createUserClaimsAsync(id, request) {
+  await createUserClaims(id, request);
+  // changeOkLoading(false);
+
+  message.success('新增成功');
+}
+
+/**
+ *
+ * @param params
+ * @returns
+ */
+export function getUserClaimsAsync(id: string): Promise<any | undefined> {
+  const result = getUserClaims(id);
+  return result;
+}
+
+/**
+ * 删除
+ * @param param0
+ */
+export async function deleteUserClaimsAsync(id: string, params: any) {
+  try {
+    //openFullLoading();
+
+    await deleteUserClaims(id, { claimType: params.claimType, claimValue: params.claimValue });
+    // closeFullLoading();
+    message.success('删除成功');
+  } catch (error) {
+    closeFullLoading();
+  }
+}
+
+/**
+ * 编辑
+ * @param param0
+ */
+export async function updateUserClaimsAsync(id, request) {
+  await updateUserClaims(id, request);
+
+  message.success('编辑成功');
 }
