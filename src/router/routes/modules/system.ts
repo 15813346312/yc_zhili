@@ -34,7 +34,17 @@ const system: AppRouteModule = {
         icon: 'ant-design:usergroup-add',
       },
     },
-
+    {
+      path: 'organizationUnits',
+      name: 'OrganizationUnits',
+      component: () => import('/@/views/sys/organizationUnits/index.vue'),
+      meta: {
+        title: '组织机构',
+        // affix: true,
+        roles: ['AbpIdentity.OrganizationUnits'],
+        icon: 'ant-design:gold',
+      },
+    },
     // {
     //   path: 'settings',
     //   name: 'Settings',

@@ -43,16 +43,6 @@ export default defineComponent({
     const [registerUserForm, { getFieldsValue, setFieldsValue, validate, resetFields }] = useForm({
       labelWidth: 120,
       schemas: [
-        // {
-        //   field: 'claimType',
-        //   component: 'Input',
-        //   label: '类型',
-        //   required: true,
-        //   labelWidth: 70,
-        //   colProps: {
-        //     span: 24,
-        //   },
-        // },
         {
           field: 'claimValue',
           component: 'Input',
