@@ -11,6 +11,7 @@
                    draggable
                    @dragenter="onDragEnter"
                    @drop="onDrop"
+                   @select="selectChange"
                    :renderIcon="createIcon"
                    :actionList="actionList">
         </BasicTree>
@@ -20,14 +21,41 @@
                 @change="callback">
           <a-tab-pane key="1"
                       tab="成员">
-            Content of Tab Pane 1
+
+            <BasicTable :columns="userColumns"
+                        :dataSource="userData"
+                        :loading="loading"
+                        :api="api"
+                        ref="tableRef"
+                        :pagination="pagination"
+                        :actionColumn="{width: 100, title: '操作', dataIndex: 'action', slots: { customRender: 'action'} }">
+              <template #toolbar>
+                <a-button type="primary"
+                          v-auth="'AbpIdentity.OrganizationUnits.ManageUsers'"
+                          @click="openCreateOrganizationUnitsUserModal">添加成员</a-button>
+              </template>
+              <template #action="{ record }">
+                <TableAction :actions="[
+            {
+              label:'移除',
+              color: 'error',
+              auth:['AbpIdentity.OrganizationUnits.ManageUsers'],
+              popConfirm: {
+                title: '是否确认移除',
+                confirm: handleDeleteUser.bind(null, record),
+              },
+            },
+          ]" />
+              </template>
+            </BasicTable>
+
           </a-tab-pane>
           <a-tab-pane key="2"
                       tab="角色"
                       force-render>
             Content of Tab Pane 2
           </a-tab-pane>
-          >
+
         </a-tabs>
       </a-card>
       <CreateOrganizationUnits @register="registerCreateOrganizationUnitsModal"
@@ -45,23 +73,41 @@ import { PageWrapper } from '/@/components/Page';
 import { useUserStore } from '/@/store/modules/user';
 import CreateOrganizationUnits from './createOrganizationUnits.vue';
 import { useModal } from '/@/components/Modal';
+import { BasicTable, TableAction } from '/@/components/Table';
 import {
   getAllListAsync,
   deleteOrganizationUnitAsync,
   moveAsync,
+  getOrganizationUnitUserAsync,
 } from '/@/api/sys/organizationUnits';
 import { cloneDeep } from 'lodash-es';
 import { message, Modal } from 'ant-design-vue';
 export default defineComponent({
-  components: { BasicTree, PageWrapper, CreateOrganizationUnits },
+  components: { BasicTree, PageWrapper, CreateOrganizationUnits, BasicTable, TableAction },
   setup() {
+    const userColumns = [
+      {
+        title: '用户名',
+        dataIndex: 'userName',
+      },
+      {
+        title: '姓名',
+        dataIndex: 'name',
+      },
+      {
+        title: '邮箱',
+        dataIndex: 'email',
+      },
+    ];
+
+    const userData = ref<any>([]);
     const userStore = useUserStore();
     const [registerCreateOrganizationUnitsModal, { openModal: openCreateOrganizationUnitsModal }] =
       useModal();
 
     const tree2 = ref<TreeItem[]>([]);
     const basicTable = ref<any>([]);
-    //初始化查询
+    //初始化组织机构查询
     const loadTree = async () => {
       getAllListAsync().then((res) => {
         basicTable.value = res.items;
@@ -213,10 +259,33 @@ export default defineComponent({
       // }
     }
 
+    const pagination = ref<any>(false);
+    const loading = ref(false);
+
+    function selectChange(info) {
+      // userData.value = getOrganizationUnitUserAsync(info[0]);
+
+      pagination.value = { page: 1,  total: 100 };
+      loading.value = true;
+      getOrganizationUnitUserAsync(info[0]).then((res) => {
+        console.log(res);
+        userData.value = res.items;
+        loading.value = false;
+      });
+    }
+    //tab切换
     function callback(key) {
       console.log(key);
     }
 
+    //移除组织用户
+    function handleDeleteUser(record: Recordable) {
+      console.log(record);
+    }
+    //打开添加成员弹窗
+    function openCreateOrganizationUnitsUserModal() {
+      console.log('打开添加成员弹窗');
+    }
     return {
       onDragEnter,
       callback,
@@ -229,6 +298,13 @@ export default defineComponent({
       handleDelete,
       actionList,
       registerCreateOrganizationUnitsModal,
+      userColumns,
+      userData,
+      handleDeleteUser,
+      openCreateOrganizationUnitsUserModal,
+      selectChange,
+      pagination,
+      loading,
     };
   },
   created() {
