@@ -92,11 +92,12 @@ export function moveAsync(id: string, params: any, mode: ErrorMessageMode = 'mod
 }
 
 //获取单行组织机构
-export function getOrganizationUnitUserAsync(id: string, mode: ErrorMessageMode = 'modal') {
+export function getOrganizationUnitUserAsync(params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.get<any>(
     {
       baseURL: globSetting.apiUrl,
-      url: `${Api.BasicUrl}/${id}/users`,
+      url: `${Api.BasicUrl}/${params.id}/users`,
+      params,
     },
     {
       errorMessageMode: mode,

@@ -22,13 +22,8 @@
           <a-tab-pane key="1"
                       tab="成员">
 
-            <BasicTable :columns="userColumns"
-                        :dataSource="userData"
-                        :loading="loading"
-                        :api="api"
-                        ref="tableRef"
-                        :pagination="pagination"
-                        :actionColumn="{width: 100, title: '操作', dataIndex: 'action', slots: { customRender: 'action'} }">
+            <BasicTable :searchInfo="searchInfo"
+                        @register="registerOrganizationUnitUserTable">
               <template #toolbar>
                 <a-button type="primary"
                           v-auth="'AbpIdentity.OrganizationUnits.ManageUsers'"
@@ -73,7 +68,7 @@ import { PageWrapper } from '/@/components/Page';
 import { useUserStore } from '/@/store/modules/user';
 import CreateOrganizationUnits from './createOrganizationUnits.vue';
 import { useModal } from '/@/components/Modal';
-import { BasicTable, TableAction } from '/@/components/Table';
+import { BasicTable, TableAction, useTable } from '/@/components/Table';
 import {
   getAllListAsync,
   deleteOrganizationUnitAsync,
@@ -99,7 +94,26 @@ export default defineComponent({
         dataIndex: 'email',
       },
     ];
-
+    const searchInfo = ref<Recordable>();
+    const [registerOrganizationUnitUserTable, { reload: reloadUser }] = useTable({
+      title: '',
+      api: getOrganizationUnitUserAsync,
+      columns: userColumns,
+      immediate: false,
+      handleSearchInfoFn(info) {
+        return info;
+      },
+      // showTableSetting: true,
+      actionColumn: {
+        width: 100,
+        title: '操作',
+        dataIndex: 'action',
+        slots: {
+          customRender: 'action',
+        },
+        fixed: 'right',
+      },
+    });
     const userData = ref<any>([]);
     const userStore = useUserStore();
     const [registerCreateOrganizationUnitsModal, { openModal: openCreateOrganizationUnitsModal }] =
@@ -258,24 +272,16 @@ export default defineComponent({
       //   return 'ion:airplane';
       // }
     }
-
-    const pagination = ref<any>(false);
-    const loading = ref(false);
-
+    let selectId;
     function selectChange(info) {
-      // userData.value = getOrganizationUnitUserAsync(info[0]);
-
-      pagination.value = { page: 1,  total: 100 };
-      loading.value = true;
-      getOrganizationUnitUserAsync(info[0]).then((res) => {
-        console.log(res);
-        userData.value = res.items;
-        loading.value = false;
-      });
+      var id = info[0];
+      selectId = id;
+      reloadUser({ searchInfo: { id } });
     }
+    let key;
     //tab切换
-    function callback(key) {
-      console.log(key);
+    function callback(k) {
+      key = k;
     }
 
     //移除组织用户
@@ -302,9 +308,9 @@ export default defineComponent({
       userData,
       handleDeleteUser,
       openCreateOrganizationUnitsUserModal,
+      registerOrganizationUnitUserTable,
       selectChange,
-      pagination,
-      loading,
+      searchInfo,
     };
   },
   created() {

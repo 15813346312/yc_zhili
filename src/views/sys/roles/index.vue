@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PageWrapper title="租户管理">
     <BasicTable @register="registerTable">
       <template #form-custom> custom-slot </template>
 
@@ -87,7 +87,7 @@
     <ManageClaims @register="registerManageClaimsModal"
                   @reload="reload"
                   :bodyStyle="{ 'padding-top': '0' }" />
-  </div>
+  </PageWrapper>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -97,12 +97,13 @@ import { useModal } from '/@/components/Modal';
 import CreateAbpRole from './createAbpRole.vue';
 import EditAbpRole from './editAbpRole.vue';
 import ManageClaims from './manageClaims.vue';
-
+import { PageWrapper } from '/@/components/Page';
 import Permissions from '/@/views/sys/permissions/index.vue';
 import { message } from 'ant-design-vue';
 import { useDrawer } from '/@/components/Drawer';
 export default defineComponent({
   components: {
+    PageWrapper,
     BasicTable,
     TableAction,
     CreateAbpRole,

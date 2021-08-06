@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PageWrapper title="租户管理">
     <BasicTable @register="registerTable">
       <template #form-custom> custom-slot </template>
 
@@ -64,7 +64,7 @@
                    :bodyStyle="{ 'padding-top': '0' }" />
     <!-- <Permissions @register="registerPermissionsModal"
                  @reload="reload" /> -->
-  </div>
+  </PageWrapper>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -74,6 +74,7 @@ import { useModal } from '/@/components/Modal';
 import CreateAbpTenant from './createAbpTenant.vue';
 import EditAbpTenant from './editAbpTenant.vue';
 // import Permissions from '/@/views/sys/permissions/index.vue';
+import { PageWrapper } from '/@/components/Page';
 import { message } from 'ant-design-vue';
 export default defineComponent({
   components: {
@@ -81,6 +82,7 @@ export default defineComponent({
     TableAction,
     CreateAbpTenant,
     EditAbpTenant,
+    PageWrapper,
     // Permissions,
   },
   setup() {

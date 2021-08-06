@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PageWrapper title="用户管理">
     <BasicTable @register="registerTable">
       <template #form-custom> custom-slot </template>
 
@@ -67,10 +67,11 @@
     <ManageClaims @register="registerManageClaimsModal"
                   @reload="reload"
                   :bodyStyle="{ 'padding-top': '0' }" />
-  </div>
+  </PageWrapper>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { PageWrapper } from '/@/components/Page';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
 import { tableColumns, getTableListAsync, deleteUserAsync, searchFormSchema } from './index.ts';
 import { useModal } from '/@/components/Modal';
@@ -84,6 +85,7 @@ import { useDrawer } from '/@/components/Drawer';
 export default defineComponent({
   components: {
     BasicTable,
+    PageWrapper,
     TableAction,
     CreateAbpUser,
     EditAbpUser,
