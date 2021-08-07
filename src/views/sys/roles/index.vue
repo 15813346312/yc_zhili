@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper title="租户管理">
+  <PageWrapper title="角色管理">
     <BasicTable @register="registerTable">
       <template #form-custom> custom-slot </template>
 

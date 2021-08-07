@@ -91,12 +91,40 @@ export function moveAsync(id: string, params: any, mode: ErrorMessageMode = 'mod
   );
 }
 
-//获取单行组织机构
+//获取单行组织机构人员
 export function getOrganizationUnitUserAsync(params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.get<any>(
     {
       baseURL: globSetting.apiUrl,
       url: `${Api.BasicUrl}/${params.id}/users`,
+      params,
+    },
+    {
+      errorMessageMode: mode,
+    }
+  );
+}
+
+//添加组织机构人员
+export function createOrganizationUnitUserAsync(id:string,params: any, mode: ErrorMessageMode = 'modal') {
+  return defHttp.post<any>(
+    {
+      baseURL: globSetting.apiUrl,
+      url: `${Api.BasicUrl}/${id}/users`,
+      params,
+    },
+    {
+      errorMessageMode: mode,
+    }
+  );
+}
+
+//移除组织机构人员
+export function deleteOrganizationUnitUserAsync(id:string,params: any, mode: ErrorMessageMode = 'modal') {
+  return defHttp.put<any>(
+    {
+      baseURL: globSetting.apiUrl,
+      url: `${Api.BasicUrl}/${id}/users`,
       params,
     },
     {

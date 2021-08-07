@@ -1,33 +1,18 @@
 <template>
   <PageWrapper title="组织机构管理">
     <div class="flex">
-      <a-card class="w-1/6">
-        <a slot="extra"
-           @click="handlePlus(null)">
+      <a-card style="min-width:320px;">
+        <a @click="handlePlus(null)">
           添加根组织
         </a>
-        <BasicTree toolbar
-                   :treeData="tree2"
-                   draggable
-                   @dragenter="onDragEnter"
-                   @drop="onDrop"
-                   @select="selectChange"
-                   :renderIcon="createIcon"
-                   :actionList="actionList">
+        <BasicTree toolbar :treeData="tree2" draggable @dragenter="onDragEnter" @drop="onDrop" @select="selectChange" :renderIcon="createIcon" :actionList="actionList">
         </BasicTree>
       </a-card>
       <a-card class="w-1/1">
-        <a-tabs default-active-key="1"
-                @change="callback">
-          <a-tab-pane key="1"
-                      tab="成员">
-
-            <BasicTable :searchInfo="searchInfo"
-                        @register="registerOrganizationUnitUserTable">
+       <PageWrapper :title="selectRowName">
+          <BasicTable :searchInfo="searchInfo" @register="registerOrganizationUnitUserTable">
               <template #toolbar>
-                <a-button type="primary"
-                          v-auth="'AbpIdentity.OrganizationUnits.ManageUsers'"
-                          @click="openCreateOrganizationUnitsUserModal">添加成员</a-button>
+                <a-button type="primary" v-auth="'AbpIdentity.OrganizationUnits.ManageUsers'" @click="openCreateOrganizationUnitsUserModal">添加成员</a-button>
               </template>
               <template #action="{ record }">
                 <TableAction :actions="[
@@ -43,19 +28,22 @@
           ]" />
               </template>
             </BasicTable>
+        <!-- <a-tabs default-active-key="1" @change="callback">
+          <a-tab-pane key="1" tab="成员">
+
+
 
           </a-tab-pane>
-          <a-tab-pane key="2"
-                      tab="角色"
-                      force-render>
+          <a-tab-pane key="2" tab="角色" force-render>
             Content of Tab Pane 2
           </a-tab-pane>
 
-        </a-tabs>
+        </a-tabs> -->
+        </PageWrapper>
       </a-card>
-      <CreateOrganizationUnits @register="registerCreateOrganizationUnitsModal"
-                               @reload="loadTree"
-                               :bodyStyle="{ 'padding-top': '0' }" />
+      <CreateOrganizationUnits @register="registerCreateOrganizationUnitsModal" @reload="loadTree" :bodyStyle="{ 'padding-top': '0' }" />
+      <AddOrganizationUnitUser @register="registerAddOrganizationUnitUserModal" @reloadUser="reloadUserAsync" :bodyStyle="{ 'padding-top': '0' }" />
+
     </div>
 
   </PageWrapper>
@@ -69,16 +57,18 @@ import { useUserStore } from '/@/store/modules/user';
 import CreateOrganizationUnits from './createOrganizationUnits.vue';
 import { useModal } from '/@/components/Modal';
 import { BasicTable, TableAction, useTable } from '/@/components/Table';
+import AddOrganizationUnitUser from './addOrganizationUnitUser.vue'
 import {
   getAllListAsync,
   deleteOrganizationUnitAsync,
   moveAsync,
   getOrganizationUnitUserAsync,
+  deleteOrganizationUnitUserAsync
 } from '/@/api/sys/organizationUnits';
 import { cloneDeep } from 'lodash-es';
 import { message, Modal } from 'ant-design-vue';
 export default defineComponent({
-  components: { BasicTree, PageWrapper, CreateOrganizationUnits, BasicTable, TableAction },
+  components: { BasicTree, PageWrapper, CreateOrganizationUnits, BasicTable, TableAction ,AddOrganizationUnitUser},
   setup() {
     const userColumns = [
       {
@@ -93,6 +83,10 @@ export default defineComponent({
         title: '邮箱',
         dataIndex: 'email',
       },
+       {
+        title: '电话',
+        dataIndex: 'phoneNumber',
+      }
     ];
     const searchInfo = ref<Recordable>();
     const [registerOrganizationUnitUserTable, { reload: reloadUser }] = useTable({
@@ -100,10 +94,15 @@ export default defineComponent({
       api: getOrganizationUnitUserAsync,
       columns: userColumns,
       immediate: false,
+      //  useSearchForm: true,
+      // formConfig: {
+      //   labelWidth: 120,
+      //   schemas: searchFormSchema,
+      // },
       handleSearchInfoFn(info) {
         return info;
       },
-      // showTableSetting: true,
+       showTableSetting: false,
       actionColumn: {
         width: 100,
         title: '操作',
@@ -117,6 +116,9 @@ export default defineComponent({
     const userData = ref<any>([]);
     const userStore = useUserStore();
     const [registerCreateOrganizationUnitsModal, { openModal: openCreateOrganizationUnitsModal }] =
+      useModal();
+
+const [registerAddOrganizationUnitUserModal, { openModal: openAddOrganizationUnitUserModal }] =
       useModal();
 
     const tree2 = ref<TreeItem[]>([]);
@@ -261,23 +263,26 @@ export default defineComponent({
 
     //设置图标
     function createIcon({ level }) {
-      return 'ion:home';
-      // if (level === 1) {
-      //   return 'ion:git-compare-outline';
-      // }
-      // if (level === 2) {
-      //   return 'ion:home';
-      // }
-      // if (level === 3) {
-      //   return 'ion:airplane';
-      // }
+      switch (level) {
+        case 1:
+          return 'ion:home';
+        default:
+          return 'ion:git-compare-outline';
+      }
     }
-    let selectId;
+    let selectRow;
+    let selectRowName=ref<string>("当前部门:无");
     function selectChange(info) {
+      if(info.length>0){
       var id = info[0];
-      selectId = id;
-      reloadUser({ searchInfo: { id } });
+      selectRow= basicTable.value.find((r) => r.id ==  info[0]);
+      selectRowName.value=selectRow.displayName+'-'+selectRow.id
+         reloadUser({ searchInfo: { id } });
+      }
     }
+    function  reloadUserAsync(){
+        reloadUser({ searchInfo: { id:selectRow.id } });
+    };
     let key;
     //tab切换
     function callback(k) {
@@ -286,11 +291,24 @@ export default defineComponent({
 
     //移除组织用户
     function handleDeleteUser(record: Recordable) {
+      let  arr =[];
+      arr.push(record.id)
+        deleteOrganizationUnitUserAsync(selectRow.id,{userIds:arr}).then(()=>{
+           message.success('移除成功');
+            reloadUserAsync()
+        })
       console.log(record);
     }
     //打开添加成员弹窗
     function openCreateOrganizationUnitsUserModal() {
-      console.log('打开添加成员弹窗');
+
+      if(selectRow){
+         openAddOrganizationUnitUserModal(true,selectRow)
+      }
+      else{
+          message.warning('请先选择组织');
+      }
+
     }
     return {
       onDragEnter,
@@ -300,6 +318,7 @@ export default defineComponent({
       createIcon,
       tree2,
       loadTree,
+      reloadUserAsync,
       handlePlus,
       handleDelete,
       actionList,
@@ -311,6 +330,10 @@ export default defineComponent({
       registerOrganizationUnitUserTable,
       selectChange,
       searchInfo,
+      selectRow,
+      selectRowName,
+      registerAddOrganizationUnitUserModal,
+      openAddOrganizationUnitUserModal
     };
   },
   created() {
