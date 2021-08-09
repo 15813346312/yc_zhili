@@ -45,6 +45,17 @@ const system: AppRouteModule = {
         icon: 'ant-design:gold',
       },
     },
+    {
+      path: 'identityClaimTypes',
+      name: 'IdentityClaimTypes',
+      component: () => import('/@/views/sys/identityClaimTypes/index.vue'),
+      meta: {
+        title: '声明类型',
+        // affix: true,
+        roles: ['AbpIdentity.IdentityClaimTypes'],
+        icon: 'ant-design:file',
+      },
+    },
     // {
     //   path: 'settings',
     //   name: 'Settings',

@@ -18,6 +18,10 @@ const system: MenuModule = {
         path: 'organizationUnits',
         name: '组织机构',
       },
+      {
+        path: 'identityClaimTypes',
+        name: '声明类型',
+      },
       // {
       //   path: 'tenants',
       //   name: '租户管理',
