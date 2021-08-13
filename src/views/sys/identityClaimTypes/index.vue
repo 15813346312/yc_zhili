@@ -19,12 +19,12 @@
         </a-tag>
       </template>
       <template #valueType="{ record }">
-         <span v-if="record.valueType==0">String</span>
-         <span v-else-if="record.valueType==1">Int</span>
-         <span v-else-if="record.valueType==2">Boolean</span>
-         <span v-else-if="record.valueType==3">DateTime</span>
+        <span v-if="record.valueType==0">String</span>
+        <span v-else-if="record.valueType==1">Int</span>
+        <span v-else-if="record.valueType==2">Boolean</span>
+        <span v-else-if="record.valueType==3">DateTime</span>
       </template>
-   <template #isStatic="{ record }">
+      <template #isStatic="{ record }">
         <a-tag color="green"
                v-if="record.isStatic">
           是
@@ -59,11 +59,11 @@
       </template>
     </BasicTable>
     <CreateIdentityClaimTypes @register="registerCreateIdentityClaimTypesModal"
-                     @reload="reload"
-                     :bodyStyle="{ 'padding-top': '0' }" />
+                              @reload="reload"
+                              :bodyStyle="{ 'padding-top': '0' }" />
     <EditIdentityClaimTypes @register="registerEditIdentityClaimTypesModal"
-                   @reload="reload"
-                   :bodyStyle="{ 'padding-top': '0' }" />
+                            @reload="reload"
+                            :bodyStyle="{ 'padding-top': '0' }" />
     <!-- <Permissions @register="registerPermissionsModal"
                  @reload="reload" /> -->
   </PageWrapper>
@@ -71,7 +71,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
-import { tableColumns, getTableListAsync, deleteClaimTypesAsync, searchFormSchema } from './index.ts';
+import {
+  tableColumns,
+  getTableListAsync,
+  deleteClaimTypesAsync,
+  searchFormSchema,
+} from './index.ts';
 import { useModal } from '/@/components/Modal';
 import CreateIdentityClaimTypes from './createIdentityClaimTypes.vue';
 import EditIdentityClaimTypes from './editIdentityClaimTypes.vue';
@@ -88,8 +93,12 @@ export default defineComponent({
     // Permissions,
   },
   setup() {
-    const [registerCreateIdentityClaimTypesModal, { openModal: openCreateIdentityClaimTypesModal }] = useModal();
-    const [registerEditIdentityClaimTypesModal, { openModal: openEditIdentityClaimTypesModal }] = useModal();
+    const [
+      registerCreateIdentityClaimTypesModal,
+      { openModal: openCreateIdentityClaimTypesModal },
+    ] = useModal();
+    const [registerEditIdentityClaimTypesModal, { openModal: openEditIdentityClaimTypesModal }] =
+      useModal();
 
     // const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
     const [registerTable, { reload }] = useTable({
@@ -127,10 +136,6 @@ export default defineComponent({
     };
     // 删除用户
     const handleDelete = async (record: Recordable) => {
-      if (record.name == 'admin') {
-        message.error('admin not delete');
-        return;
-      }
       await deleteClaimTypesAsync({ id: record.id, reload });
     };
 
