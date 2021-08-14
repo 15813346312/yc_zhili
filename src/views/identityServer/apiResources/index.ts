@@ -1,6 +1,6 @@
 import { FormSchema } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table';
-import moment from 'moment';
+// import moment from 'moment';
 
 import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
@@ -10,7 +10,7 @@ import {
   createApiResources,
   updateApiResources,
   getApiResourcesPagedList,
-} from '/@/api/sys/apiResources';
+} from '/@/api/identityServer/apiResources';
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
 const [openFullLoading, closeFullLoading] = useLoading({
@@ -51,52 +51,23 @@ export const createFormSchema: FormSchema[] = [
     component: 'Input',
     label: '名称',
     required: true,
+    componentProps: {
+      placeholder: '请输入名称',
+    },
     labelWidth: 100,
     colProps: {
       span: 24,
     },
   },
   {
-    field: 'required',
-    component: 'Checkbox',
-    label: '是否必填',
-    labelWidth: 100,
-    colProps: {
-      span: 24,
-    },
-  },
-  {
-    field: 'valueType',
-    component: 'Select',
-    label: '值类型',
+    field: 'displayName',
+    component: 'Input',
+    label: '显示名称',
     required: true,
     labelWidth: 100,
     componentProps: {
-      options: [
-        { label: 'String', value: 0 },
-        { label: 'Int', value: 1 },
-        { label: 'Boolean', value: 2 },
-        { label: 'DateTime', value: 3 },
-      ],
+      placeholder: '请输入显示名称',
     },
-    colProps: {
-      span: 24,
-    },
-  },
-  {
-    field: 'regex',
-    component: 'Input',
-    label: '正则',
-    labelWidth: 100,
-    colProps: {
-      span: 24,
-    },
-  },
-  {
-    field: 'regexDescription',
-    component: 'Input',
-    label: '正则描述',
-    labelWidth: 100,
     colProps: {
       span: 24,
     },
@@ -106,15 +77,30 @@ export const createFormSchema: FormSchema[] = [
     component: 'Input',
     label: '描述',
     labelWidth: 100,
+    componentProps: {
+      placeholder: '请输入描述',
+    },
     colProps: {
       span: 24,
     },
   },
   {
-    field: 'isStatic',
-    component: 'Checkbox',
-    label: '是否静态',
+    field: 'allowedAccessTokenSigningAlgorithms',
+    component: 'Input',
+    label: '算法',
     labelWidth: 100,
+    componentProps: {
+      placeholder: '允许的访问令牌签名算法',
+    },
+    colProps: {
+      span: 24,
+    },
+  },
+  {
+    field: 'showInDiscoveryDocument',
+    component: 'Checkbox',
+    label: '在发现文档中显示',
+    labelWidth: 120,
     colProps: {
       span: 24,
     },

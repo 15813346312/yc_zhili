@@ -10,6 +10,23 @@ enum Api {
  * @description:
  * 分页
  */
+export function getApiResourcesList(params: any, mode: ErrorMessageMode = 'modal') {
+  return defHttp.get<any>(
+    {
+      baseURL: globSetting.apiUrl,
+      url: `/api/identity-server/apiScopes/all`,
+      params,
+    },
+    {
+      errorMessageMode: mode,
+    }
+  );
+}
+
+/**
+ * @description:
+ * 分页
+ */
 export function getApiResourcesPagedList(params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.get<any>(
     {
