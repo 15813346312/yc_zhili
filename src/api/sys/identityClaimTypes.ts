@@ -6,6 +6,23 @@ enum Api {
   BasicUrl = '/api/identity/claim-types',
 }
 
+
+/**
+ * @description:
+ * all
+ */
+ export function getClaimTypeList( mode: ErrorMessageMode = 'modal') {
+  return defHttp.get<any>(
+    {
+      baseURL: globSetting.apiUrl,
+      url:`${ Api.BasicUrl}/actived-list`
+    },
+    {
+      errorMessageMode: mode,
+    }
+  );
+}
+
 /**
  * @description:
  * 分页
