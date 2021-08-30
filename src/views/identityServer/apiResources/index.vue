@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper title="声明类型">
+  <PageWrapper title="API资源">
     <BasicTable @register="registerTable">
       <template #form-custom> custom-slot </template>
 
