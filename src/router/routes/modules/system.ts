@@ -82,7 +82,7 @@ const system: AppRouteModule = {
         {
           path: 'apiResources',
           name: 'ApiResources',
-          component: () => import('/@/views/identityServer/apiResources/index.vue'),
+          component: () => import('/@/views/sys/identityServer/apiResources/index.vue'),
           meta: {
             title: 'API资源',
             roles: ['AbpIdentityServer.ApiResources'],
@@ -92,7 +92,7 @@ const system: AppRouteModule = {
         {
           path: 'clients',
           name: 'Clients',
-          component: () => import('/@/views/identityServer/clients/index.vue'),
+          component: () => import('/@/views/sys/identityServer/clients/index.vue'),
           meta: {
             title: '客户端',
             roles: ['AbpIdentityServer.Clients'],
@@ -102,7 +102,7 @@ const system: AppRouteModule = {
         {
           path: 'identityResources',
           name: 'IdentityResources',
-          component: () => import('/@/views/identityServer/identityResources/index.vue'),
+          component: () => import('/@/views/sys/identityServer/identityResources/index.vue'),
           meta: {
             title: 'Identity资源',
             roles: ['AbpIdentityServer.IdentityResources'],

@@ -31,7 +31,7 @@ const system: MenuModule = {
 
       {
         path: '/identityServer',
-        name: 'IdentityServer管理',
+        name: '身份资源管理',
         children: [
           {
             path: 'apiResources',
