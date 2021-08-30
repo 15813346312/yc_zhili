@@ -4,17 +4,17 @@ import { t } from '/@/hooks/web/useI18n';
 const menu: MenuModule = {
   orderNo: 10,
   menu: {
-    name: t('routes.dashboard.dashboard'),
+    name: '主页',
     path: '/dashboard',
 
     children: [
       {
-        path: 'analysis',
-        name: t('routes.dashboard.analysis'),
+        path: 'workbench',
+        name: '工作台',
       },
       {
-        path: 'workbench',
-        name: t('routes.dashboard.workbench'),
+        path: 'analysis',
+        name: '分析页',
       },
     ],
   },
