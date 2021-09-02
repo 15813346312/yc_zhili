@@ -3,19 +3,19 @@ import { useGlobSetting } from '/@/hooks/setting/index';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 const globSetting = useGlobSetting();
 enum Api {
-  BasicUrl = '/api/identity/claim-types',
+  BasicUrl = '/api/identity-server/api-resources',
 }
-
 
 /**
  * @description:
- * all
+ * 分页
  */
- export function getClaimTypeList( mode: ErrorMessageMode = 'modal') {
+export function getApiResourcesList(params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.get<any>(
     {
       baseURL: globSetting.apiUrl,
-      url:`${ Api.BasicUrl}/actived-list`
+      url: `/api/identity-server/apiScopes/all`,
+      params,
     },
     {
       errorMessageMode: mode,
@@ -27,7 +27,7 @@ enum Api {
  * @description:
  * 分页
  */
-export function getClaimTypesPagedList(params: any, mode: ErrorMessageMode = 'modal') {
+export function getApiResourcesPagedList(params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.get<any>(
     {
       baseURL: globSetting.apiUrl,
@@ -44,7 +44,7 @@ export function getClaimTypesPagedList(params: any, mode: ErrorMessageMode = 'mo
  * @description:
  * 获取单行
  */
-export function getClaimTypes(id: string, mode: ErrorMessageMode = 'modal') {
+export function getApiResources(id: string, mode: ErrorMessageMode = 'modal') {
   return defHttp.get<any>(
     {
       baseURL: globSetting.apiUrl,
@@ -60,7 +60,7 @@ export function getClaimTypes(id: string, mode: ErrorMessageMode = 'modal') {
  * @description:
  * 删除
  */
-export function deleteClaimTypes(id: string, mode: ErrorMessageMode = 'modal') {
+export function deleteApiResources(id: string, mode: ErrorMessageMode = 'modal') {
   return defHttp.delete<any>(
     {
       baseURL: globSetting.apiUrl,
@@ -76,7 +76,7 @@ export function deleteClaimTypes(id: string, mode: ErrorMessageMode = 'modal') {
  * @description:
  * 创建
  */
-export function createClaimTypes(params: any, mode: ErrorMessageMode = 'modal') {
+export function createApiResources(params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.post<any>(
     {
       baseURL: globSetting.apiUrl,
@@ -93,7 +93,7 @@ export function createClaimTypes(params: any, mode: ErrorMessageMode = 'modal') 
  * @description:
  * 修改
  */
-export function updateClaimTypes(id: string, params: any, mode: ErrorMessageMode = 'modal') {
+export function updateApiResources(id: string, params: any, mode: ErrorMessageMode = 'modal') {
   return defHttp.put<any>(
     {
       baseURL: globSetting.apiUrl,
