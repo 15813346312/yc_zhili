@@ -11,13 +11,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, useContext, defineEmit } from 'vue';
+import { defineComponent, useContext, defineEmit } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
 import { BasicForm, useForm } from '/@/components/Form/index';
-import { createUserClaimsAsync, updateUserClaimsAsync } from './index.ts';
+import { createUserClaimsAsync } from './index';
 // import { IdentityUserDto, IdentityUserCreateDto } from '/@/services/ServiceProxies';
 import { useI18n } from '/@/hooks/web/useI18n';
-import { Row } from 'ant-design-vue';
 export default defineComponent({
   name: 'CreateAbpUser',
   components: {
@@ -40,7 +39,7 @@ export default defineComponent({
         claimValue: data.record.claimValue,
       });
     });
-    const [registerUserForm, { getFieldsValue, setFieldsValue, validate, resetFields }] = useForm({
+    const [registerUserForm, { getFieldsValue, setFieldsValue, validate }] = useForm({
       labelWidth: 120,
       schemas: [
         {
@@ -79,7 +78,8 @@ export default defineComponent({
         let request = getFieldsValue(); //as IdentityUserCreateDto;
 
         if (validate()) {
-          createUserClaimsAsync(id, request, changeOkLoading, validate, closeModal);
+          // createUserClaimsAsync(id, request, changeOkLoading, validate, closeModal);
+          createUserClaimsAsync(id, request);
 
           ctx.emit('reloadTable');
           closeModal();

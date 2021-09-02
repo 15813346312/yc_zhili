@@ -6,6 +6,8 @@ import type {
   PropType as VuePropType,
 } from 'vue';
 
+import Vue from 'vue'
+
 declare global {
   const __APP_INFO__: {
     pkg: {
@@ -96,4 +98,7 @@ declare module 'vue' {
   export type JSXComponent<Props = any> =
     | { new (): ComponentPublicInstance<Props> }
     | FunctionalComponent<Props>;
+}
+declare module 'vue' {
+  export default Vue
 }

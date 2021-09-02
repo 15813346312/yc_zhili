@@ -9,7 +9,7 @@ module.exports = {
     sourceType: 'module', //设置为 "script" (默认) 或 "module"（如果你的代码是 ECMAScript 模块)。
   },
   extends: [
-    'airbnb-base',
+    // 'airbnb-base',
     'eslint:recommended',
     'plugin:vue/essential',
     'plugin:prettier/recommended',

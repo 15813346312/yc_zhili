@@ -1,27 +1,23 @@
 <template>
-  <BasicModal title="编辑用户"
-              :canFullscreen="false"
-              @ok="submit"
-              @register="registerModal"
-              @visible-change="visibleChange"
-              :bodyStyle="{ 'padding-top': '0' }">
+  <BasicModal
+    title="编辑用户"
+    :canFullscreen="false"
+    @ok="submit"
+    @register="registerModal"
+    @visible-change="visibleChange"
+    :bodyStyle="{ 'padding-top': '0' }"
+  >
     <div>
       <Tabs>
-        <TabPane tab="用户信息"
-                 key="1">
+        <TabPane tab="用户信息" key="1">
           <BasicForm @register="registerUserForm" />
         </TabPane>
-        <TabPane tab="角色"
-                 key="2">
-          <a-checkbox-group @change="onRoleSelectedChange"
-                            v-model:value="defaultRolesRef">
-            <a-checkbox v-for="(item, index) in rolesRef"
-                        :key="index"
-                        :value="item.name">
+        <TabPane tab="角色" key="2">
+          <a-checkbox-group @change="onRoleSelectedChange" v-model:value="defaultRolesRef">
+            <a-checkbox v-for="(item, index) in rolesRef" :key="index" :value="item.name">
               {{ item.name }}
             </a-checkbox>
           </a-checkbox-group>
-
         </TabPane>
       </Tabs>
     </div>
@@ -29,104 +25,104 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, useContext, defineEmit } from 'vue';
-import { BasicModal, useModalInner } from '/@/components/Modal';
-import { BasicForm, useForm } from '/@/components/Form/index';
-import { Tabs, Checkbox } from 'ant-design-vue';
-import {
-  editFormSchema,
-  getAllRoleAsync,
-  updateUserAsync,
-  getRolesByUserIdAsync,
-  getUserAsync,
-} from './index.ts';
-export default defineComponent({
-  name: 'EditAbpUser',
-  components: {
-    BasicModal,
-    BasicForm,
-    Tabs,
-    Checkbox,
-    TabPane: Tabs.TabPane,
-  },
-  setup() {
-    // 加载父组件方法
-    defineEmit(['reload']);
-    const ctx = useContext();
-    const [registerUserForm, { getFieldsValue, validate, setFieldsValue }] = useForm({
-      labelWidth: 120,
-      schemas: editFormSchema,
-      showActionButtonGroup: false,
-    });
-    let currentUserInfo;
-    const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
-      currentUserInfo = data.record;
-
-      setFieldsValue({
-        name: data.record.name,
-        userName: data.record.userName,
-        email: data.record.email,
-        phoneNumber: data.record.phoneNumber,
-        lockoutEnabled: data.record.lockoutEnabled,
+  import { defineComponent, reactive, useContext, defineEmit } from 'vue';
+  import { BasicModal, useModalInner } from '/@/components/Modal';
+  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { Tabs, Checkbox } from 'ant-design-vue';
+  import {
+    editFormSchema,
+    getAllRoleAsync,
+    updateUserAsync,
+    getRolesByUserIdAsync,
+    getUserAsync,
+  } from './index';
+  export default defineComponent({
+    name: 'EditAbpUser',
+    components: {
+      BasicModal,
+      BasicForm,
+      Tabs,
+      Checkbox,
+      TabPane: Tabs.TabPane,
+    },
+    setup() {
+      // 加载父组件方法
+      defineEmit(['reload']);
+      const ctx = useContext();
+      const [registerUserForm, { getFieldsValue, validate, setFieldsValue }] = useForm({
+        labelWidth: 120,
+        schemas: editFormSchema,
+        showActionButtonGroup: false,
       });
-    });
-    let roles: any = [];
-    let defaultRoles: string[] = [];
-    let rolesRef = reactive(roles);
-    let defaultRolesRef = reactive(defaultRoles);
-    const visibleChange = async (visible: boolean) => {
-      if (visible) {
-        const roles = await getAllRoleAsync();
-        const userRoles = await getRolesByUserIdAsync(currentUserInfo.id as string);
+      let currentUserInfo;
+      const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
+        currentUserInfo = data.record;
 
-        currentUserInfo = await getUserAsync(currentUserInfo.id);
-        userRoles.items?.forEach((e) => {
-          defaultRolesRef.push(e.name as string);
+        setFieldsValue({
+          name: data.record.name,
+          userName: data.record.userName,
+          email: data.record.email,
+          phoneNumber: data.record.phoneNumber,
+          lockoutEnabled: data.record.lockoutEnabled,
         });
-        roles.items?.forEach((e) => {
-          rolesRef.push(e);
-        });
-      } else {
-        rolesRef.splice(0, rolesRef.length);
-        defaultRolesRef.splice(0, defaultRolesRef.length);
-      }
-    };
-    // 选择角色
-    const onRoleSelectedChange = (value: string[]) => {
-      defaultRolesRef.splice(0, defaultRolesRef.length);
-      value.forEach((e) => {
-        defaultRolesRef.push(e);
       });
-    };
-    const submit = async () => {
-      try {
-        if (validate()) {
-          let request = getFieldsValue();
-          request.id = currentUserInfo.id;
-          request.surname = currentUserInfo.surname;
-          request.concurrencyStamp = currentUserInfo.concurrencyStamp;
-          request.roleNames = defaultRolesRef;
-          await updateUserAsync({ request, changeOkLoading, validate, closeModal });
-          ctx.emit('reload');
+      let roles: any = [];
+      let defaultRoles: string[] = [];
+      let rolesRef = reactive(roles);
+      let defaultRolesRef = reactive(defaultRoles);
+      const visibleChange = async (visible: boolean) => {
+        if (visible) {
+          const roles = await getAllRoleAsync();
+          const userRoles = await getRolesByUserIdAsync(currentUserInfo.id as string);
+
+          currentUserInfo = await getUserAsync(currentUserInfo.id);
+          userRoles.items?.forEach((e) => {
+            defaultRolesRef.push(e.name as string);
+          });
+          roles.items?.forEach((e) => {
+            rolesRef.push(e);
+          });
+        } else {
+          rolesRef.splice(0, rolesRef.length);
+          defaultRolesRef.splice(0, defaultRolesRef.length);
         }
-      } catch (error) {
-        changeOkLoading(false);
-      }
-    };
-    return {
-      registerModal,
-      registerUserForm,
-      submit,
-      rolesRef,
-      onRoleSelectedChange,
-      visibleChange,
-      defaultRolesRef,
-    };
-  },
-});
+      };
+      // 选择角色
+      const onRoleSelectedChange = (value: string[]) => {
+        defaultRolesRef.splice(0, defaultRolesRef.length);
+        value.forEach((e) => {
+          defaultRolesRef.push(e);
+        });
+      };
+      const submit = async () => {
+        try {
+          if (validate()) {
+            let request = getFieldsValue();
+            request.id = currentUserInfo.id;
+            request.surname = currentUserInfo.surname;
+            request.concurrencyStamp = currentUserInfo.concurrencyStamp;
+            request.roleNames = defaultRolesRef;
+            await updateUserAsync({ request, changeOkLoading, validate, closeModal });
+            ctx.emit('reload');
+          }
+        } catch (error) {
+          changeOkLoading(false);
+        }
+      };
+      return {
+        registerModal,
+        registerUserForm,
+        submit,
+        rolesRef,
+        onRoleSelectedChange,
+        visibleChange,
+        defaultRolesRef,
+      };
+    },
+  });
 </script>
 <style lang="less" scoped>
-.ant-checkbox-wrapper + .ant-checkbox-wrapper {
-  margin-left: 0px;
-}
+  .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px;
+  }
 </style>

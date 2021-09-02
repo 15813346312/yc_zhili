@@ -4,9 +4,12 @@
       <template #form-custom> custom-slot </template>
 
       <template #toolbar>
-        <a-button type="primary"
-                  v-auth="'AbpTenantManagement.Tenants.Create'"
-                  @click="openCreateAbpTenantModal">新增</a-button>
+        <a-button
+          type="primary"
+          v-auth="'AbpTenantManagement.Tenants.Create'"
+          @click="openCreateAbpTenantModal"
+          >新增</a-button
+        >
       </template>
       <!-- <template #isDefault="{ record }">
         <a-tag color="green"
@@ -35,117 +38,121 @@
               onClick: openPermissions.bind(null, record),
             }, -->
       <template #action="{ record }">
-
-        <TableAction :actions="[
+        <TableAction
+          :actions="[
             {
-              label:'编辑',
-              auth:['AbpTenantManagement.Tenants.Update'],
+              label: '编辑',
+              auth: ['AbpTenantManagement.Tenants.Update'],
               onClick: handleEdit.bind(null, record),
             },
 
             {
-             label:'删除',
+              label: '删除',
               color: 'error',
-              auth:['AbpTenantManagement.Tenants.Delete'],
+              auth: ['AbpTenantManagement.Tenants.Delete'],
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
               },
-
             },
-          ]" />
+          ]"
+        />
       </template>
     </BasicTable>
-    <CreateAbpTenant @register="registerCreateAbpTenantModal"
-                     @reload="reload"
-                     :bodyStyle="{ 'padding-top': '0' }" />
-    <EditAbpTenant @register="registerEditAbpTenantModal"
-                   @reload="reload"
-                   :bodyStyle="{ 'padding-top': '0' }" />
+    <CreateAbpTenant
+      @register="registerCreateAbpTenantModal"
+      @reload="reload"
+      :bodyStyle="{ 'padding-top': '0' }"
+    />
+    <EditAbpTenant
+      @register="registerEditAbpTenantModal"
+      @reload="reload"
+      :bodyStyle="{ 'padding-top': '0' }"
+    />
     <!-- <Permissions @register="registerPermissionsModal"
                  @reload="reload" /> -->
   </PageWrapper>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { BasicTable, useTable, TableAction } from '/@/components/Table';
-import { tableColumns, getTableListAsync, deleteTenantAsync, searchFormSchema } from './index.ts';
-import { useModal } from '/@/components/Modal';
-import CreateAbpTenant from './createAbpTenant.vue';
-import EditAbpTenant from './editAbpTenant.vue';
-// import Permissions from '/@/views/sys/permissions/index.vue';
-import { PageWrapper } from '/@/components/Page';
-import { message } from 'ant-design-vue';
-export default defineComponent({
-  components: {
-    BasicTable,
-    TableAction,
-    CreateAbpTenant,
-    EditAbpTenant,
-    PageWrapper,
-    // Permissions,
-  },
-  setup() {
-    const [registerCreateAbpTenantModal, { openModal: openCreateAbpTenantModal }] = useModal();
-    const [registerEditAbpTenantModal, { openModal: openEditAbpTenantModal }] = useModal();
-
-    // const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
-    const [registerTable, { reload }] = useTable({
-      title: '',
-      api: getTableListAsync,
-      columns: tableColumns,
-      useSearchForm: true,
-      formConfig: {
-        labelWidth: 120,
-        schemas: searchFormSchema,
-      },
-      showTableSetting: true,
-      rowSelection: { type: 'checkbox' },
-      actionColumn: {
-        width: 200,
-        title: '操作',
-        dataIndex: 'action',
-        slots: {
-          customRender: 'action',
+  import { defineComponent } from 'vue';
+  import { BasicTable, useTable, TableAction } from '/@/components/Table';
+  import { tableColumns, getTableListAsync, deleteTenantAsync, searchFormSchema } from './index';
+  import { useModal } from '/@/components/Modal';
+  import CreateAbpTenant from './createAbpTenant.vue';
+  import EditAbpTenant from './editAbpTenant.vue';
+  // import Permissions from '/@/views/sys/permissions/index.vue';
+  import { PageWrapper } from '/@/components/Page';
+  import { message } from 'ant-design-vue';
+  export default defineComponent({
+    components: {
+      BasicTable,
+      TableAction,
+      CreateAbpTenant,
+      EditAbpTenant,
+      PageWrapper,
+      // Permissions,
+    },
+    setup() {
+      const [registerCreateAbpTenantModal, { openModal: openCreateAbpTenantModal }] = useModal();
+      const [registerEditAbpTenantModal, { openModal: openEditAbpTenantModal }] = useModal();
+      // const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
+      const [registerTable, { reload }] = useTable({
+        title: '',
+        api: getTableListAsync,
+        columns: tableColumns,
+        useSearchForm: true,
+        formConfig: {
+          labelWidth: 120,
+          schemas: searchFormSchema,
         },
-        fixed: 'right',
-      },
-    });
-    // 编辑用户
-    const handleEdit = (record: Recordable) => {
-      openEditAbpTenantModal(true, {
-        record: record,
+        showTableSetting: true,
+        rowSelection: { type: 'checkbox' },
+        actionColumn: {
+          width: 200,
+          title: '操作',
+          dataIndex: 'action',
+          slots: {
+            customRender: 'action',
+          },
+          fixed: 'right',
+        },
       });
-    };
-    const openPermissions = (record: recordable) => {
-      // openPermissionsModal(true, {
-      //   name: 'R',
-      //   key: record.name,
-      // });
-    };
-    // 删除用户
-    const handleDelete = async (record: Recordable) => {
-      if (record.name == 'admin') {
-        message.error('admin not delete');
-        return;
-      }
-      await deleteTenantAsync({ id: record.id, reload });
-    };
+      // 编辑用户
+      const handleEdit = (record: Recordable) => {
+        openEditAbpTenantModal(true, {
+          record: record,
+        });
+      };
+      const openPermissions = (record: Recordable) => {
+        console.log(record);
+        // openPermissionsModal(true, {
+        //   name: 'R',
+        //   key: record.name,
+        // });
+      };
+      // 删除用户
+      const handleDelete = async (record: Recordable) => {
+        if (record.name == 'admin') {
+          message.error('admin not delete');
+          return;
+        }
+        await deleteTenantAsync({ id: record.id, reload });
+      };
 
-    // function getFormValues() {
-    //   console.log(reload ().getFieldsValue());
-    // }
-    return {
-      registerTable,
-      registerCreateAbpTenantModal,
-      openCreateAbpTenantModal,
-      registerEditAbpTenantModal,
-      handleEdit,
-      // registerPermissionsModal,
-      handleDelete,
-      reload,
-      openPermissions,
-    };
-  },
-});
+      // function getFormValues() {
+      //   console.log(reload ().getFieldsValue());
+      // }
+      return {
+        registerTable,
+        registerCreateAbpTenantModal,
+        openCreateAbpTenantModal,
+        registerEditAbpTenantModal,
+        handleEdit,
+        // registerPermissionsModal,
+        handleDelete,
+        reload,
+        openPermissions,
+      };
+    },
+  });
 </script>
