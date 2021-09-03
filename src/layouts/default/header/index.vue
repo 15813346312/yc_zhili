@@ -41,12 +41,13 @@
 
       <FullScreen v-if="getShowFullScreen" :class="`${prefixCls}-action__item fullscreen-item`" />
 
-      <AppLocalePicker
+      <!-- 显示中英文切换 -->
+      <!-- <AppLocalePicker
         v-if="getShowLocalePicker"
         :reload="true"
         :showText="false"
         :class="`${prefixCls}-action__item`"
-      />
+      /> -->
 
       <UserDropDown :theme="getHeaderTheme" />
 

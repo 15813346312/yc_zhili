@@ -69,7 +69,7 @@ const setting: ProjectConfig = {
     // 显示全屏按钮
     showFullScreen: true,
     // 显示文档按钮
-    showDoc: false,
+    showDoc: true,
     // 显示消息中心按钮
     showNotice: false,
     // 显示菜单搜索按钮

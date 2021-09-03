@@ -8,7 +8,7 @@ const system: MenuModule = {
     children: [
       {
         path: '/systemManager',
-        name: '身份标识管理',
+        name: '身份管理',
         children: [
           {
             path: 'users',
@@ -18,45 +18,9 @@ const system: MenuModule = {
             path: 'roles',
             name: '角色管理',
           },
-          {
-            path: 'organizationUnits',
-            name: '组织机构',
-          },
-          {
-            path: 'identityClaimTypes',
-            name: '声明类型',
-          },
         ],
       },
 
-      {
-        path: '/identityServer',
-        name: '身份资源管理',
-        children: [
-          {
-            path: 'apiResources',
-            name: 'API资源',
-          },
-          {
-            path: 'clients',
-            name: '客户端',
-          },
-          {
-            path: 'identityResources',
-            name: 'Identity资源',
-          },
-        ],
-      },
-      {
-        path: '/tenant',
-        name: '租户管理',
-        children: [
-          {
-            path: 'tenants',
-            name: '租户管理',
-          },
-        ],
-      },
       {
         path: '/log',
         name: '系统日志',
@@ -71,15 +35,6 @@ const system: MenuModule = {
           },
         ],
       },
-
-      // {
-      //   path: 'tenants',
-      //   name: '租户管理',
-      // },
-      // {
-      //   path: 'settings',
-      //   name: '基础设置',
-      // },
     ],
   },
 };

@@ -20,40 +20,7 @@ const dashboard: AppRouteModule = {
       meta: {
         icon: 'ant-design:appstore',
 
-        title: '商品列表',
-        // roles: ['AbpIdentity.Users'],
-      },
-    },
-    {
-      path: 'specs',
-      name: 'Specs',
-      component: () => import('/@/views/good/specs/index.vue'),
-      meta: {
-        icon: 'ant-design:appstore',
-
-        title: '商品规格',
-        // roles: ['AbpIdentity.Users'],
-      },
-    },
-    {
-      path: 'brand',
-      name: 'Brand',
-      component: () => import('/@/views/good/brands/index.vue'),
-      meta: {
-        icon: 'ant-design:appstore',
-
-        title: '品牌列表',
-        // roles: ['AbpIdentity.Users'],
-      },
-    },
-    {
-      path: 'productCategorie',
-      name: 'ProductCategorie',
-      component: () => import('/@/views/good/productCategories/index.vue'),
-      meta: {
-        icon: 'ant-design:appstore',
-
-        title: '商品分类',
+        title: '标准路由',
         // roles: ['AbpIdentity.Users'],
       },
     },

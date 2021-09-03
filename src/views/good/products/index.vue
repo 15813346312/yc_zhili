@@ -1,5 +1,5 @@
 <template>
-  <div>商品列表</div>
+  <div>保证路由页面</div>
 </template>
 
 <script>

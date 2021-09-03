@@ -19,7 +19,7 @@ const system: AppRouteModule = {
       redirect: '/system/users',
       meta: {
         icon: 'ant-design:user',
-        title: '身份标识管理',
+        title: '身份管理',
       },
       children: [
         {
@@ -42,94 +42,6 @@ const system: AppRouteModule = {
             // affix: true,
             roles: ['AbpIdentity.Roles'],
             icon: 'ant-design:usergroup-add',
-          },
-        },
-        {
-          path: 'organizationUnits',
-          name: 'OrganizationUnits',
-          component: () => import('/@/views/sys/organizationUnits/index.vue'),
-          meta: {
-            title: '组织机构',
-            // affix: true,
-            roles: ['AbpIdentity.OrganizationUnits'],
-            icon: 'ant-design:gold',
-          },
-        },
-        {
-          path: 'identityClaimTypes',
-          name: 'IdentityClaimTypes',
-          component: () => import('/@/views/sys/identityClaimTypes/index.vue'),
-          meta: {
-            title: '声明类型',
-            // affix: true,
-            roles: ['AbpIdentity.IdentityClaimTypes'],
-            icon: 'ant-design:file',
-          },
-        },
-      ],
-    },
-
-    {
-      path: '/identityServer',
-      name: 'IdentityServer',
-      // component: LAYOUT,
-      redirect: '/identityServer/apiResources',
-      meta: {
-        icon: 'ant-design:cloud-server',
-        title: 'IdentityServer管理',
-      },
-      children: [
-        {
-          path: 'apiResources',
-          name: 'ApiResources',
-          component: () => import('/@/views/sys/identityServer/apiResources/index.vue'),
-          meta: {
-            title: 'API资源',
-            roles: ['AbpIdentityServer.ApiResources'],
-            icon: 'ant-design:container',
-          },
-        },
-        {
-          path: 'clients',
-          name: 'Clients',
-          component: () => import('/@/views/sys/identityServer/clients/index.vue'),
-          meta: {
-            title: '客户端',
-            roles: ['AbpIdentityServer.Clients'],
-            icon: 'ant-design:database',
-          },
-        },
-        {
-          path: 'identityResources',
-          name: 'IdentityResources',
-          component: () => import('/@/views/sys/identityServer/identityResources/index.vue'),
-          meta: {
-            title: 'Identity资源',
-            roles: ['AbpIdentityServer.IdentityResources'],
-            icon: 'ant-design:build',
-          },
-        },
-      ],
-    },
-    {
-      path: '/tenant',
-      name: 'Tenant',
-      // component: LAYOUT,
-      redirect: '/system/tenants',
-      meta: {
-        icon: 'ant-design:cloud-server',
-        title: '租户管理',
-      },
-      children: [
-        {
-          path: 'tenants',
-          name: 'Tenants',
-          component: () => import('/@/views/sys/tenants/index.vue'),
-          meta: {
-            title: '租户管理',
-            // affix: true,
-            roles: ['AbpTenantManagement.Tenants'],
-            icon: 'ant-design:cloud-server',
           },
         },
       ],
