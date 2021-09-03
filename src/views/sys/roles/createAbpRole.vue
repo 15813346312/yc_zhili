@@ -36,7 +36,7 @@ export default defineComponent({
     const { t } = useI18n();
     const [registerModal, { changeOkLoading, closeModal }] = useModalInner();
     const [registerUserForm, { getFieldsValue, validate, resetFields }] = useForm({
-      labelWidth: 120,
+      labelWidth: 100,
       schemas: createFormSchema,
       showActionButtonGroup: false,
     });

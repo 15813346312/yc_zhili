@@ -30,7 +30,7 @@
       defineEmit(['reload']);
       const ctx = useContext();
       const [registerUserForm, { getFieldsValue, validate, setFieldsValue }] = useForm({
-        labelWidth: 120,
+        labelWidth: 100,
         schemas: editFormSchema,
         showActionButtonGroup: false,
       });

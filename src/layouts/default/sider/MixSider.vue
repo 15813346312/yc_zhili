@@ -1,5 +1,7 @@
 <template>
-  <div :class="`${prefixCls}-dom`" :style="getDomStyle"></div>
+  <div :class="`${prefixCls}-dom`" :style="getDomStyle">
+    <img class="logo-image" src="../../../assets/images/logo.png" alt="">
+  </div>
   <div
     v-click-outside="handleClickOutside"
     :style="getWrapStyle"
@@ -13,7 +15,7 @@
     ]"
     v-bind="getMenuEvents"
   >
-    <AppLogo :showTitle="false" :class="`${prefixCls}-logo`" />
+    <!-- <AppLogo :showTitle="false" :class="`${prefixCls}-logo`" /> -->
 
     <Trigger :class="`${prefixCls}-trigger`" />
 
@@ -44,7 +46,7 @@
     </ScrollContainer>
 
     <div :class="`${prefixCls}-menu-list`" ref="sideRef" :style="getMenuStyle">
-      <div
+      <!-- <div
         v-show="openMenu"
         :class="[
           `${prefixCls}-menu-list__title`,
@@ -53,14 +55,14 @@
           },
         ]"
       >
-        <span class="text"> {{ title }}</span>
+        <span class="text">白云互联</span>
         <Icon
           :size="16"
           :icon="getMixSideFixed ? 'ri:pushpin-2-fill' : 'ri:pushpin-2-line'"
           class="pushpin"
           @click="handleFixedMenu"
         />
-      </div>
+      </div> -->
       <ScrollContainer :class="`${prefixCls}-menu-list__content`">
         <SimpleMenu
           :items="chilrenMenus"
@@ -330,21 +332,40 @@
 </script>
 <style lang="less">
   @prefix-cls: ~'@{namespace}-layout-mix-sider';
-  @width: 80px;
+  @width: 70px;
   .@{prefix-cls} {
     position: fixed;
-    top: 0;
+    top: @header-height;
     left: 0;
     z-index: @layout-mix-sider-fixed-z-index;
-    height: 100%;
+    height:calc(100% - @header-height);
     overflow: hidden;
     background-color: @sider-dark-bg-color;
     transition: all 0.2s ease 0s;
 
     &-dom {
-      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      // height: 100%;
+      width: 220px !important;
+      min-width: 210px !important;
+      max-width: 220px !important;
+      height: 69.3px !important;
+      height: @header-height;
       overflow: hidden;
       transition: all 0.2s ease 0s;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      // box-shadow: 0px 4px 6px -7px #5d5d5d;
+      box-shadow: -10px 5px 6px -7px #5d5d5d;
+      z-index: 999;
+      .logo-image{
+        height: 45px;
+      }
     }
 
     &-logo {
@@ -352,6 +373,7 @@
       height: @header-height;
       padding-left: 0 !important;
       justify-content: center;
+      border-bottom: 1px solid #eeeeee;
 
       img {
         width: @logo-width;
@@ -366,7 +388,7 @@
 
       &.open {
         > .scrollbar {
-          border-right: 1px solid rgb(238, 238, 238);
+          // border-right: 1px solid rgb(238, 238, 238);
         }
       }
 
@@ -406,16 +428,17 @@
         }
 
         > .scrollbar {
-          border-right: 1px solid @border-color;
+          // border-right: 1px solid @border-color;
         }
       }
       .@{prefix-cls}-menu-list {
         background-color: @sider-dark-bg-color;
 
         &__title {
-          color: @white;
+          color: #000;
           border-bottom: none;
-          border-bottom: 1px solid @border-color;
+          border-bottom: 1px solid #eeeeee;
+          background: #fff;
         }
       }
     }
@@ -436,34 +459,34 @@
 
     &-module {
       position: relative;
-      padding-top: 1px;
+      // padding-top: 1px;
 
       &__item {
         position: relative;
         padding: 12px 0;
-        color: rgba(255, 255, 255, 0.65);
+        color: #fff;
         text-align: center;
         cursor: pointer;
-        transition: all 0.3s ease;
 
         &:hover {
-          color: @white;
+          color: #1571f2;
         }
         // &:hover,
         &--active {
           font-weight: 700;
-          color: @white;
-          background-color: @sider-dark-darken-bg-color;
+          color: #1571f2;
+          background-color: #fff;
+          border-right: 1px solid #eeeeee;
 
-          &::before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background-color: @primary-color;
-            content: '';
-          }
+          // &::before {
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   width: 3px;
+          //   height: 100%;
+          //   background-color: @primary-color;
+          //   content: '';
+          // }
         }
       }
 
@@ -500,7 +523,7 @@
 
     &-menu-list {
       position: fixed;
-      top: 0;
+      top: @header-height;
       width: 0;
       width: 200px;
       height: calc(100%);
@@ -538,8 +561,10 @@
 
       &__content {
         height: calc(100% - @header-height) !important;
+        box-shadow: 4px 0px 5px -5px #5d5d5d;
 
         .scrollbar__wrap {
+          background: #fff;
           height: 100%;
           overflow-x: hidden;
         }

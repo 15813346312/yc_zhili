@@ -38,7 +38,7 @@ export default defineComponent({
       }
     );
     const [registerUserForm, { getFieldsValue, validate, resetFields }] = useForm({
-      labelWidth: 120,
+      labelWidth: 100,
       schemas: [
         {
           field: 'displayName',

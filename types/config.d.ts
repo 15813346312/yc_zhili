@@ -46,105 +46,113 @@ export interface HeaderSetting {
   fixed: boolean;
   show: boolean;
   theme: ThemeEnum;
-  // Turn on full screen
+  // 是否可以全屏
   showFullScreen: boolean;
-  // Whether to show the lock screen
+  // 是否显示锁屏按钮
   useLockPage: boolean;
-  // Show document button
+  // 是否显示文档按钮
   showDoc: boolean;
-  // Show message center button
+  // 是否显示消息按钮
   showNotice: boolean;
   showSearch: boolean;
 }
 
 export interface LocaleSetting {
   showPicker: boolean;
-  // Current language
+  // 本地语言
   locale: LocaleType;
-  // default language
+  // 默认语言
   fallback: LocaleType;
   // available Locales
   availableLocales: LocaleType[];
 }
 
 export interface TransitionSetting {
-  //  Whether to open the page switching animation
+  //  是否开启切换动画
   enable: boolean;
-  // Route basic switching animation
+  // 动画名
   basicTransition: RouterTransitionEnum;
-  // Whether to open page switching loading
+  // 是否打开页面切换loading
   openPageLoading: boolean;
-  // Whether to open the top progress bar
+  // 是否打开页面切换顶部进度条
   openNProgress: boolean;
 }
 
 export interface ProjectConfig {
-  // Storage location of permission related information
+  // 权限缓存存放位置。默认存放于localStorage
   permissionCacheType: CacheTypeEnum;
-  // Whether to show the configuration button
+  // 是否显示设置按钮
   showSettingButton: boolean;
-  // Whether to show the theme switch button
+  // 是否显示主题切换按钮
   showDarkModeToggle: boolean;
-  // Configure where the button is displayed
+  // 设置按钮位置 可选项
+  // SettingButtonPositionEnum.AUTO: 自动选择
+  // SettingButtonPositionEnum.HEADER: 位于头部
+  // SettingButtonPositionEnum.FIXED: 固定在右侧
   settingButtonPosition: SettingButtonPositionEnum;
-  // Permission mode
+  // 权限模式,默认前端角色权限模式
+  // ROUTE_MAPPING: 前端模式（菜单由路由生成，默认）
+  // ROLE：前端模式（菜单路由分开）
   permissionMode: PermissionModeEnum;
-  // Website gray mode, open for possible mourning dates
+  // 网站灰色模式，用于可能悼念的日期开启
   grayMode: boolean;
-  // Whether to turn on the color weak mode
+  // 色弱模式
   colorWeak: boolean;
-  // Theme color
+  // 项目主题色
   themeColor: string;
 
-  // The main interface is displayed in full screen, the menu is not displayed, and the top
+  // 是否取消菜单,顶部,多标签页显示, 用于可能内嵌在别的系统内
   fullContent: boolean;
-  // content width
+  // 主题内容宽度
   contentMode: ContentEnum;
-  // Whether to display the logo
+  // 是否显示logo
   showLogo: boolean;
-  // Whether to show the global footer
+  // 是否显示底部信息 copyright
   showFooter: boolean;
-  // menuType: MenuTypeEnum;
+  // 头部配置
   headerSetting: HeaderSetting;
-  // menuSetting
+  // 菜单配置
   menuSetting: MenuSetting;
-  // Multi-tab settings
+  // 多标签
   multiTabsSetting: MultiTabsSetting;
-  // Animation configuration
+  // 动画配置
   transitionSetting: TransitionSetting;
-  // pageLayout whether to enable keep-alive
+  // 是否开启KeepAlive缓存  开发时候最好关闭,不然每次都需要清除缓存
   openKeepAlive: boolean;
-  // Lock screen time
+  // 自动锁屏时间，为0不锁屏。 单位分钟 默认1个小时
   lockTime: number;
-  // Show breadcrumbs
+  // 显示面包屑
   showBreadCrumb: boolean;
-  // Show breadcrumb icon
+  // 显示面包屑图标
   showBreadCrumbIcon: boolean;
-  // Use error-handler-plugin
+  // 是否使用全局错误捕获
   useErrorHandle: boolean;
-  // Whether to open back to top
+  // 是否开启回到顶部
   useOpenBackTop: boolean;
-  // Is it possible to embed iframe pages
+  // 是否可以嵌入iframe页面
   canEmbedIFramePage: boolean;
-  // Whether to delete unclosed messages and notify when switching the interface
+  // 切换界面的时候是否删除未关闭的message及notify
   closeMessageOnSwitch: boolean;
-  // Whether to cancel the http request that has been sent but not responded when switching the interface.
+  // 切换界面的时候是否取消已经发送但是未响应的http请求。
+  // 如果开启,想对单独接口覆盖。可以在单独接口设置
   removeAllHttpPending: boolean;
 }
 
+// 全局配置
 export interface GlobConfig {
   // Site title
   title: string;
-  // Service interface url
+  // 请求接口和用户登录接口
   apiUrl: string;
   authUrl: string;
-  // Upload url
+  // 上传接口
   uploadUrl?: string;
   //  Service interface url prefix
   urlPrefix?: string;
   // Project abbreviation
   shortName: string;
 }
+// 全局env配置
 export interface GlobEnvConfig {
   // Site title
   VITE_GLOB_APP_TITLE: string;

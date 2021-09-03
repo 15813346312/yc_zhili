@@ -123,7 +123,7 @@
         immediate: false,
         //  useSearchForm: true,
         // formConfig: {
-        //   labelWidth: 120,
+        //   labelWidth: 100,
         //   schemas: searchFormSchema,
         // },
         handleSearchInfoFn(info) {

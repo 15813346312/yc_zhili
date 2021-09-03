@@ -71,10 +71,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
-import { tableColumns, getTableListAsync, deleteAuditLogAsync, searchFormSchema } from './index.ts';
+import { tableColumns, getTableListAsync, deleteAuditLogAsync, searchFormSchema } from './index';
 
 // import Permissions from '/@/views/sys/permissions/index.vue';
-import { message } from 'ant-design-vue';
+// import { message } from 'ant-design-vue';
 export default defineComponent({
   components: {
     BasicTable,
@@ -90,7 +90,7 @@ export default defineComponent({
       columns: tableColumns,
       useSearchForm: true,
       formConfig: {
-        labelWidth: 120,
+        labelWidth: 100,
         schemas: searchFormSchema,
       },
       showTableSetting: true,

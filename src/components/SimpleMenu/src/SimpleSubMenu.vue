@@ -5,7 +5,7 @@
     v-bind="$props"
     :class="getLevelClass"
   >
-    <Icon v-if="getIcon" :icon="getIcon" :size="16" />
+    <!-- <Icon v-if="getIcon" :icon="getIcon" :size="16" /> -->
     <div v-if="collapsedShowTitle && getIsCollapseParent" class="mt-1 collapse-title">
       {{ getI18nName }}
     </div>
@@ -23,7 +23,7 @@
     :collapsedShowTitle="collapsedShowTitle"
   >
     <template #title>
-      <Icon v-if="getIcon" :icon="getIcon" :size="16" />
+      <!-- <Icon v-if="getIcon" :icon="getIcon" :size="16" /> -->
 
       <div v-if="collapsedShowTitle && getIsCollapseParent" class="mt-2 collapse-title">
         {{ getI18nName }}

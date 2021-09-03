@@ -100,7 +100,7 @@ export const createFormSchema: FormSchema[] = [
     field: 'showInDiscoveryDocument',
     component: 'Checkbox',
     label: '在发现文档中显示',
-    labelWidth: 120,
+    labelWidth: 100,
     colProps: {
       span: 24,
     },

@@ -34,7 +34,7 @@ export default defineComponent({
       columns: tableColumns, // 表头
       useSearchForm: true, // 是否打开搜索栏
       formConfig: { // 搜索form配置
-        labelWidth: 80, // label宽度
+        labelWidth: 100, // label宽度
         schemas: searchFormSchema, // 搜索form配置
       },
       // showIndexColumn: false, // 是否显示序号

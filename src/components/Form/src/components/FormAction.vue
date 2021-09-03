@@ -1,5 +1,5 @@
 <template>
-  <a-col v-bind="actionColOpt" :style="{ textAlign: 'right' }" v-if="showActionButtonGroup">
+  <a-col style="padding-left: 40px;" v-bind="actionColOpt" :style="{ textAlign: 'left' }" v-if="showActionButtonGroup">
     <FormItem>
       <slot name="resetBefore"></slot>
       <Button
@@ -23,7 +23,7 @@
         {{ getSubmitBtnOptions.text }}
       </Button>
 
-      <slot name="advanceBefore"></slot>
+      <!-- <slot name="advanceBefore"></slot>
       <Button
         type="link"
         size="small"
@@ -33,7 +33,7 @@
         {{ isAdvanced ? t('component.form.putAway') : t('component.form.unfold') }}
         <BasicArrow class="ml-1" :expand="!isAdvanced" up />
       </Button>
-      <slot name="advanceAfter"></slot>
+      <slot name="advanceAfter"></slot> -->
     </FormItem>
   </a-col>
 </template>

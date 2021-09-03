@@ -95,6 +95,7 @@ export function handler(event: HandlerEnum, value: any): DeepPartial<ProjectConf
     case HandlerEnum.MENU_TRIGGER_MIX_SIDEBAR:
       return { menuSetting: { mixSideTrigger: value } };
 
+    // 固定展开菜单
     case HandlerEnum.MENU_FIXED_MIX_SIDEBAR:
       return { menuSetting: { mixSideFixed: value } };
 

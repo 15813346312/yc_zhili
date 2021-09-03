@@ -41,7 +41,7 @@ export default defineComponent({
       });
     });
     const [registerUserForm, { getFieldsValue, setFieldsValue, validate, resetFields }] = useForm({
-      labelWidth: 120,
+      labelWidth: 100,
       schemas: [
         // {
         //   field: 'claimType',

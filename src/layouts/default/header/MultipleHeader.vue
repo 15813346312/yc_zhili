@@ -1,6 +1,8 @@
 <template>
   <div :style="getPlaceholderDomStyle" v-if="getIsShowPlaceholderDom"></div>
+
   <div :style="getWrapStyle" :class="getClass">
+    <!-- <img class="logo-image" src="../../../assets/images/logo.png" alt="" /> -->
     <LayoutHeader v-if="getShowInsetHeaderRef" />
     <MultipleTabs v-if="getShowTabs" />
   </div>
@@ -19,7 +21,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { headerHeightRef } from '../content/useContentViewHeight';
 
-  const HEADER_HEIGHT = 48;
+  const HEADER_HEIGHT = 70;
 
   const TABS_HEIGHT = 32;
   export default defineComponent({
@@ -110,7 +112,10 @@
   .@{prefix-cls} {
     transition: width 0.2s;
     flex: 0 0 auto;
-
+    .logo-image{
+      display: inline-block;
+      height: 48px;
+    }
     &--dark {
       margin-left: -1px;
     }
@@ -120,6 +125,7 @@
       top: 0;
       z-index: @multiple-tab-fixed-z-index;
       width: 100%;
+      // left: 0;
     }
   }
 </style>

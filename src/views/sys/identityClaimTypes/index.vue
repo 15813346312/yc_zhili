@@ -107,7 +107,7 @@ export default defineComponent({
       columns: tableColumns,
       useSearchForm: true,
       formConfig: {
-        labelWidth: 120,
+        labelWidth: 100,
         schemas: searchFormSchema,
       },
       showTableSetting: true,

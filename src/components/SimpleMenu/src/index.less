@@ -3,17 +3,33 @@
 
 .@{prefix-cls} {
   &-dark&-vertical .@{simple-prefix-cls}__parent {
-    background-color: @sider-dark-bg-color;
+    background-color: #fff;
+    color: #000;
     > .@{prefix-cls}-submenu-title {
-      background-color: @sider-dark-bg-color;
+      background-color: #fff;
+      color: #000
+    }
+    &:hover{
+      background-color: #0960bd;
+      color: #fff;
+    }
+    :hover{
+      background-color: #0960bd;
+      color: #fff;
     }
   }
 
   &-dark&-vertical .@{simple-prefix-cls}__children,
   &-dark&-popup .@{simple-prefix-cls}__children {
-    background-color: @sider-dark-lighten-bg-color;
+    background-color: #fff;
+    color: #000;
     > .@{prefix-cls}-submenu-title {
-      background-color: @sider-dark-lighten-bg-color;
+      background-color: #fff;
+      color:#000;
+    }
+    :hover{
+      background-color: #0960bd;
+      color: #fff;
     }
   }
 

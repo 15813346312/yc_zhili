@@ -290,6 +290,9 @@
       &-with-help {
         margin-bottom: 0;
       }
+      &-control-wrapper{
+        width: calc(100% - 100px) !important;
+      }
 
       &:not(.ant-form-item-with-help) {
         margin-bottom: 20px;
