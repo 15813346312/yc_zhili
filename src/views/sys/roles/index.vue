@@ -96,6 +96,7 @@
   import { message } from 'ant-design-vue';
   import { useDrawer } from '/@/components/Drawer';
   export default defineComponent({
+    name: 'Roles',
     components: {
       PageWrapper,
       BasicTable,

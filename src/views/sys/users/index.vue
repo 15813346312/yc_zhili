@@ -92,6 +92,7 @@
   import Permissions from '/@/views/sys/permissions/index.vue';
   import { useDrawer } from '/@/components/Drawer';
   export default defineComponent({
+    name: 'Users',
     components: {
       BasicTable,
       PageWrapper,

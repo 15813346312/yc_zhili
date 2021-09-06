@@ -120,9 +120,9 @@ const setting: ProjectConfig = {
   // 多标签
   multiTabsSetting: {
     // 刷新后是否保留已经打开的标签页
-    cache: false,
+    cache: true,
     // 开启
-    show: false,
+    show: true,
     // 开启快速操作
     canDrag: true,
     // 是否可以拖拽

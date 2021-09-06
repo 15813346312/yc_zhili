@@ -76,6 +76,7 @@ import { tableColumns, getTableListAsync, deleteAuditLogAsync, searchFormSchema 
 // import Permissions from '/@/views/sys/permissions/index.vue';
 // import { message } from 'ant-design-vue';
 export default defineComponent({
+  name: 'Abpauditing',
   components: {
     BasicTable,
     TableAction,

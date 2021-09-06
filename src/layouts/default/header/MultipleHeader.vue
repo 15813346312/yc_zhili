@@ -119,6 +119,9 @@
     &--dark {
       margin-left: -1px;
     }
+    &--light{
+      box-shadow: 0px 4px 6px -7px #5d5d5d;
+    }
 
     &--fixed {
       position: fixed;

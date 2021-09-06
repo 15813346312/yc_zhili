@@ -55,7 +55,7 @@
           },
         ]"
       >
-        <span class="text">白云互联</span>
+        <span class="text">百云互联</span>
         <Icon
           :size="16"
           :icon="getMixSideFixed ? 'ri:pushpin-2-fill' : 'ri:pushpin-2-line'"
@@ -348,9 +348,9 @@
       top: 0;
       left: 0;
       // height: 100%;
-      width: 220px !important;
-      min-width: 210px !important;
-      max-width: 220px !important;
+      // width: 220px !important;
+      // min-width: 210px !important;
+      // max-width: 220px !important;
       height: 69.3px !important;
       height: @header-height;
       overflow: hidden;
@@ -361,7 +361,7 @@
       align-items: center;
       text-align: center;
       // box-shadow: 0px 4px 6px -7px #5d5d5d;
-      box-shadow: -10px 5px 6px -7px #5d5d5d;
+      // box-shadow: -10px 5px 6px -7px #5d5d5d;
       z-index: 999;
       .logo-image{
         height: 45px;

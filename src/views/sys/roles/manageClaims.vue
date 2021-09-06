@@ -79,7 +79,7 @@ import { defineComponent, reactive, useContext, defineEmit } from 'vue';
 import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 import EditClaimsModel from './editclaimsModel.vue';
 import CreateClaimsModel from './createclaimsModel.vue';
-import { getRoleClaimsAsync, deleteRoleClaimsAsync } from './index.ts';
+import { getRoleClaimsAsync, deleteRoleClaimsAsync } from './index';
 import { TableAction } from '/@/components/Table';
 import { useModal } from '/@/components/Modal';
 export default defineComponent({

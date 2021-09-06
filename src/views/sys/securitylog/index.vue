@@ -41,89 +41,89 @@
               onClick: handleEdit.bind(null, record),
             }, -->
       <template #action="{ record }">
-
-        <TableAction :actions="[
-
-
+        <TableAction
+          :actions="[
             {
-             label:'删除',
+              label: '删除',
               color: 'error',
-              auth:['AbpAuditing.SecurityLog.Delete'],
+              auth: ['AbpAuditing.SecurityLog.Delete'],
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
               },
-
             },
-          ]" />
+          ]"
+        />
       </template>
     </BasicTable>
-    <CreateAbpTenant @register="registerCreateAbpTenantModal"
-                     @reload="reload"
-                     :bodyStyle="{ 'padding-top': '0' }" />
-    <EditAbpTenant @register="registerEditAbpTenantModal"
-                   @reload="reload"
-                   :bodyStyle="{ 'padding-top': '0' }" />
+    <CreateAbpTenant
+      @register="registerCreateAbpTenantModal"
+      @reload="reload"
+      :bodyStyle="{ 'padding-top': '0' }"
+    />
+    <EditAbpTenant
+      @register="registerEditAbpTenantModal"
+      @reload="reload"
+      :bodyStyle="{ 'padding-top': '0' }"
+    />
     <!-- <Permissions @register="registerPermissionsModal"
                  @reload="reload" /> -->
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { BasicTable, useTable, TableAction } from '/@/components/Table';
-import {
-  tableColumns,
-  getTableListAsync,
-  deleteSecurityLogAsync,
-  searchFormSchema,
-} from './index.ts';
+  import { defineComponent } from 'vue';
+  import { BasicTable, useTable, TableAction } from '/@/components/Table';
+  import {
+    tableColumns,
+    getTableListAsync,
+    deleteSecurityLogAsync,
+    searchFormSchema,
+  } from './index';
+  export default defineComponent({
+    name: 'Securitylog',
+    components: {
+      BasicTable,
+      TableAction,
 
-// import Permissions from '/@/views/sys/permissions/index.vue';
-import { message } from 'ant-design-vue';
-export default defineComponent({
-  components: {
-    BasicTable,
-    TableAction,
-
-    // Permissions,
-  },
-  setup() {
-    // const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
-    const [registerTable, { reload }] = useTable({
-      title: '',
-      api: getTableListAsync,
-      columns: tableColumns,
-      useSearchForm: true,
-      formConfig: {
-        labelWidth: 100,
-        schemas: searchFormSchema,
-      },
-      showTableSetting: true,
-      rowSelection: { type: 'checkbox' },
-      actionColumn: {
-        width: 200,
-        title: '操作',
-        dataIndex: 'action',
-        slots: {
-          customRender: 'action',
+      // Permissions,
+    },
+    setup() {
+      // const [registerPermissionsModal, { openDrawer: openPermissionsModal }] = useDrawer();
+      const [registerTable, { reload }] = useTable({
+        title: '',
+        api: getTableListAsync,
+        columns: tableColumns,
+        useSearchForm: true,
+        formConfig: {
+          labelWidth: 100,
+          schemas: searchFormSchema,
         },
-        fixed: 'right',
-      },
-    });
+        showTableSetting: true,
+        rowSelection: { type: 'checkbox' },
+        actionColumn: {
+          width: 200,
+          title: '操作',
+          dataIndex: 'action',
+          slots: {
+            customRender: 'action',
+          },
+          fixed: 'right',
+        },
+      });
 
-    // 删除
-    const handleDelete = async (record: Recordable) => {
-      await deleteSecurityLogAsync({ id: record.id, reload });
-    };
+      // 删除
+      const handleDelete = async (record: Recordable) => {
+        await deleteSecurityLogAsync({ id: record.id, reload });
+      };
 
-    // function getFormValues() {
-    //   console.log(reload ().getFieldsValue());
-    // }
-    return {
-      registerTable,
-      handleDelete,
-      reload,
-    };
-  },
-});
+      // function getFormValues() {
+      //   console.log(reload ().getFieldsValue());
+      // }
+      return {
+        registerTable,
+        handleDelete,
+        reload,
+      };
+    },
+  });
 </script>

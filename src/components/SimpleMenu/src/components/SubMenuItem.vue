@@ -1,5 +1,5 @@
 <template>
-  <li :class="getClass">
+  <li :class="getClass" class="no-padding-left-item">
     <template v-if="!getCollapse">
       <div :class="`${prefixCls}-submenu-title`" @click.stop="handleClick" :style="getItemStyle">
         <slot name="title"></slot>

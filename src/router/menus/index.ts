@@ -23,6 +23,7 @@ Object.keys(modules).forEach((key) => {
 // ===========================
 // ==========Helper===========
 // ===========================
+
 const isBackMode = () => {
   const appStore = useAppStoreWidthOut();
   return appStore.getProjectConfig.permissionMode === PermissionModeEnum.BACK;

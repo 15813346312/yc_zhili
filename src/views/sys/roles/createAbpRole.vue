@@ -12,11 +12,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, useContext, defineEmit } from 'vue';
+import { defineComponent, useContext, defineEmit } from 'vue';
 import { BasicModal, useModalInner } from '/@/components/Modal';
 import { Tabs, Checkbox } from 'ant-design-vue';
 import { BasicForm, useForm } from '/@/components/Form/index';
-import { createFormSchema, createRoleAsync } from './index.ts';
+import { createFormSchema, createRoleAsync } from './index';
 // import { IdentityRoleDto, IdentityUserCreateDto } from '/@/services/ServiceProxies';
 import { useI18n } from '/@/hooks/web/useI18n';
 export default defineComponent({

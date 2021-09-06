@@ -57,6 +57,9 @@ export const useAppStore = defineStore({
     getMultiTabsSetting() {
       return this.getProjectConfig.multiTabsSetting;
     },
+    openKeepAlive() {
+      return this.getProjectConfig.openKeepAlive;
+    }
   },
   actions: {
     setPageLoading(loading: boolean): void {

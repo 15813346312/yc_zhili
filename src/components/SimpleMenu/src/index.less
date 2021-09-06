@@ -1,35 +1,61 @@
 @simple-prefix-cls: ~'@{namespace}-simple-menu';
 @prefix-cls: ~'@{namespace}-menu';
 
+
+
 .@{prefix-cls} {
   &-dark&-vertical .@{simple-prefix-cls}__parent {
     background-color: #fff;
     color: #000;
+    padding-left: 6px !important;
+    // color: #000;
     > .@{prefix-cls}-submenu-title {
       background-color: #fff;
-      color: #000
+      color: #000;
+    }
+    > .@{simple-prefix-cls}-sub-title{
+      padding-left: 10px;
+      line-height: 30px;
+      border-radius: 4px;
+      width: 100%;
     }
     &:hover{
-      background-color: #0960bd;
-      color: #fff;
+      // background-color: #0960bd;
+      // color: #fff;
+      > span{
+        background-color: #E9EFF6;
+        color: #0960bd;
+      }
     }
-    :hover{
-      background-color: #0960bd;
-      color: #fff;
-    }
+    // :hover{
+    //   background-color: #0960bd;
+    //   color: #fff;
+    // }
+  }
+  &-dark&-vertical .no-padding-left-item{
+    padding-left: 0px !important;
   }
 
   &-dark&-vertical .@{simple-prefix-cls}__children,
   &-dark&-popup .@{simple-prefix-cls}__children {
     background-color: #fff;
     color: #000;
+    padding-left: 22px !important;
     > .@{prefix-cls}-submenu-title {
       background-color: #fff;
       color:#000;
     }
+    > .@{simple-prefix-cls}-sub-title{
+      width: 100%;
+      line-height: 30px;
+      border-radius: 4px;
+      padding-left: 10px;
+      color: #969696;
+      // padding-right: 20px;
+    }
     :hover{
-      background-color: #0960bd;
-      color: #fff;
+      background-color: #E9EFF6;
+      color: #0960bd;
     }
   }
 

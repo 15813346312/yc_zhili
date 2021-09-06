@@ -1,5 +1,5 @@
 <template>
-  <div>保证路由页面</div>
+  <div>标准路由页面</div>
 </template>
 
 <script>

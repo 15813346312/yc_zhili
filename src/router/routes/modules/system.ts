@@ -63,7 +63,7 @@ const system: AppRouteModule = {
           meta: {
             title: '审计日志',
             // affix: true,
-            roles: ['AbpAuditing.AuditLog'],
+            // roles: ['AbpAuditing.AuditLog'],
             icon: 'ant-design:file-text',
           },
         },
@@ -74,7 +74,7 @@ const system: AppRouteModule = {
           meta: {
             title: '安全日志',
             // affix: true,
-            roles: ['AbpAuditing.SecurityLog'],
+            // roles: ['AbpAuditing.SecurityLog'],
             icon: 'ant-design:file-pdf',
           },
         },

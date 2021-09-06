@@ -1,4 +1,5 @@
 @menu-prefix-cls: ~'@{namespace}-menu';
+@menu-prefix-simple: ~'@{namespace}-simple-menu';
 @menu-popup-prefix-cls: ~'@{namespace}-menu-popup';
 @submenu-popup-prefix-cls: ~'@{namespace}-menu-submenu-popup';
 
@@ -254,8 +255,13 @@
     &-dark&-vertical &-submenu-title {
       color: @menu-dark-subsidiary-color;
       &-active:not(.@{menu-prefix-cls}-submenu) {
-        color: #fff !important;
-        background-color: @primary-color !important;
+        color: #000 !important;
+        // background-color: @primary-color !important;
+        background-color: #fff !important;
+        .@{menu-prefix-simple}-sub-title{
+          background-color: #E9EFF6;
+          color: #1973F2;
+        }
       }
 
       &:hover {
