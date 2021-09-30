@@ -8,7 +8,7 @@ const menu: MenuModule = {
 
     children: [
       {
-        path: 'index',
+        path: 'notice',
         name: '公告',
       }
     ],

@@ -7,16 +7,16 @@ const dashboard: AppRouteModule = {
   path: '/setting',
   name: 'setting',
   component: LAYOUT,
-  redirect: '/setting/index',
+  redirect: '/setting/notice',
   meta: {
     icon: 'ant-design:user',
     title: '配置管理',
   },
   children: [
     {
-      path: 'index',
-      name: 'index',
-      component: () => import('/@/views/good/products/index.vue'),
+      path: 'notice',
+      name: 'notice',
+      component: () => import('/@/views/project/notice/index.vue'),
       meta: {
         title: '公告'
       },

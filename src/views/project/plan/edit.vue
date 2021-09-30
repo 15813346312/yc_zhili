@@ -21,7 +21,7 @@
   import { createFormSchema, createAsync, updateAsync } from './service';
 
   export default defineComponent({
-    name: 'editCollectingVesselModel',
+    name: 'editPlan',
     components: {
       BasicModal,
       BasicForm,

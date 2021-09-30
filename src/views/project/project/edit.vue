@@ -1,7 +1,7 @@
 <template>
   <div>
     <BasicModal
-      title="采血管"
+      title="项目管理"
       :canFullscreen="false"
       @ok="submit"
       @register="registerModal"
@@ -21,7 +21,7 @@
   import { createFormSchema, createAsync, updateAsync } from './service';
 
   export default defineComponent({
-    name: 'editCollectingVesselModel',
+    name: 'editProject',
     components: {
       BasicModal,
       BasicForm,

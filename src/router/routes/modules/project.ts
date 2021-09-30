@@ -40,7 +40,7 @@ const dashboard: AppRouteModule = {
     {
       path: 'project',
       name: 'project',
-      component: () => import('/@/views/good/products/index.vue'),
+      component: () => import('/@/views/project/project/index.vue'),
       meta: {
         title: '项目'
       },
@@ -48,7 +48,7 @@ const dashboard: AppRouteModule = {
     {
       path: 'plan',
       name: 'plan',
-      component: () => import('/@/views/good/products/index.vue'),
+      component: () => import('/@/views/project/plan/index.vue'),
       meta: {
         title: '套餐'
       },
