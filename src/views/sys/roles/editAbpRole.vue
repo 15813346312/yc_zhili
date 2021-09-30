@@ -36,6 +36,8 @@
       });
       let currentUserInfo;
       const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
+
+        debugger;
         currentUserInfo = data.record;
 
         setFieldsValue({

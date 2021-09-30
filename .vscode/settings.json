@@ -92,7 +92,7 @@
   },
   "prettier.requireConfig": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "workbench.sideBar.location": "left",
+  "workbench.sideBar.location": "right",
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

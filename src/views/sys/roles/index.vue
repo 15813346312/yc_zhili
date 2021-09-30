@@ -17,13 +17,7 @@
         <a-tag color="red" v-else> 否 </a-tag>
       </template>
 
-      <!-- <template #isDefault="{ record }">
-        <a-tag :color="!record.isDefault ? 'green' : 'red'">
-          {{ !record.isDefault  ? t('common.enable') : t('common.disable')  }}
-        </a-tag>
-      </template>
 
-       -->
       <template #action="{ record }">
         <!-- <Button icon="note-edit-line"
                 @click="handleEdit(record)">
@@ -132,8 +126,12 @@
           fixed: 'right',
         },
       });
+
+
+
       // 编辑用户
       const handleEdit = (record: Recordable) => {
+        debugger;
         console.log('编辑', record);
         openEditAbpRoleModal(true, {
           record: record,

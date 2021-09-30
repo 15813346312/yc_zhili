@@ -6,8 +6,8 @@ import { t } from '/@/hooks/web/useI18n';
 const dashboard: AppRouteModule = {
   path: '/dashboard',
   name: 'Dashboard',
-  component: LAYOUT,
   redirect: '/dashboard/workbench',
+  component: LAYOUT,
   meta: {
     icon: 'ant-design:home-outlined', // ion:grid-outline
     title: t('routes.dashboard.dashboard'),
@@ -24,17 +24,7 @@ const dashboard: AppRouteModule = {
         // roles: ['AbpIdentity.Users'],
       },
     },
-    {
-      path: 'analysis',
-      name: 'Analysis',
-      component: () => import('/@/views/dashboard/analysis/index.vue'),
-      meta: {
-        affix: true,
-        icon: 'ant-design:pie-chart',
-        title: t('routes.dashboard.analysis'),
-        // roles: ['AbpIdentity.Users'],
-      },
-    },
+
   ],
 };
 

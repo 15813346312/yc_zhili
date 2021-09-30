@@ -1,16 +1,15 @@
 import type { MenuModule } from '/@/router/types';
-import { t } from '/@/hooks/web/useI18n';
 
 const menu: MenuModule = {
-  orderNo: 1,
+  orderNo: 4,
   menu: {
-    name: '主页',
-    path: '/dashboard',
+    name: '配置管理',
+    path: '/setting',
 
     children: [
       {
-        path: 'workbench',
-        name: '工作台',
+        path: 'index',
+        name: '公告',
       }
     ],
   },

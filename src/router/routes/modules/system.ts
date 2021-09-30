@@ -10,6 +10,7 @@ const system: AppRouteModule = {
   meta: {
     icon: 'ant-design:user',
     title: '系统设置',
+    roles: ['AbpIdentity.Users'],
   },
   children: [
     {
@@ -20,6 +21,7 @@ const system: AppRouteModule = {
       meta: {
         icon: 'ant-design:user',
         title: '身份管理',
+        roles: ['AbpIdentity.Users','AbpIdentity.Roles'],
       },
       children: [
         {
@@ -46,7 +48,7 @@ const system: AppRouteModule = {
         },
       ],
     },
-    {
+  /*   {
       path: '/log',
       name: 'Log',
       component: LAYOUT,
@@ -79,7 +81,7 @@ const system: AppRouteModule = {
           },
         },
       ],
-    },
+    }, */
   ],
 };
 

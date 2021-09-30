@@ -174,7 +174,7 @@ export default defineComponent({
             password: data.password,
             username: data.account,
             // client_id: 'basic-web',
-            client_id: 'console-client-demo',
+            client_id: 'ZhiLiAbp_App',
             client_secret: '1q2w3e*',
             grant_type: 'password',
             mode: 'none', //不要默认的错误提示
