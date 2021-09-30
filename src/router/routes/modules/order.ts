@@ -16,7 +16,7 @@ const dashboard: AppRouteModule = {
     {
       path: 'orderlist',
       name: 'orderlist',
-      component: () => import('/@/views/good/products/index.vue'),
+      component: () => import('/@/views/order/index.vue'),
       meta: {
         title: '订单'
       },
