@@ -57,7 +57,7 @@
     components: { BasicTable, TableAction, editModel },
     setup() {
       let data: any[] = [];
-      const [registerTable, { getDataSource, setTableData,reload }] = useTable({
+      const [registerTable, { getDataSource, setTableData }] = useTable({
         columns: columns,
         showIndexColumn: false,
         dataSource: data,
@@ -79,7 +79,6 @@
         const index = data.findIndex((item) => item.id === record.id);
         data.splice(index, 1);
         setTableData(data);
-        reload();
       }
 
       function reloadModal(rows) {
@@ -92,7 +91,6 @@
           }
         });
         setTableData(data);
-        reload();
       }
 
       return {

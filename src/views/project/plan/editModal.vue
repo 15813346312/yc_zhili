@@ -43,7 +43,7 @@
       // 保存
       const submit = async () => {
         var result = getSelectRows().map(function (i) {
-          return { id: i.id, name: i.name, price: i.price, projectCode: i.projectCode };
+          return { id: i.id, name: i.name, price: i.price, projectCode: i.projectCode,date:`${Date.now()}` };
         });
         ctx.emit('reload', result);
         clearSelectedRowKeys();
