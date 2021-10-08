@@ -56,11 +56,10 @@
   export default defineComponent({
     components: { BasicTable, TableAction, editModel },
     setup() {
-      let data: any[] = [];
       const [registerTable, { getDataSource, setTableData }] = useTable({
         columns: columns,
         showIndexColumn: false,
-        dataSource: data,
+        dataSource: [],
         actionColumn: {
           width: 160,
           title: '操作',
@@ -76,13 +75,15 @@
       };
 
       function handleDelete(record) {
+        let data = getDataSource();
+
         const index = data.findIndex((item) => item.id === record.id);
         data.splice(index, 1);
         setTableData(data);
       }
 
       function reloadModal(rows) {
-        debugger;
+        let data = getDataSource();
         rows.forEach((i) => {
           const index = data.findIndex((item) => item.id === i.id);
 

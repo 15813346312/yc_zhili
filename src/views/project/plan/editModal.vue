@@ -32,7 +32,7 @@
       const ctx = useContext();
 
       let editModel = {};
-      const [registerTable, { getSelectRows,clearSelectedRowKeys }] = useTable({
+      const [registerTable, { getSelectRows, clearSelectedRowKeys }] = useTable({
         api: getPagedAsync,
         columns: tableColumns,
         rowSelection: { type: 'checkbox' },
@@ -43,7 +43,13 @@
       // 保存
       const submit = async () => {
         var result = getSelectRows().map(function (i) {
-          return { id: i.id, name: i.name, price: i.price, projectCode: i.projectCode,date:`${Date.now()}` };
+          return {
+            id: i.id,
+            name: i.name,
+            price: i.price,
+            projectCode: i.projectCode,
+            key: `${Date.now()}`,
+          };
         });
         ctx.emit('reload', result);
         clearSelectedRowKeys();
