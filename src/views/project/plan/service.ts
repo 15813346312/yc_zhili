@@ -63,7 +63,7 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const createFormSchema: FormSchema[] = [
+export const editSchema: FormSchema[] = [
   {
     field: 'name',
     component: 'Input',
@@ -98,22 +98,6 @@ export const createFormSchema: FormSchema[] = [
       placeholder: '请输入备注',
     },
     required: false,
-    labelWidth: 70,
-    colProps: {
-      span: 24,
-    },
-  },
-];
-
-export const editFormSchema: FormSchema[] = [
-  {
-    field: 'name',
-    component: 'Input',
-    label: '名称',
-    componentProps: {
-      placeholder: '请输入名称',
-    },
-    required: true,
     labelWidth: 70,
     colProps: {
       span: 24,

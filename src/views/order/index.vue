@@ -5,7 +5,7 @@
         <template #form-custom> custom-slot </template>
 
         <template #action="{ record }">
-          <TableAction :actions="[]" />
+          <TableAction  :actions="[]" />
         </template>
       </BasicTable>
     </PageWrapper>

@@ -1,87 +1,52 @@
 <template>
-  <div>
-    <BasicModal
-      title="采血管"
-      :canFullscreen="false"
-      @ok="submit"
-      @register="registerModal"
-      :bodyStyle="{ 'padding-top': '0' }"
-    >
-      <BasicForm @register="registerUserForm" />
-    </BasicModal>
-  </div>
+  <PageWrapper title="套餐管理" contentBackground contentClass="p-4">
+    <BasicForm @register="registerTask" />
+    <PersonTable ref="tableRef" />
+
+    <template #rightFooter>
+      <a-button type="primary" @click="submitAll"> 提交 </a-button>
+    </template>
+  </PageWrapper>
 </template>
-
 <script lang="ts">
-  import { defineComponent, useContext, defineEmit } from 'vue';
-
-  import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { BasicForm, useForm } from '/@/components/Form/index';
-
-  import { createFormSchema, createAsync, updateAsync } from './service';
+  import { BasicForm, useForm } from '/@/components/Form';
+  import { defineComponent, ref } from 'vue';
+  import PersonTable from './editTable.vue';
+  import { PageWrapper } from '/@/components/Page';
+  import { editSchema } from './service';
+  import { Card } from 'ant-design-vue';
 
   export default defineComponent({
-    name: 'editPlan',
-    components: {
-      BasicModal,
-      BasicForm,
-    },
+    name: 'planEdit',
+    components: { BasicForm, PersonTable, PageWrapper, [Card.name]: Card },
     setup() {
-      // 加载父组件方法
-      //defineEmit(['reload']);
-      const ctx = useContext();
+      const tableRef = ref<{ getDataSource: () => any } | null>(null);
 
-      const [registerUserForm, { getFieldsValue, setFieldsValue, validate, resetFields }] = useForm(
-        {
-          labelWidth: 100,
-          schemas: createFormSchema,
-          showActionButtonGroup: false,
-        }
-      );
-      let editModel = {};
-      //加载数据
-      const [registerModal, { changeOkLoading, closeModal }] = useModalInner((data) => {
-        debugger;
-        if (!data.id) {
-          resetFields();
-          editModel = {};
-          return;
-        }
-        editModel = data;
-        setFieldsValue(data);
+      const [registerTask, { validate: validateTaskForm }] = useForm({
+        baseColProps: {
+          span: 6,
+        },
+        schemas: editSchema,
+        showActionButtonGroup: false,
       });
 
-      // 保存
-      const submit = async () => {
+      async function submitAll() {
         try {
-          let request = getFieldsValue(); //as IdentityUserCreateDto;
-          console.log(editModel);
-
-          if (!editModel.id) {
-            await createAsync({
-              request,
-              changeOkLoading,
-              validate,
-              closeModal,
-              resetFields,
-            });
-          } else {
-            request.id = editModel.id;
-            request.concurrencyStamp = editModel.concurrencyStamp;
-
-            await updateAsync({ request, changeOkLoading, validate, closeModal });
+          if (tableRef.value) {
+            console.log('table data:', tableRef.value.getDataSource());
           }
 
-          ctx.emit('reload');
-        } catch (error) {
-          changeOkLoading(false);
-        }
-      };
-      return {
-        registerModal,
-        registerUserForm,
-        submit,
-      };
+          const [values, taskValues] = await Promise.all([validate(), validateTaskForm()]);
+          console.log('form data:', values, taskValues);
+        } catch (error) {}
+      }
+
+      return { registerTask, submitAll, tableRef };
     },
   });
 </script>
+<style lang="less" scoped>
+  .high-form {
+    padding-bottom: 48px;
+  }
+</style>

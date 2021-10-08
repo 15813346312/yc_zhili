@@ -5,7 +5,7 @@
         <template #form-custom> custom-slot </template>
 
         <template #toolbar>
-        <!--   <a-button type="primary" @click="handleCreate">新增</a-button> -->
+        <a-button type="primary" @click="handleCreate">新增</a-button>
         </template>
 
         <template #action="{ record }">
@@ -25,11 +25,6 @@
       </BasicTable>
     </PageWrapper>
 
-    <editCollectingVesselModel
-      @register="registerModal"
-      @reload="reload"
-      :bodyStyle="{ 'padding-top': '0' }"
-    />
   </div>
 </template>
 <script lang="ts">
@@ -40,18 +35,17 @@
 
   import { useModal } from '/@/components/Modal';
   import { PageWrapper } from '/@/components/Page';
-
-  import editCollectingVesselModel from './edit.vue';
+  import { useGo } from '/@/hooks/web/usePage';
 
   export default defineComponent({
     name: 'plan',
     components: {
       PageWrapper,
       BasicTable,
-      TableAction,
-      editCollectingVesselModel,
+      TableAction
     },
     setup() {
+      const go=useGo();
       const [registerModal, { openModal: openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '',
@@ -76,7 +70,7 @@
       });
 
       const handleCreate = () => {
-        openModal(true,{});
+        go('/project/planAdd')
       };
 
       // 编辑用户

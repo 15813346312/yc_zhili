@@ -7,7 +7,6 @@ import { useLoading } from '/@/components/Loading';
 // import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
 import { pagedList, create, remove, update, activate } from '/@/api/project/operator';
 import { all } from '/@/api/project/hospital';
-import { any } from 'vue-types';
 
 const [openFullLoading, closeFullLoading] = useLoading({
   tip: 'Loading...',
