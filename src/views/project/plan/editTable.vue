@@ -20,7 +20,7 @@
         />
       </template>
     </BasicTable>
-    <editModel @register="registerModal" @reload="reload" />
+    <editModel @register="registerModal" @reload="reloadModal" />
   </div>
 </template>
 <script lang="ts">
@@ -53,12 +53,11 @@
     },
   ];
 
-  const data: any[] = [];
-
   export default defineComponent({
     components: { BasicTable, TableAction, editModel },
     setup() {
-      const [registerTable, { getDataSource }] = useTable({
+      let data: any[] = [];
+      const [registerTable, { getDataSource, setTableData,reload }] = useTable({
         columns: columns,
         showIndexColumn: false,
         dataSource: data,
@@ -77,23 +76,23 @@
       };
 
       function handleDelete(record) {
-        debugger;
-
-        const data = getDataSource();
         const index = data.findIndex((item) => item.id === record.id);
         data.splice(index, 1);
+        setTableData(data);
+        reload();
       }
 
-      function reload(rows) {
+      function reloadModal(rows) {
         debugger;
-        const data = getDataSource();
         rows.forEach((i) => {
           const index = data.findIndex((item) => item.id === i.id);
 
-          if (index <= 0) {
+          if (index < 0) {
             data.push(i);
           }
         });
+        setTableData(data);
+        reload();
       }
 
       return {
@@ -101,7 +100,7 @@
         getDataSource,
         handleCreate,
         registerModal,
-        reload,
+        reloadModal,
         handleDelete,
       };
     },

@@ -6,6 +6,7 @@
       @ok="submit"
       @register="registerModal"
       :bodyStyle="{ 'padding-top': '0' }"
+      width="800px"
     >
       <BasicForm @register="registerUserForm" />
     </BasicModal>

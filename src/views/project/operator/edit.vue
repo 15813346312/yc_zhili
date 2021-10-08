@@ -5,6 +5,7 @@
       :canFullscreen="false"
       @ok="submit"
       @register="registerModal"
+
       :bodyStyle="{ 'padding-top': '0' }"
     >
 

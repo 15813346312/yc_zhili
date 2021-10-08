@@ -32,7 +32,7 @@
       const ctx = useContext();
 
       let editModel = {};
-      const [registerTable, { getSelectRows }] = useTable({
+      const [registerTable, { getSelectRows,clearSelectedRowKeys }] = useTable({
         api: getPagedAsync,
         columns: tableColumns,
         rowSelection: { type: 'checkbox' },
@@ -46,7 +46,7 @@
           return { id: i.id, name: i.name, price: i.price, projectCode: i.projectCode };
         });
         ctx.emit('reload', result);
-
+        clearSelectedRowKeys();
         closeModal();
       };
 
