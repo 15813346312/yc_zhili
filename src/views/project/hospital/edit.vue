@@ -1,7 +1,8 @@
 <template>
   <div>
     <BasicModal
-      title="新增医院"
+      title="编辑医院"
+
       :canFullscreen="false"
       @ok="submit"
       @register="registerModal"

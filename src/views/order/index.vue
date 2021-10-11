@@ -5,9 +5,25 @@
         <template #form-custom> custom-slot </template>
 
         <template #action="{ record }">
-          <TableAction  :actions="[]" />
+          <TableAction
+            :actions="[
+              {
+                label: '详情',
+                onClick: handleInfo.bind(null, record),
+              },
+              {
+                label: '删除',
+                color: 'error',
+                popConfirm: {
+                  title: '是否确认删除',
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
         </template>
       </BasicTable>
+      <editDrawer @register="register"></editDrawer>
     </PageWrapper>
   </div>
 </template>
@@ -17,8 +33,10 @@
 
   import { tableColumns, getPagedAsync, searchFormSchema, removeAsync } from './service';
 
-  import { useModal } from '/@/components/Modal';
   import { PageWrapper } from '/@/components/Page';
+  import { useDrawer } from '/@/components/Drawer';
+
+  import editDrawer from './info.vue';
 
   export default defineComponent({
     name: 'CollectingVessel',
@@ -26,9 +44,10 @@
       PageWrapper,
       BasicTable,
       TableAction,
+      editDrawer,
     },
     setup() {
-      const [registerModal, { openModal: openModal }] = useModal();
+      const [register, { openDrawer: openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
         title: '',
         api: getPagedAsync,
@@ -39,8 +58,8 @@
           schemas: searchFormSchema,
         },
         showTableSetting: true,
-       /*  rowSelection: { type: 'checkbox' }, */
-       /*  actionColumn: {
+        /*  rowSelection: { type: 'checkbox' }, */
+        actionColumn: {
           width: 230,
           title: '操作',
           dataIndex: 'action',
@@ -48,31 +67,26 @@
             customRender: 'action',
           },
           fixed: 'right',
-        }, */
+        },
       });
 
-      const handleCreate = () => {
-        openModal(true, {});
+      const handleCreate = () => {};
+
+      const handleInfo = (record) => {
+        openDrawer(true, record);
       };
 
-      // 编辑用户
-      const handleEdit = (record) => {
-        openModal(true, record);
-      };
-
-      // 删除用户
       const handleDelete = async (record) => {
         await removeAsync({ id: record.id, reload });
       };
 
       return {
+        register,
         registerTable,
         reload,
         handleCreate,
-        handleEdit,
         handleDelete,
-        registerModal,
-        openModal,
+        handleInfo
       };
     },
   });

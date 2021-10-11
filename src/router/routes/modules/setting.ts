@@ -18,7 +18,7 @@ const dashboard: AppRouteModule = {
       name: 'notice',
       component: () => import('/@/views/project/notice/index.vue'),
       meta: {
-        title: '公告'
+        title: '公告',
       },
     }
   ],

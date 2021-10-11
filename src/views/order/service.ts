@@ -13,11 +13,6 @@ const [openFullLoading, closeFullLoading] = useLoading({
 
 export const tableColumns: BasicColumn[] = [
   {
-    title: '订单ID',
-    dataIndex: 'id',
-    sorter: true,
-  },
-  {
     title: '订单编号',
     dataIndex: 'orderNo',
     sorter: true,
@@ -80,61 +75,72 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const createFormSchema: FormSchema[] = [
+export const infoSchema: DescItem[] = [
   {
-    field: 'name',
-    component: 'Input',
-    label: '名称',
-    componentProps: {
-      placeholder: '请输入名称',
-    },
-    required: true,
-    labelWidth: 70,
-    colProps: {
-      span: 24,
+    field: 'orderNo',
+    label: '订单编号',
+  },
+  {
+    field: 'creationTime',
+    label: '下单日期',
+    render: (text) => {
+      return moment(text).format('YYYY-MM-DD HH:mm');
     },
   },
   {
-    field: 'code',
-    component: 'Input',
-    label: '编码',
-    componentProps: {
-      placeholder: '请输入编码',
-    },
-    required: true,
-    labelWidth: 70,
-    colProps: {
-      span: 24,
+    field: 'discountPercent',
+    label: '折扣',
+    render: (text) => {
+      return text * 100 + '%';
     },
   },
   {
-    field: 'remark',
-    component: 'InputTextArea',
-    label: '备注',
-    componentProps: {
-      placeholder: '请输入备注',
-    },
-    required: false,
-    labelWidth: 70,
-    colProps: {
-      span: 24,
-    },
+    field: 'promotionAmount',
+    label: '优惠',
   },
-];
-
-export const editFormSchema: FormSchema[] = [
   {
-    field: 'name',
-    component: 'Input',
-    label: '名称',
-    componentProps: {
-      placeholder: '请输入名称',
-    },
-    required: true,
-    labelWidth: 70,
-    colProps: {
-      span: 24,
-    },
+    field: 'orderTotal',
+    label: '订单金额',
+  },
+  {
+    field: 'patient',
+    label: '患者',
+  },
+  {
+    field: 'patientPhone',
+    label: '患者手机号',
+  },
+  {
+    field: 'patientAge',
+    label: '患者年龄',
+  },
+  {
+    field: 'patientIdCard',
+    label: '患者身份证',
+  },
+  {
+    field: 'patientProvince',
+    label: '省份',
+  },
+  {
+    field: 'patientCity',
+    label: '城市',
+  },
+  {
+    field: 'patientDistrict',
+    label: '区域',
+  },
+  {
+    field: 'patientAddress',
+    label: '详细地址',
+  },
+  {
+    field: 'doctor',
+    label: '医生',
+  },
+  {
+    field: 'operator',
+    label: '业务员',
   },
 ];
 
