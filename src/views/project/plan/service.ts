@@ -4,7 +4,7 @@ import { BasicColumn } from '/@/components/Table';
 import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
 // import { PagedListInput, PagedListOutput, ListOutput } from '../../../api/sys/model/basicModel';
-import { pagedList, create, remove, update } from '/@/api/project/plan';
+import { pagedList, create, remove, update, get } from '/@/api/project/plan';
 
 const [openFullLoading, closeFullLoading] = useLoading({
   tip: 'Loading...',
@@ -50,6 +50,59 @@ export const tableColumns: BasicColumn[] = [
   },
 ];
 
+const allReportDates: any[] = [
+  {
+    label: '24小时',
+    value: 0,
+    key: '24小时',
+  },
+  {
+    label: '2个工作日',
+    value: 1,
+    key: '2个工作日',
+  },
+  {
+    label: '3个工作日',
+    value: 2,
+    key: '3个工作日',
+  },
+  {
+    label: '4个工作日',
+    value: 3,
+    key: '4个工作日',
+  },
+  {
+    label: '5个工作日',
+    value: 4,
+    key: '5个工作日',
+  },
+  {
+    label: '6个工作日',
+    value: 5,
+    key: '6个工作日',
+  },
+  {
+    label: '7个工作日',
+    value: 6,
+    key: '7个工作日',
+  },
+  {
+    label: '8个工作日',
+    value: 7,
+    key: '8个工作日',
+  },
+  {
+    label: '1个月',
+    value: 8,
+    key: '1个月',
+  },
+  {
+    label: '自定义',
+    value: 9,
+    key: '自定义',
+  },
+];
+
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'filter',
@@ -78,13 +131,68 @@ export const editSchema: FormSchema[] = [
     },
   },
   {
-    field: 'code',
-    component: 'Input',
-    label: '编码',
+    field: 'price',
+    component: 'InputNumber',
+    label: '价格',
     componentProps: {
-      placeholder: '请输入编码',
+      placeholder: '请输入价格',
     },
     required: true,
+    labelWidth: 70,
+    colProps: {
+      span: 24,
+    },
+  },
+  {
+    field: 'city',
+    component: 'Select',
+    label: '城市',
+    componentProps: {
+      options: [
+        {
+          label: '广州',
+          value: 1,
+          key: '广州',
+        },
+        {
+          label: '非广州',
+          value: 2,
+          key: '非广州',
+        },
+      ],
+    },
+    required: true,
+    labelWidth: 70,
+    colProps: {
+      span: 24,
+    },
+  },
+
+  {
+    field: 'reportDate',
+    component: 'Select',
+    label: '报告日期',
+    componentProps: () => {
+      return {
+        options: allReportDates,
+      };
+    },
+    required: true,
+    labelWidth: 70,
+    colProps: {
+      span: 24,
+    },
+  },
+  {
+    field: 'reportDateExtend',
+    component: 'Input',
+    label: '    ',
+    componentProps: {
+      placeholder: '请输入自定义日期',
+    },
+    show: ({ model }) => {
+      return model.reportDate == 9;
+    },
     labelWidth: 70,
     colProps: {
       span: 24,
@@ -121,14 +229,14 @@ export async function getPagedAsync(params: any): Promise<any | undefined> {
  * 创建
  * @param param0
  */
-export async function createAsync({ request, changeOkLoading, validate, closeModal, resetFields }) {
-  changeOkLoading(true);
-  await validate();
+export async function createAsync(request, goBack) {
+  if (!request.projects.length) {
+    message.error('请选择关联项目');
+    return;
+  }
   await create(request);
-  changeOkLoading(false);
   message.success('新增成功');
-  resetFields();
-  closeModal();
+  goBack();
 }
 
 /**
@@ -151,12 +259,17 @@ export async function removeAsync({ id, reload }) {
  * 编辑
  * @param param0
  */
-export async function updateAsync({ request, changeOkLoading, validate, closeModal }) {
-  changeOkLoading(true);
-  await validate();
+export async function updateAsync(request, goBack) {
+  if (!request.projects.length) {
+    message.error('请选择关联项目');
+    return;
+  }
 
   await update(request.id, request);
-  changeOkLoading(false);
   message.success('编辑成功');
-  closeModal();
+  goBack();
+}
+
+export async function getAsync(id: string) {
+  return await get(id);
 }

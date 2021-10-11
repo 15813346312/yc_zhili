@@ -1,12 +1,11 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" @edit-change="handleEditChange">
+    <BasicTable title="关联项目" @register="registerTable" @edit-change="handleEditChange">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">添加项目</a-button>
       </template>
       <template #action="{ record, column }">
         <TableAction
-          title="关联项目"
           :actions="[
             {
               label: '删除',
@@ -101,6 +100,7 @@
         registerModal,
         reloadModal,
         handleDelete,
+        setTableData
       };
     },
   });

@@ -5,18 +5,22 @@
         <template #form-custom> custom-slot </template>
 
         <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增</a-button>
+          <a-button type="primary" @click="handleCreate">新增</a-button>
         </template>
 
         <template #action="{ record }">
           <TableAction
             :actions="[
               {
+                label: '编辑',
+                onClick: handleEdit.bind(null, record),
+              },
+              {
                 label: '删除',
                 color: 'error',
                 popConfirm: {
                   title: '是否确认删除',
-                  confirm: handleDelete.bind(null, record)
+                  confirm: handleDelete.bind(null, record),
                 },
               },
             ]"
@@ -24,7 +28,6 @@
         </template>
       </BasicTable>
     </PageWrapper>
-
   </div>
 </template>
 <script lang="ts">
@@ -36,16 +39,20 @@
   import { useModal } from '/@/components/Modal';
   import { PageWrapper } from '/@/components/Page';
   import { useGo } from '/@/hooks/web/usePage';
+  import { useTabs } from '/@/hooks/web/useTabs';
+  import { listener } from './event';
 
   export default defineComponent({
     name: 'plan',
     components: {
       PageWrapper,
       BasicTable,
-      TableAction
+      TableAction,
     },
     setup() {
-      const go=useGo();
+      const go = useGo();
+      const { closeAll, closeLeft, closeRight, closeOther, closeCurrent, refreshPage, setTitle } =
+        useTabs();
       const [registerModal, { openModal: openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '',
@@ -57,7 +64,7 @@
           schemas: searchFormSchema,
         },
         showTableSetting: true,
-        rowSelection: { type: 'checkbox' },
+     /*    rowSelection: { type: 'checkbox' }, */
         actionColumn: {
           width: 230,
           title: '操作',
@@ -69,13 +76,17 @@
         },
       });
 
+      listener(function () {
+        reload();
+      });
+
       const handleCreate = () => {
-        go('/project/planAdd')
+        go('/project/planAdd');
       };
 
       // 编辑用户
       const handleEdit = (record) => {
-        openModal(true, record);
+        go('/project/planAdd?id=' + record.id);
       };
 
       // 删除用户

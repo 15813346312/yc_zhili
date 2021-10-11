@@ -39,8 +39,8 @@
           schemas: searchFormSchema,
         },
         showTableSetting: true,
-        rowSelection: { type: 'checkbox' },
-        actionColumn: {
+       /*  rowSelection: { type: 'checkbox' }, */
+       /*  actionColumn: {
           width: 230,
           title: '操作',
           dataIndex: 'action',
@@ -48,7 +48,7 @@
             customRender: 'action',
           },
           fixed: 'right',
-        },
+        }, */
       });
 
       const handleCreate = () => {

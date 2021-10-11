@@ -10,35 +10,77 @@
 </template>
 <script lang="ts">
   import { BasicForm, useForm } from '/@/components/Form';
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, ref, toRaw, getCurrentInstance, onMounted } from 'vue';
   import PersonTable from './editTable.vue';
   import { PageWrapper } from '/@/components/Page';
-  import { editSchema } from './service';
+  import { editSchema, createAsync, getAsync, updateAsync } from './service';
   import { Card } from 'ant-design-vue';
+  import { useGo } from '/@/hooks/web/usePage';
+  import { useTabs } from '/@/hooks/web/useTabs';
+  import { useRoute } from 'vue-router';
+  import { trigger } from './event';
 
   export default defineComponent({
     name: 'planEdit',
     components: { BasicForm, PersonTable, PageWrapper, [Card.name]: Card },
-    setup() {
+    setup(props) {
       const tableRef = ref<{ getDataSource: () => any } | null>(null);
-
-      const [registerTask, { validate: validateTaskForm }] = useForm({
+      const go = useGo();
+      const { ctx } = getCurrentInstance();
+      const { closeAll, closeLeft, closeRight, closeOther, closeCurrent, refreshPage, setTitle } =
+        useTabs();
+      const [registerTask, { getFieldsValue, setFieldsValue, validate, resetFields }] = useForm({
         baseColProps: {
           span: 6,
         },
         schemas: editSchema,
         showActionButtonGroup: false,
       });
+      const id = ctx.$router.currentRoute.value.query.id;
+
+      async function goBack() {
+        trigger('reload');
+        closeCurrent();
+
+        go('/project/plan');
+      }
+
+      async function loadPage() {
+        debugger;
+        const result = await getAsync(id);
+        setFieldsValue(result);
+
+        var projects = result.projects.map(function (i) {
+          return {
+            id: i.id,
+            name: i.name,
+            price: i.price,
+            projectCode: i.projectCode,
+            key: `${Date.now()}`,
+          };
+        });
+
+        tableRef.value.setTableData(projects);
+      }
+      onMounted(async () => {
+        id && (await loadPage());
+      });
 
       async function submitAll() {
-        try {
-          if (tableRef.value) {
-            console.log('table data:', tableRef.value.getDataSource());
-          }
+        const projects = tableRef.value.getDataSource();
+        let request = getFieldsValue();
 
-          const [values, taskValues] = await Promise.all([validate(), validateTaskForm()]);
-          console.log('form data:', values, taskValues);
-        } catch (error) {}
+        request.id = id;
+        request.projects = projects.filter(function (i) {
+          return { id: i.id };
+        });
+        await validate();
+
+        if (id) {
+          await updateAsync(request, goBack);
+        } else {
+          await createAsync(request, goBack);
+        }
       }
 
       return { registerTask, submitAll, tableRef };

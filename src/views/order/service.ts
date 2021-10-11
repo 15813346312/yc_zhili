@@ -1,5 +1,6 @@
 import { FormSchema } from '/@/components/Table';
 import { BasicColumn } from '/@/components/Table';
+import moment from 'moment';
 
 import { message } from 'ant-design-vue';
 import { useLoading } from '/@/components/Loading';
@@ -24,16 +25,6 @@ export const tableColumns: BasicColumn[] = [
   {
     title: '价格',
     dataIndex: 'orderTotal',
-    sorter: false,
-  },
-  {
-    title: '优惠',
-    dataIndex: 'promotionAmount',
-    sorter: false,
-  },
-  {
-    title: '折扣',
-    dataIndex: 'discountPercent',
     sorter: false,
   },
   {
@@ -65,6 +56,14 @@ export const tableColumns: BasicColumn[] = [
     title: '患者年龄',
     dataIndex: 'patientAge',
     sorter: false,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'creationTime',
+    sorter: false,
+    customRender: ({ text }) => {
+      return moment(text).format('YYYY-MM-DD HH:mm');
+    },
   },
 ];
 

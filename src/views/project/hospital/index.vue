@@ -67,7 +67,7 @@
           schemas: searchFormSchema,
         },
         showTableSetting: true,
-        rowSelection: { type: 'checkbox' },
+       /*  rowSelection: { type: 'checkbox' }, */
         actionColumn: {
           width: 230,
           title: '操作',
