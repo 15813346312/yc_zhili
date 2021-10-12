@@ -12,6 +12,7 @@ const [openFullLoading, closeFullLoading] = useLoading({
   tip: 'Loading...',
 });
 
+
 export const tableColumns: BasicColumn[] = [
   {
     title: '姓名',
@@ -112,9 +113,9 @@ export const createFormSchema: FormSchema[] = [
   },
   {
     field: 'hospital',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '医院',
-    componentProps: {
+   /*  componentProps: {
       options: (await all()).map(function (i) {
         return {
           label: i.name,
@@ -122,6 +123,15 @@ export const createFormSchema: FormSchema[] = [
           key: i.name,
         };
       }),
+    }, */
+    componentProps: {
+      api: all,
+      // use name as label
+      labelField: 'name',
+      // use id as value
+      valueField: 'id',
+      // not request untill to select
+      immediate: false
     },
     required: true,
     labelWidth: 70,

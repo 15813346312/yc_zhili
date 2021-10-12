@@ -11,6 +11,7 @@ interface NavItem {
   title: string;
   icon: string;
   color: string;
+  url:string;
 }
 
 interface DynamicInfoItem {
@@ -22,35 +23,41 @@ interface DynamicInfoItem {
 
 export const navItems: NavItem[] = [
   {
-    title: '首页',
-    icon: 'ion:home-outline',
-    color: '#1fdaca',
-  },
-  {
-    title: '仪表盘',
-    icon: 'ion:grid-outline',
-    color: '#bf0c2c',
-  },
-  {
-    title: '组件',
+    title: '医院',
     icon: 'ion:layers-outline',
     color: '#e18525',
+    url:'/project/hospital'
   },
   {
-    title: '系统管理',
-    icon: 'ion:settings-outline',
-    color: '#3fb27f',
+    title: '业务员',
+    icon: 'ion:layers-outline',
+    color: '#e18525',
+    url:'/project/operator'
   },
   {
-    title: '权限管理',
-    icon: 'ion:key-outline',
-    color: '#4daf1bc9',
+    title: '采血管',
+    icon: 'ion:layers-outline',
+    color: '#e18525',
+    url:'/project/vessel'
   },
   {
-    title: '图表',
-    icon: 'ion:bar-chart-outline',
-    color: '#00d8ff',
+    title: '项目',
+    icon: 'ion:layers-outline',
+    color: '#e18525',
+    url:'/project/project'
   },
+  {
+    title: '套餐',
+    icon: 'ion:layers-outline',
+    color: '#e18525',
+    url:'/project/plan'
+  },
+  {
+    title: '订单',
+    icon: 'ion:layers-outline',
+    color: '#e18525',
+    url:'/order/orderlist'
+  }
 ];
 
 export const dynamicInfoItems: DynamicInfoItem[] = [

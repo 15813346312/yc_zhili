@@ -11,7 +11,7 @@ const [openFullLoading, closeFullLoading] = useLoading({
   tip: 'Loading...',
 });
 
-const allVessel: any[] = await GetVesselAll();
+/* const allVessel: any[] = await GetVesselAll(); */
 const allReportDates: any[] = [
   {
     label: '24小时',
@@ -92,14 +92,14 @@ export const tableColumns: BasicColumn[] = [
       return '非广州';
     },
   },
-  {
+/*   {
     title: '抽血管',
     dataIndex: 'collectingVesselId',
     sorter: false,
     customRender: ({ text }) => {
       return allVessel.filter((i) => i.id == text)[0].name;
     },
-  },
+  }, */
   {
     title: '方法',
     dataIndex: 'method',
@@ -207,16 +207,16 @@ export const createFormSchema: FormSchema[] = [
   },
   {
     field: 'collectingVesselId',
-    component: 'Select',
+    component: 'ApiSelect',
     label: '采血管',
     componentProps: {
-      options: allVessel.map(function (i) {
-        return {
-          label: i.name,
-          value: i.id,
-          key: i.name,
-        };
-      }),
+      api: GetVesselAll,
+      // use name as label
+      labelField: 'name',
+      // use id as value
+      valueField: 'id',
+      // not request untill to select
+      immediate: false
     },
     required: true,
     labelWidth: 70,

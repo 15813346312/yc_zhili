@@ -10,7 +10,7 @@
 </template>
 <script lang="ts">
   import { BasicForm, useForm } from '/@/components/Form';
-  import { defineComponent, ref, toRaw, getCurrentInstance, onMounted } from 'vue';
+  import { defineComponent, ref, toRaw, onMounted } from 'vue';
   import PersonTable from './editTable.vue';
   import { PageWrapper } from '/@/components/Page';
   import { editSchema, createAsync, getAsync, updateAsync } from './service';
@@ -26,7 +26,7 @@
     setup(props) {
       const tableRef = ref<{ getDataSource: () => any } | null>(null);
       const go = useGo();
-      const { ctx } = getCurrentInstance();
+      const route = useRoute();
       const { closeAll, closeLeft, closeRight, closeOther, closeCurrent, refreshPage, setTitle } =
         useTabs();
       const [registerTask, { getFieldsValue, setFieldsValue, validate, resetFields }] = useForm({
@@ -36,7 +36,9 @@
         schemas: editSchema,
         showActionButtonGroup: false,
       });
-      const id = ctx.$router.currentRoute.value.query.id;
+
+      debugger;
+      const id = route.query.id;
 
       async function goBack() {
         trigger('reload');
