@@ -106,7 +106,7 @@ export const tableColumns: BasicColumn[] = [
     sorter: false,
   },
   {
-    title: '样品量',
+    title: '样本量/μl',
     dataIndex: 'sampleCapacity',
     sorter: false,
   },
@@ -249,12 +249,17 @@ export const createFormSchema: FormSchema[] = [
     colProps: {
       span: 24,
     },
+    renderComponentContent: () => {
+      return {
+        suffix: () => 'μl',
+      };
+    },
   },
   {
     field: 'reportRoom',
     component: 'Input',
-    label: '报告室',
-    required: true,
+    label: '运输条件',
+    required: false,
     labelWidth: 70,
     colProps: {
       span: 24,

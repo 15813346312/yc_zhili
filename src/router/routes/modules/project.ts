@@ -25,7 +25,7 @@ const dashboard: AppRouteModule = {
       name: 'operator',
       component: () => import('/@/views/project/operator/index.vue'),
       meta: {
-        title: '业务员',
+        title: '操作员',
       },
     },
     {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <BasicModal
-      title="业务员"
+      title="操作员"
       :canFullscreen="false"
       @ok="submit"
       @register="registerModal"

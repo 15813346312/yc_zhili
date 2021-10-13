@@ -29,7 +29,7 @@ export const navItems: NavItem[] = [
     url:'/project/hospital'
   },
   {
-    title: '业务员',
+    title: '操作员',
     icon: 'ion:layers-outline',
     color: '#e18525',
     url:'/project/operator'

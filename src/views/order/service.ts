@@ -140,7 +140,7 @@ export const infoSchema: DescItem[] = [
   },
   {
     field: 'operator',
-    label: '业务员',
+    label: '操作员',
   },
 ];
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <BasicModal
-      title="业务员"
+      title="操作员"
       :canFullscreen="false"
       @ok="submit"
       @register="registerModal"
@@ -71,6 +71,7 @@
             request.id = editModel.id;
             request.concurrencyStamp = editModel.concurrencyStamp;
             request.isActivate=editModel.isActivate;
+            request.openid=editModel.openid;
 
             await updateAsync({ request, changeOkLoading, validate, closeModal });
           }

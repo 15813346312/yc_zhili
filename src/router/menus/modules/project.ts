@@ -8,7 +8,7 @@ const menu: MenuModule = {
 
     children: [
       { path: 'hospital', name: '医院' },
-      { path: 'operator', name: '业务员' },
+      { path: 'operator', name: '操作员' },
       { path: 'vessel', name: '采血管' },
       { path: 'project', name: '项目' },
       { path: 'plan', name: '套餐' },
