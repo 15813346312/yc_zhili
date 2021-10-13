@@ -142,6 +142,7 @@ export const editSchema: FormSchema[] = [
     colProps: {
       span: 24,
     },
+    dynamicDisabled: () => true,
   },
   {
     field: 'city',
@@ -182,6 +183,7 @@ export const editSchema: FormSchema[] = [
     colProps: {
       span: 24,
     },
+    dynamicDisabled: () => true,
   },
   {
     field: 'reportDateExtend',

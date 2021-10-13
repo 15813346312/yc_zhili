@@ -48,6 +48,8 @@
             name: i.name,
             price: i.price,
             projectCode: i.projectCode,
+            reportDate:i.reportDate,
+            reportDateExtend:reportDateExtend,
             key: `${Date.now()}`,
           };
         });

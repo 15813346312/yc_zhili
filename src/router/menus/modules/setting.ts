@@ -10,6 +10,10 @@ const menu: MenuModule = {
       {
         path: 'notice',
         name: '公告',
+      },
+      {
+        path: 'register',
+        name: '注册',
       }
     ],
   },

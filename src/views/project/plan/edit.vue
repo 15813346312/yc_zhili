@@ -1,7 +1,7 @@
 <template>
   <PageWrapper title="套餐管理" contentBackground contentClass="p-4">
     <BasicForm @register="registerTask" />
-    <PersonTable ref="tableRef" />
+    <PersonTable ref="tableRef" @chang="onProjectChang" />
 
     <template #rightFooter>
       <a-button type="primary" @click="submitAll"> 提交 </a-button>
@@ -37,7 +37,6 @@
         showActionButtonGroup: false,
       });
 
-      debugger;
       const id = route.query.id;
 
       async function goBack() {
@@ -48,7 +47,6 @@
       }
 
       async function loadPage() {
-        debugger;
         const result = await getAsync(id);
         setFieldsValue(result);
 
@@ -58,12 +56,19 @@
             name: i.name,
             price: i.price,
             projectCode: i.projectCode,
+            reportDate: i.reportDate,
+            reportDateExtend: i.reportDateExtend,
             key: `${Date.now()}`,
           };
         });
 
         tableRef.value.setTableData(projects);
       }
+
+      function onProjectChang(changData) {
+        setFieldsValue(changData);
+      }
+
       onMounted(async () => {
         id && (await loadPage());
       });
@@ -85,7 +90,7 @@
         }
       }
 
-      return { registerTask, submitAll, tableRef };
+      return { registerTask, submitAll, tableRef, onProjectChang };
     },
   });
 </script>

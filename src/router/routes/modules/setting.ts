@@ -20,6 +20,14 @@ const dashboard: AppRouteModule = {
       meta: {
         title: '公告',
       },
+    },
+    {
+      path: 'register',
+      name: 'register',
+      component: () => import('/@/views/config/register/index.vue'),
+      meta: {
+        title: '注册协议',
+      },
     }
   ],
 };

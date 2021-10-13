@@ -54,7 +54,7 @@
 
   export default defineComponent({
     components: { BasicTable, TableAction, editModel },
-    setup() {
+    setup(props, ctx) {
       const [registerTable, { getDataSource, setTableData }] = useTable({
         columns: columns,
         showIndexColumn: false,
@@ -79,6 +79,7 @@
         const index = data.findIndex((item) => item.id === record.id);
         data.splice(index, 1);
         setTableData(data);
+        chang(data);
       }
 
       function reloadModal(rows) {
@@ -91,6 +92,22 @@
           }
         });
         setTableData(data);
+        chang(data);
+      }
+
+      function chang(rowsData: any[]) {
+        let price = 0;
+        let reportDate = 0;
+        let reportDateExtend: any = '';
+        rowsData.forEach((i) => {
+          price += i.price;
+
+          if (i.reportDate > reportDate) {
+            reportDate = i.reportDate;
+            reportDateExtend = i.reportDateExtend;
+          }
+        });
+        ctx.emit('chang', { price, reportDate, reportDateExtend });
       }
 
       return {
@@ -100,7 +117,7 @@
         registerModal,
         reloadModal,
         handleDelete,
-        setTableData
+        setTableData,
       };
     },
   });
