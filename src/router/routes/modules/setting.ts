@@ -28,6 +28,14 @@ const dashboard: AppRouteModule = {
       meta: {
         title: '注册协议',
       },
+    },
+    {
+      path: 'privacy',
+      name: 'privacy',
+      component: () => import('/@/views/config/privacy/index.vue'),
+      meta: {
+        title: '隐私协议',
+      },
     }
   ],
 };

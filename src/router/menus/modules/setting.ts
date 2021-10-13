@@ -13,8 +13,12 @@ const menu: MenuModule = {
       },
       {
         path: 'register',
-        name: '注册',
-      }
+        name: '注册协议',
+      },
+      {
+        path: 'privacy',
+        name: '隐私协议',
+      },
     ],
   },
 };
