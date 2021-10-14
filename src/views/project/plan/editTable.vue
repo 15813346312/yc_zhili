@@ -98,13 +98,13 @@
       function chang(rowsData: any[]) {
         let price = 0;
         let reportDate = 0;
-        let reportDateExtend: any = '';
+        let reportDateExtend = '';
         rowsData.forEach((i) => {
           price += i.price;
 
           if (i.reportDate > reportDate) {
             reportDate = i.reportDate;
-            reportDateExtend = i.reportDateExtend;
+            reportDateExtend = i.reportDateExtend || '';
           }
         });
         ctx.emit('chang', { price, reportDate, reportDateExtend });

@@ -75,15 +75,12 @@ export function remove(id: string, mode: ErrorMessageMode = 'modal') {
  * @description: createRole
  * 创建
  */
-export function create(params: any, mode: ErrorMessageMode = 'modal') {
+export function create(params: any) {
   return defHttp.post<any>(
     {
       baseURL: globSetting.apiUrl,
       url: Api.BasicUrl,
       params,
-    },
-    {
-      errorMessageMode: mode,
     }
   );
 }

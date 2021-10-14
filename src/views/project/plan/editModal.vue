@@ -49,7 +49,7 @@
             price: i.price,
             projectCode: i.projectCode,
             reportDate:i.reportDate,
-            reportDateExtend:reportDateExtend,
+            reportDateExtend:i.reportDateExtend,
             key: `${Date.now()}`,
           };
         });

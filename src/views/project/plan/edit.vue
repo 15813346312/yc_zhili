@@ -66,7 +66,7 @@
       }
 
       function onProjectChang(changData) {
-        setFieldsValue(changData);
+         setFieldsValue(changData);
       }
 
       onMounted(async () => {
@@ -74,11 +74,12 @@
       });
 
       async function submitAll() {
+        debugger;
         const projects = tableRef.value.getDataSource();
         let request = getFieldsValue();
 
         request.id = id;
-        request.projects = projects.filter(function (i) {
+        request.projects = projects.map(function (i) {
           return { id: i.id };
         });
         await validate();
